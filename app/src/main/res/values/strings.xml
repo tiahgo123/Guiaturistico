@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Guiaturistico</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="escolhelingua">Por favor escolha a lingua que deseja</string>
 
 </resources>
