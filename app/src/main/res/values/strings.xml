@@ -4,5 +4,12 @@
     <string name="app_name">Guiaturistico</string>
     <string name="action_settings">Settings</string>
     <string name="escolhelingua">Por favor escolha a lingua que deseja</string>
+    <string name="portugal"> Portugal </string>
+    <string name="ingles"> Inglês </string>
+    <string name="frances"> Francês </string>
+    <string name="espanhol"> Espanhol </string>
+    <string name="alemao"> Alemão </string>
+    <string name="chines"> Chinês </string>
+
 
 </resources>
