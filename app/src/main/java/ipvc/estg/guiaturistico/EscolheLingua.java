@@ -1,9 +1,12 @@
 package ipvc.estg.guiaturistico;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 public class EscolheLingua extends ActionBarActivity {
@@ -12,6 +15,17 @@ public class EscolheLingua extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
+
+        ImageButton portugues = (ImageButton) findViewById(R.id.imageButton);
+        portugues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),menu.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 

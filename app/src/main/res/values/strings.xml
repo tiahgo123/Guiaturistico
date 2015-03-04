@@ -18,13 +18,11 @@
     <string name="categoriaAlojamento"> Alojamento </string>
     <string name="categoriaAgenda"> Agenda Cultural </string>
     <string name="categoriaPraia"> Praia </string>
-    <string name="categoriaDesporto"> Desporto </string>
+    <string name="categoriaDesporto"> Desporto e Lazer </string>
     <string name="categoriaEspaco"> Espaço Noturno </string>
     <string name="categoriaOutro"> Outro </string>
 
     <string name="defineRaio"> Definir o raio </string>
     <string name="inicio"> Iniciar </string>
-
-
 
 </resources>
