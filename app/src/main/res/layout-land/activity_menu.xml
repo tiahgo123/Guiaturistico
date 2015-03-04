@@ -13,7 +13,7 @@
             android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
     <TextView
@@ -64,6 +64,15 @@
                 android:layout_marginLeft="130dp"
                 android:background="@drawable/categoria"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton20"
+                android:layout_alignTop="@+id/imageButton8"
+                android:layout_alignLeft="@+id/imageButton8"
+                android:layout_marginLeft="130dp"
+                android:background="@drawable/outro"/>
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +107,16 @@
                 android:id="@+id/checkBox7"
                 android:layout_alignTop="@+id/checkBox3"
                 android:layout_alignLeft="@+id/checkBox3"
-                android:layout_marginLeft="150dp" />
+                android:layout_marginLeft="120dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoriaOutro"
+                android:id="@+id/checkBox9"
+                android:layout_alignTop="@+id/checkBox7"
+                android:layout_alignLeft="@+id/checkBox7"
+                android:layout_marginLeft="120dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
