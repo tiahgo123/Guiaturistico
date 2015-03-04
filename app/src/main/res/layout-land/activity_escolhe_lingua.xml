@@ -9,9 +9,9 @@
         android:text="@string/escolhelingua"
         android:layout_gravity="center_horizontal"
         android:id="@+id/textView"
+        android:layout_marginTop="26dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
+        android:layout_centerHorizontal="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -22,7 +22,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="51dp" />
+        android:layout_marginTop="30dp"
+        android:src="@drawable/bandeiraportugal" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -32,7 +33,8 @@
         android:layout_toRightOf="@+id/imageButton10"
         android:layout_toEndOf="@+id/imageButton10"
         android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp" />
+        android:layout_marginStart="100dp"
+        android:src="@drawable/bandeirainglaterra"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -42,7 +44,8 @@
         android:layout_toRightOf="@+id/imageButton11"
         android:layout_toEndOf="@+id/imageButton11"
         android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp" />
+        android:layout_marginStart="100dp"
+        android:src="@drawable/bandeirafranca"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +55,8 @@
         android:layout_below="@+id/imageButton10"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,7 +87,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="30dp"
+        android:src="@drawable/bandeiraespanha"
+        />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -93,7 +99,9 @@
         android:layout_toRightOf="@+id/imageButton13"
         android:layout_toEndOf="@+id/imageButton13"
         android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp" />
+        android:layout_marginStart="100dp"
+        android:src="@drawable/bandeiraalemanha"
+ />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -103,7 +111,9 @@
         android:layout_toRightOf="@+id/imageButton14"
         android:layout_toEndOf="@+id/imageButton14"
         android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp" />
+        android:layout_marginStart="100dp"
+        android:src="@drawable/bandeirachines"
+         />
 
     <TextView
         android:layout_width="wrap_content"
