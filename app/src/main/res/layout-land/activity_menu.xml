@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
@@ -9,7 +23,7 @@
         android:id="@+id/textView8"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="10dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -18,26 +32,37 @@
         android:layout_below="@+id/textView8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/monumentos"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton3"
         android:layout_alignTop="@+id/imageButton2"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/imageButton2"
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/cultura"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton4"
-        android:layout_marginRight="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imageButton2"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="27dp" />
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_alignLeft="@+id/imageButton3"
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/gastronomia"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton8"
+                android:layout_alignTop="@+id/imageButton4"
+                android:layout_alignLeft="@+id/imageButton4"
+                android:layout_marginLeft="130dp"
+                android:background="@drawable/categoria"/>
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -45,10 +70,7 @@
         android:text="@string/categoriaMonumento"
         android:id="@+id/checkBox"
         android:layout_below="@+id/imageButton2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="63dp"
-        android:layout_marginStart="63dp"
+        android:layout_marginTop="1dp"
         android:checked="false" />
 
     <CheckBox
@@ -56,44 +78,64 @@
         android:layout_height="wrap_content"
         android:text="@string/categoriaCultura"
         android:id="@+id/checkBox2"
-        android:layout_above="@+id/imageButton5"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/checkBox"
+        android:layout_alignLeft="@+id/checkBox"
+        android:layout_marginLeft="135dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/categoriaGastronomia"
         android:id="@+id/checkBox3"
-        android:layout_above="@+id/imageButton5"
-        android:layout_toRightOf="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8" />
+        android:layout_alignTop="@+id/checkBox2"
+        android:layout_alignLeft="@+id/checkBox2"
+        android:layout_marginLeft="100dp" />
+
+     <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoriaDesporto"
+                android:id="@+id/checkBox7"
+                android:layout_alignTop="@+id/checkBox3"
+                android:layout_alignLeft="@+id/checkBox3"
+                android:layout_marginLeft="150dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton5"
-        android:layout_below="@+id/imageButton2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp" />
+        android:background="@drawable/alojamento"
+        android:layout_below="@+id/checkBox"
+        android:layout_marginTop="3dp"
+        android:layout_alignLeft="@+id/imageButton2"
+        android:layout_alignStart="@+id/imageButton2" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton6"
-        android:layout_alignBottom="@+id/imageButton5"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/agenda"
+        android:layout_alignTop="@+id/imageButton5"
+        android:layout_alignLeft="@+id/imageButton5"
+        android:layout_marginLeft="100dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton7"
-        android:layout_alignRight="@+id/imageButton4"
-        android:layout_alignEnd="@+id/imageButton4"
-        android:layout_above="@+id/imageButton4"
-        android:layout_below="@+id/checkBox" />
+        android:layout_alignTop="@+id/imageButton6"
+        android:layout_alignLeft="@+id/imageButton6"
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/praia"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton9"
+                android:layout_alignTop="@+id/imageButton7"
+                android:layout_alignLeft="@+id/imageButton7"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/espaconocturno"/>
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -101,25 +143,46 @@
         android:text="@string/categoriaAlojamento"
         android:id="@+id/checkBox4"
         android:layout_below="@+id/imageButton5"
-        android:layout_alignLeft="@+id/checkBox"
-        android:layout_alignStart="@+id/checkBox" />
+        android:layout_marginTop="1dp"
+         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/categoriaAgenda"
         android:id="@+id/checkBox5"
-        android:layout_below="@+id/imageButton6"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/checkBox4"
+        android:layout_alignLeft="@+id/checkBox4"
+        android:layout_marginLeft="110dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/categoriaPraia"
         android:id="@+id/checkBox6"
-        android:layout_below="@+id/imageButton7"
-        android:layout_toRightOf="@+id/checkBox5"
-        android:layout_toEndOf="@+id/checkBox5" />
+        android:layout_alignTop="@+id/checkBox5"
+        android:layout_alignLeft="@+id/checkBox5"
+        android:layout_marginLeft="150dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoriaEspaco"
+                android:id="@+id/checkBox8"
+                android:layout_alignTop="@+id/checkBox6"
+                android:layout_alignLeft="@+id/checkBox6"
+                android:layout_marginLeft="90dp" />
+
+        </RelativeLayout>
+        </ScrollView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="6">
+
+        </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
