@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="4">
 
-        <ScrollView
+        <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
@@ -100,23 +100,7 @@
         android:layout_alignLeft="@+id/checkBox2"
         android:layout_marginLeft="100dp" />
 
-     <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/categoriaDesporto"
-                android:id="@+id/checkBox7"
-                android:layout_alignTop="@+id/checkBox3"
-                android:layout_alignLeft="@+id/checkBox3"
-                android:layout_marginLeft="120dp" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/categoriaOutro"
-                android:id="@+id/checkBox9"
-                android:layout_alignTop="@+id/checkBox7"
-                android:layout_alignLeft="@+id/checkBox7"
-                android:layout_marginLeft="120dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -191,14 +175,76 @@
                 android:layout_alignLeft="@+id/checkBox6"
                 android:layout_marginLeft="90dp" />
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoriaPraia"
+                android:id="@+id/checkBox16"
+                android:layout_alignTop="@+id/checkBox3"
+                android:layout_alignLeft="@+id/checkBox3"
+                android:layout_marginLeft="120dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoriaOutro"
+                android:id="@+id/checkBox17"
+                android:layout_alignTop="@+id/checkBox16"
+                android:layout_alignLeft="@+id/checkBox16"
+                android:layout_marginLeft="120dp" />
+
         </RelativeLayout>
-        </ScrollView>
+        </HorizontalScrollView>
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="6">
+        android:layout_weight="6"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/defineRaio"
+                android:id="@+id/textView15"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/checkBox13"
+                android:layout_alignLeft="@+id/checkBox13"
+                android:layout_alignStart="@+id/checkBox13" />
+
+            <SeekBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar"
+                android:layout_alignTop="@+id/textView15"
+                android:layout_toRightOf="@+id/checkBox13"
+                android:layout_alignRight="@+id/checkBox15"
+                android:layout_alignEnd="@+id/checkBox15" />
+
+           </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/inicio"
+                android:id="@+id/button"
+                android:layout_gravity="center"
+/>
+
+        </LinearLayout>
 
         </LinearLayout>
 
