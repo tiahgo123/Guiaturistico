@@ -9,7 +9,7 @@
         android:text="@string/escolhelingua"
         android:layout_gravity="center_horizontal"
         android:id="@+id/textView"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
