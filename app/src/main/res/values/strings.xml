@@ -25,4 +25,6 @@
     <string name="defineRaio"> Definir o raio </string>
     <string name="inicio"> Iniciar </string>
 
+    <string name="voltar">Voltar</string>
+
 </resources>
