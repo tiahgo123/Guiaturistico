@@ -261,7 +261,7 @@
                             android:layout_height="75dp"
                             android:background="@drawable/outro"
                             android:layout_gravity="center"
-                            android:id="@+id/imageButtonoutro"
+                            android:id="@+id/imageButtOnoutro"
                             />
 
                         <TextView

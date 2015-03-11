@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Guiaturistico</string>
+    <string name="action_settings">Settings</string>
+    <string name="escolhelingua">Por favor escolha a lingua que deseja</string>
+    <string name="portugal"> Portugal </string>
+    <string name="ingles"> Inglês </string>
+    <string name="frances"> Francês </string>
+    <string name="espanhol"> Espanhol </string>
+    <string name="alemao"> Alemão </string>
+    <string name="chines"> Chinês </string>
+
+    <string name="categoria">Select the categories that you want</string>
+    <string name="categoriaMonumento"> Monumento</string>
+    <string name="categoriaCultura"> Cultura </string>
+    <string name="categoriaGastronomia"> Gastronomia </string>
+    <string name="categoriaAlojamento"> Alojamento </string>
+    <string name="categoriaAgenda"> Agenda Cultural </string>
+    <string name="categoriaPraia"> Praia </string>
+    <string name="categoriaDesporto"> Desporto e Lazer </string>
+    <string name="categoriaEspaco"> Espaço Noturno </string>
+    <string name="categoriaOutro"> Outro </string>
+
+    <string name="defineRaio"> Definir o raio </string>
+    <string name="inicio"> Iniciar </string>
+
+    <string name="voltar">Voltar</string>
+
+</resources>
