@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,129 +9,206 @@
         android:text="@string/escolhelingua"
         android:layout_gravity="center_horizontal"
         android:id="@+id/textView"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton10"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bandeiraportugal" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton11"
-        android:background="@drawable/bandeirainglaterra"
-        android:layout_above="@+id/textView2"
-        android:layout_alignLeft="@+id/imageButton14"
-        android:layout_alignStart="@+id/imageButton14" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton12"
-        android:layout_marginRight="100dp"
-        android:background="@drawable/bandeirafranca"
-        android:layout_alignTop="@+id/imageButton11"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="27dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/portugal"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/imageButton10"
-        android:layout_alignLeft="@+id/imageButton10"
-        android:layout_alignStart="@+id/imageButton10" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ingles"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/imageButton11"
-        android:layout_alignLeft="@+id/imageButton11"
-        android:layout_alignStart="@+id/imageButton11" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/frances"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/imageButton12"
-        android:layout_alignLeft="@+id/imageButton12"
-        android:layout_alignStart="@+id/imageButton12" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton13"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bandeiraespanha"
-        />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton14"
-        android:background="@drawable/bandeiraalemanha"
-        android:layout_above="@+id/textView5"
-        android:layout_centerHorizontal="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton15"
-        android:background="@drawable/bandeirachines"
-        android:layout_alignTop="@+id/imageButton14"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/espanhol"
-        android:id="@+id/textView5"
-        android:layout_below="@+id/imageButton13"
-        android:layout_alignLeft="@+id/imageButton13"
-        android:layout_alignStart="@+id/imageButton13" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alemao"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/imageButton14"
-        android:layout_alignLeft="@+id/imageButton14"
-        android:layout_alignStart="@+id/imageButton14" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/chines"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/imageButton15"
-        android:layout_alignLeft="@+id/imageButton15"
-        android:layout_alignStart="@+id/imageButton15" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
 
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:id="@+id/imageButton"
+                        android:background="@drawable/bandeiraportugal"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/portugal"
+                        android:id="@+id/textView8"
+                        android:layout_gravity="center" />
+
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButton1"
+                    android:background="@drawable/bandeirainglaterra"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingles"
+                    android:id="@+id/textView81"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButton2"
+                    android:background="@drawable/bandeirafranca"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frances"
+                    android:id="@+id/textView82"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButton3"
+                    android:background="@drawable/bandeiraespanha"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/espanhol"
+                    android:id="@+id/textView83"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButton14"
+                    android:background="@drawable/bandeiraalemanha"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alemao"
+                    android:id="@+id/textView814"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButton25"
+                    android:background="@drawable/bandeirachines"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chines"
+                    android:id="@+id/textView825"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
 
 
 
