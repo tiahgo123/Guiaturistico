@@ -48,6 +48,7 @@
                     <ImageButton
                         android:layout_width="75dp"
                         android:layout_height="75dp"
+                        android:id="@+id/imageButtonMonumento"
                         android:background="@drawable/monumentos"
                         android:layout_gravity="center"
                          />
@@ -73,6 +74,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/cultura"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonCultura"
                         />
 
                     <TextView
@@ -80,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/categoriaCultura"
                         android:layout_gravity="center"
+
                         />
                 </LinearLayout>
 
@@ -96,6 +99,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/gastronomia"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonGastronomia"
                         />
 
                     <TextView
@@ -119,6 +123,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/alojamento"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonAlojamento"
                         />
 
                     <TextView
@@ -143,6 +148,7 @@
                         android:background="@drawable/agenda"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:id="@+id/imageButtonAgenda"
                         />
 
                     <TextView
@@ -181,6 +187,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/praia"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonPraia"
                         />
 
                     <TextView
@@ -205,6 +212,7 @@
                         android:background="@drawable/categoria"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:id="@+id/imageButtonDesporto"
                         />
 
                     <TextView
@@ -229,6 +237,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/espaconocturno"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonEspaco"
                         />
 
                     <TextView
@@ -252,6 +261,7 @@
                         android:layout_height="75dp"
                         android:background="@drawable/outro"
                         android:layout_gravity="center"
+                        android:id="@+id/imageButtonoutro"
                         />
 
                     <TextView
@@ -262,13 +272,7 @@
                         />
                 </LinearLayout>
 
-
             </LinearLayout>
-
-
-
-
-
         </LinearLayout>
         </HorizontalScrollView>
 
@@ -279,7 +283,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="6"
         android:orientation="horizontal">
-
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -316,7 +319,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/inicio"
-                android:id="@+id/button"
+                android:id="@+id/buttonIniciar"
                 android:layout_gravity="center"
 />
 
