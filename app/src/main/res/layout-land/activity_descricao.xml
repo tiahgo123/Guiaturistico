@@ -69,9 +69,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="75dp"
                 android:text="@string/voltar"
-                android:id="@+id/buttonVoltar"
+                android:id="@+id/button"
                 android:layout_gravity="center"></Button>
-        </LinearLayout>
 
         </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
 </LinearLayout>

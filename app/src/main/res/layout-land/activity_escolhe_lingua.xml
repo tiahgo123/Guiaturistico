@@ -37,22 +37,22 @@
                 android:layout_gravity="center">
 
 
-                    <ImageButton
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:id="@+id/imageButtonPortugal"
-                        android:background="@drawable/bandeiraportugal"
-                        android:layout_gravity="center" />
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/imageButtonPortugal"
+                    android:background="@drawable/bandeiraportugal2"
+                    android:layout_gravity="center" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/portugal"
-                        android:id="@+id/textView8"
-                        android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portugal"
+                    android:id="@+id/textView8"
+                    android:layout_gravity="center" />
 
 
-                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -103,9 +103,9 @@
 
             </LinearLayout>
 
-            </LinearLayout>
-
         </LinearLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -182,7 +182,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/imageButtonChina"
-                    android:background="@drawable/bandeirachina"
+                    android:background="@drawable/bandeirachines"
                     android:layout_gravity="center" />
 
                 <TextView

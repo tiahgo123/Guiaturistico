@@ -16,15 +16,16 @@ public class EscolheLingua extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
 
-        ImageButton portugues = (ImageButton) findViewById(R.id.imageButtonPortugal);
-        portugues.setOnClickListener(new View.OnClickListener() {
+        ImageButton imagemportugal = (ImageButton) findViewById(R.id.imageButtonPortugal);
+        imagemportugal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
-
             }
         });
+
+
 
 
     }
