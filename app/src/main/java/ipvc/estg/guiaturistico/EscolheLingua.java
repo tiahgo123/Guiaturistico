@@ -22,6 +22,7 @@ public class EscolheLingua extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
+
             }
         });
 
