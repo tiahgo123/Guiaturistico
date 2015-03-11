@@ -209,7 +209,7 @@
                     <ImageButton
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:background="@drawable/categoria"
+                        android:background="@drawable/desportolazer"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:id="@+id/imageButtonDesporto"
@@ -235,7 +235,7 @@
                     <ImageButton
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:background="@drawable/espaconocturno"
+                        android:background="@drawable/espaconoturno"
                         android:layout_gravity="center"
                         android:id="@+id/imageButtonEspaco"
                         />
