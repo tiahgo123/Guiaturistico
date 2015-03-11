@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/categoria"
+        android:id="@+id/textView8"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="6">
+
+        <HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+
+            >
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:id="@+id/imageButtonMonumento"
+                        android:background="@drawable/monumentos"
+                        android:layout_gravity="center"
+                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaMonumento"
+                        android:layout_gravity="center"
+                         />
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/cultura"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonCultura"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaCultura"
+                        android:layout_gravity="center"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/gastronomia"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonGastronomia"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaGastronomia"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/alojamento"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonAlojamento"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaAlojamento"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/agenda"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/imageButtonAgenda"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaAgenda"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/praia"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonPraia"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaPraia"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/categoria"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/imageButtonDesporto"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaDesporto"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/espaconocturno"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonEspaco"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaEspaco"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageButton
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/outro"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageButtonoutro"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categoriaOutro"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/defineRaio"
+                android:id="@+id/textView15"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/checkBox13"
+                android:layout_alignLeft="@+id/checkBox13"
+                android:layout_alignStart="@+id/checkBox13" />
+
+            <SeekBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar"
+                android:layout_alignTop="@+id/textView15"
+                android:layout_toRightOf="@+id/checkBox13"
+                android:layout_alignRight="@+id/checkBox15"
+                android:layout_alignEnd="@+id/checkBox15" />
+
+           </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/inicio"
+                android:id="@+id/buttonIniciar"
+                android:layout_gravity="center"
+/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+</LinearLayout>
