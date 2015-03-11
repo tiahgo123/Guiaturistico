@@ -41,7 +41,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/imageButtonPortugal"
-                    android:background="@drawable/bandeiraportugal2"
+                    android:background="@drawable/bandeiraportuguesa"
                     android:layout_gravity="center" />
 
                 <TextView
