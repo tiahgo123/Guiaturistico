@@ -3,6 +3,7 @@ package ipvc.estg.guiaturistico;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,9 +23,6 @@ public class menu extends Activity {
         imagemMonumento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   Configuration config = new Configuration();
-             //   config.locale = Locale.ROOT;
-             //   getResources().updateConfiguration(config, null);
 
                 Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
                 startActivity(intent);
