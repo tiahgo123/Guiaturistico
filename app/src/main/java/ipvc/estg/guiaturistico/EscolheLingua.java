@@ -1,5 +1,7 @@
 package ipvc.estg.guiaturistico;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -9,12 +11,16 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.Locale;
 
 
 public class EscolheLingua extends ActionBarActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,96 +28,21 @@ public class EscolheLingua extends ActionBarActivity {
         setContentView(R.layout.activity_escolhe_lingua);
 
 
-        ImageButton imagemPortugal = (ImageButton) findViewById(R.id.imageButtonPortugal);
-        imagemPortugal.setOnClickListener(new View.OnClickListener() {
+
+       Button avancar = (Button) findViewById(R.id.buttonAvancar);
+        avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Configuration config = new Configuration();
-                config.locale = Locale.ROOT;
-                getResources().updateConfiguration(config, null);
 
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
             }
         });
-
-        ImageButton imagemInglaterra = (ImageButton) findViewById(R.id.imageButtonInglaterra);
-        imagemInglaterra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Resources res = getApplicationContext().getResources();
-                // Change locale settings in the app.
-                DisplayMetrics dm = res.getDisplayMetrics();
-                android.content.res.Configuration conf = res.getConfiguration();
-                conf.locale = new Locale("en");
-                res.updateConfiguration(conf, dm);
-
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imagemFranca = (ImageButton) findViewById(R.id.imageButtonFranca);
-        imagemFranca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Configuration config = new Configuration();
-                config.locale = Locale.FRANCE;
-                getResources().updateConfiguration(config, null);
-
-
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imagemEspanha = (ImageButton) findViewById(R.id.imageButtonEspanha);
-        imagemEspanha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Configuration config = new Configuration();
-                Locale spanish = new Locale("es", "ES");
-                config.locale = spanish;
-                getResources().updateConfiguration(config, null);
-
-
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imagemAlemanha = (ImageButton) findViewById(R.id.imageButtonAlemanha);
-        imagemAlemanha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Configuration config = new Configuration();
-                config.locale = Locale.GERMAN;
-                getResources().updateConfiguration(config, null);
-
-
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-            }
-        });
-        ImageButton imagemChina = (ImageButton) findViewById(R.id.imageButtonChina);
-        imagemChina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Configuration config = new Configuration();
-                config.locale = Locale.CHINA;
-                getResources().updateConfiguration(config, null);
-
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
 
 
     }
+
+
 
 
     @Override
@@ -135,4 +66,6 @@ public class EscolheLingua extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+
+    }
+
