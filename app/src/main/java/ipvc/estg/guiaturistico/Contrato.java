@@ -2,8 +2,6 @@ package ipvc.estg.guiaturistico;
 
 import android.provider.BaseColumns;
 
-import java.security.cert.PolicyNode;
-
 /**
  * Created by tiago on 25/03/2015.
  */
