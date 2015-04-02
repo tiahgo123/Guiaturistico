@@ -27,5 +27,7 @@
     <string name="inicio"> Iniciar </string>
 
     <string name="voltar">Voltar</string>
+    <string name="seleciona">Selecionar tudo</string>
+    <string name="remove">Remover escolhas</string>
 
 </resources>

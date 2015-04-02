@@ -40,6 +40,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutMomumento"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -65,6 +66,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:orientation="vertical"
+                        android:id="@+id/layoutCultura"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp">
@@ -89,6 +91,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutGastronomia"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -113,6 +116,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutAlojamento"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -137,6 +141,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutAgenda"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -169,6 +174,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:id="@+id/layoutPraia"
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     android:paddingLeft="5dp"
@@ -201,6 +207,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutDesporto"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -227,6 +234,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutEspaco"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -251,6 +259,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:id="@+id/layoutOutro"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
@@ -261,7 +270,7 @@
                             android:layout_height="75dp"
                             android:background="@drawable/outro"
                             android:layout_gravity="center"
-                            android:id="@+id/imageButtOnoutro"
+                            android:id="@+id/imageButtonOutro"
                             />
 
                         <TextView

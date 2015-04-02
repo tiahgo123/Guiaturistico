@@ -32,6 +32,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutMomumento"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -56,6 +57,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutCultura"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -80,6 +82,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutGastronomia"
             android:layout_weight="1">
 
             <ImageButton
@@ -115,6 +118,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutAlojamento"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -139,6 +143,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutAgenda"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -163,6 +168,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutPraia"
             android:layout_weight="1">
 
             <ImageButton
@@ -198,6 +204,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutDesporto"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -222,6 +229,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutEspaco"
             android:layout_weight="1"
             android:paddingRight="5dp">
 
@@ -246,6 +254,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:id="@+id/layoutOutro"
             android:layout_weight="1">
 
             <ImageButton
