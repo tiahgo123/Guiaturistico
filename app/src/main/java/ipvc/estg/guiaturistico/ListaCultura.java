@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
@@ -12,21 +11,19 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
-
 /**
- * Created by Tiago on 11-03-2015.
+ * Created by Tiago Sousa on 02/04/2015.
  */
-public class ListaMonumento extends Activity {
+public class ListaCultura extends Activity {
 
     int[] toViewIDs;
     String[] fromFieldNames;
     ListView list;
     CheckBox checkBoxSeleciona;
     Cursor obterDocumento;
-    int idCategoria = 1;
+    int idCategoria = 2;
 
     SQLiteDatabase db;
-    SimpleCursorAdapter myCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +32,18 @@ public class ListaMonumento extends Activity {
 
         list = (ListView) findViewById(R.id.listView);
 
-        DbHelper dbHelper= new DbHelper(getApplicationContext());
+
+        DbHelper dbHelper = new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
 
         BuildTable();
-
 
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
         buttonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(),menu.class);
+                Intent intent = new Intent(getApplicationContext(), menu.class);
                 startActivity(intent);
             }
         });
@@ -57,22 +54,29 @@ public class ListaMonumento extends Activity {
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
                     checkBoxSeleciona.setChecked(true);
-                    for ( int i=0; i < list.getCount(); i++ ) {
+                    for (int i = 0; i < list.getCount(); i++) {
                         list.setItemChecked(i, false);
-                        list.setBackgroundColor(Color.GREEN);
+                    }
+                    for (int i = 0; i < list.getChildCount(); i++) {
+                        list.setItemChecked(i, false);
+                    }
 
+                    //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
+                } else {
+                    for (int i = 0; i < list.getChildCount(); i++) {
+                        list.setItemChecked(i, false);
                     }
-             //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
-                }else {
-                    for ( int i=0; i< list.getChildCount(); i++ ) {
-                        list.setItemChecked(i, true);
+                    for (int i = 0; i < list.getChildCount(); i++) {
+                        list.setItemChecked(i, false);
                     }
+
                     checkBoxSeleciona.setChecked(false);
-            //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
+                    //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+
     }
 
     private void BuildTable() {
@@ -82,12 +86,12 @@ public class ListaMonumento extends Activity {
         startManagingCursor(c);
 
         // Setup mapping from cursor to view fields:
-        fromFieldNames = new String[] {Contrato.pontos.COLUMN_NOME,
-                Contrato.pontos.COLUMN_IMAGEM };
-        toViewIDs = new int[] { R.id.textNome, R.id.image };
+        fromFieldNames = new String[]{Contrato.pontos.COLUMN_NOME,
+                Contrato.pontos.COLUMN_IMAGEM};
+        toViewIDs = new int[]{R.id.textNome, R.id.image};
 
         // Create adapter to may columns of the DB onto elemesnt in the UI.
-        myCursorAdapter = new SimpleCursorAdapter(this, // Context
+        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(this, // Context
                 R.layout.layout_lista, // Row layout template
                 c, // cursor (set of DB records to map)
                 fromFieldNames, // DB Column names
@@ -121,6 +125,4 @@ public class ListaMonumento extends Activity {
 
         return obterDocumento;
     }
-
-
 }

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/checkBoxSeleciona"
         android:text="@string/seleciona"
-        android:onClick="onCheckboxClicked"/>
+        android:checked="false"/>
 
 
     <ListView

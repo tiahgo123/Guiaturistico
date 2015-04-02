@@ -96,8 +96,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if (!verificarLongButtonCultura) {
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(),ListaCultura.class);
+                        startActivity(intent);
                 } else {
                     verificarLongButtonCultura = false;
                 }
@@ -126,8 +126,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
             if(!verificarLongButtonGastronomia){
-                //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                //     startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(),ListaGastronomia.class);
+                    startActivity(intent);
             }else {
                 verificarLongButtonGastronomia = false;
             }
@@ -156,8 +156,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonAlojamento){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                         Intent intent = new Intent(getApplicationContext(),ListaAlojamento.class);
+                         startActivity(intent);
                 }else {
                     verificarLongButtonAlojamento = false;
                 }
@@ -185,8 +185,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonAgenda){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(),ListaAgenda.class);
+                        startActivity(intent);
                 }else {
                     verificarLongButtonAgenda = false;
                 }
@@ -214,8 +214,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonPraia){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                         Intent intent = new Intent(getApplicationContext(),ListaPraia.class);
+                         startActivity(intent);
                 }else {
                     verificarLongButtonPraia = false;
                 }
@@ -243,8 +243,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonDesporto){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                         Intent intent = new Intent(getApplicationContext(),ListaDesporto.class);
+                         startActivity(intent);
                 }else {
                     verificarLongButtonDesporto = false;
                 }
@@ -272,8 +272,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonEspaco){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                         Intent intent = new Intent(getApplicationContext(),ListaEspaco.class);
+                         startActivity(intent);
                 }else {
                     verificarLongButtonEspaco = false;
                 }
@@ -301,8 +301,8 @@ public class menu extends Activity {
             @Override
             public void onClick(View v) {
                 if(!verificarLongButtonOutro){
-                    //     Intent intent = new Intent(getApplicationContext(),ListaMonumento.class);
-                    //     startActivity(intent);
+                         Intent intent = new Intent(getApplicationContext(),ListaOutro.class);
+                         startActivity(intent);
                 }else {
                     verificarLongButtonOutro = false;
                 }
