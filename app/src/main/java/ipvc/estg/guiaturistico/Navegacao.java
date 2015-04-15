@@ -27,7 +27,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
 
     Cursor obterPonto;
-    int idCategoria = 5;
+    int checked = 1;
 
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
@@ -132,8 +132,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         };
 
     //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
-    //    String selection = Contrato.pontos.COLUMN_IdCategoria + " =? ";
-    //  String[] selectionArgs = {String.valueOf(idCategoria)};
+    //    String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+    //  String[] selectionArgs = {String.valueOf(checked)};
 
         obterPonto = db.query(
                 Contrato.pontos.TABLE_NAME,
@@ -163,8 +163,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 categoria.setDescricaoCategoria(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO)));
                 categoria.setImagemCategoria(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM)));
                 categoria.setTelefoneCategoria(cursor.getInt(cursor.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE)));
-                categoria.setLatitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE))));
-                categoria.setLongitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE))));
+//                categoria.setLatitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE))));
+              //  categoria.setLongitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE))));
 
                 // Add book to books
                 categorias.add(categoria);
