@@ -390,7 +390,7 @@ public class menu extends Activity {
     protected void onResume() {
         super.onResume();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-        if (aplicacao.isVerificarlinearMonumento()){
+        if (aplicacao.isVerificarlinearMonumento()|| aplicacao.isVerificaTransacaoMonumento()){
             linearMonumento.setBackgroundColor(Color.GREEN);
         }else{
             linearMonumento.setBackgroundColor(Color.WHITE);

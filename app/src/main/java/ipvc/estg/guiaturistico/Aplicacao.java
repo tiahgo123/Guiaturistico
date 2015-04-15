@@ -7,6 +7,8 @@ import android.app.Application;
  */
 public class Aplicacao extends Application {
 
+    boolean verificaTransacaoMonumento;
+
     boolean verificarLongButtonMonumento;
     boolean verificarLongButtonCultura;
     boolean verificarLongButtonGastronomia;
@@ -27,6 +29,14 @@ public class Aplicacao extends Application {
     boolean verificarlinearDesporto;
     boolean verificarlinearEspaco;
     boolean verificarlinearOutro;
+
+    public void setVerificaTransacaoMonumento(boolean verificaTransacaoMonumento) {
+        this.verificaTransacaoMonumento = verificaTransacaoMonumento;
+    }
+
+    public boolean isVerificaTransacaoMonumento() {
+        return verificaTransacaoMonumento;
+    }
 
     public void setVerificarlinearAgenda(boolean verificarlinearAgenda) {
         this.verificarlinearAgenda = verificarlinearAgenda;
