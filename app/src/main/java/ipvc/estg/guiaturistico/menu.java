@@ -24,7 +24,6 @@ public class menu extends Activity {
     boolean verificarLongButtonEspaco = false;
     boolean verificarLongButtonOutro = false;
 
-
     boolean verificarlinearMonumento = false;
     boolean verificarlinearCultura = false;
     boolean verificarlinearGastronomia = false;
@@ -63,6 +62,28 @@ public class menu extends Activity {
         linearEspaco = (LinearLayout) findViewById(R.id.layoutEspaco);
         linearOutro = (LinearLayout) findViewById(R.id.layoutOutro);
 
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        verificarLongButtonMonumento = aplicacao.isVerificarLongButtonMonumento();
+        verificarLongButtonCultura = aplicacao.isVerificarLongButtonCultura();
+        verificarLongButtonGastronomia = aplicacao.isVerificarLongButtonGastronomia();
+        verificarLongButtonAlojamento = aplicacao.isVerificarLongButtonAlojamento();
+        verificarLongButtonAgenda = aplicacao.isVerificarLongButtonAgenda();
+        verificarLongButtonPraia = aplicacao.isVerificarLongButtonPraia();
+        verificarLongButtonDesporto = aplicacao.isVerificarLongButtonDesporto();
+        verificarLongButtonEspaco = aplicacao.isVerificarLongButtonEspaco();
+        verificarLongButtonOutro = aplicacao.isVerificarLongButtonOutro();
+
+        verificarlinearMonumento = aplicacao.isVerificarlinearMonumento();
+        verificarlinearCultura = aplicacao.isVerificarlinearCultura();
+        verificarlinearGastronomia= aplicacao.isVerificarlinearGastronomia();
+        verificarlinearAlojamento = aplicacao.isVerificarlinearAlojamento();
+        verificarlinearAgenda = aplicacao.isVerificarlinearAgenda();
+        verificarlinearPraia = aplicacao.isVerificarlinearPraia();
+        verificarlinearDesporto = aplicacao.isVerificarlinearDesporto();
+        verificarlinearEspaco = aplicacao.isVerificarlinearEspaco();
+        verificarlinearOutro = aplicacao.isVerificarlinearOutro();
+
+
         ImageButton imagemMonumento = (ImageButton) findViewById(R.id.imageButtonMonumento);
         imagemMonumento.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -72,7 +93,9 @@ public class menu extends Activity {
             startActivity(intent);
             }else{
                 verificarLongButtonMonumento = false;
+
             }
+            aplicacao.setVerificarLongButtonMonumento(verificarLongButtonMonumento);
              }
        });
 
@@ -84,10 +107,13 @@ public class menu extends Activity {
                 linearMonumento.setBackgroundColor(Color.GREEN);
                 verificarlinearMonumento = true;
             }else{
-                linearMonumento.setBackgroundColor(Color.WHITE);
                 verificarLongButtonMonumento = true;
                 verificarlinearMonumento = false;
+                linearMonumento.setBackgroundColor(Color.WHITE);
+
             }
+                aplicacao.setVerificarLongButtonMonumento(verificarLongButtonMonumento);
+                aplicacao.setVerificarlinearMonumento(verificarlinearMonumento);
                 return false;
             }
         });
@@ -102,6 +128,7 @@ public class menu extends Activity {
                 } else {
                     verificarLongButtonCultura = false;
                 }
+                aplicacao.setVerificarLongButtonCultura(verificarLongButtonCultura);
             }
 
         });
@@ -118,6 +145,8 @@ public class menu extends Activity {
                     verificarLongButtonCultura = true;
                     verificarlinearCultura = false;
                 }
+                aplicacao.setVerificarLongButtonCultura(verificarLongButtonCultura);
+                aplicacao.setVerificarlinearCultura(verificarlinearCultura);
                 return false;
             }
         });
@@ -132,7 +161,7 @@ public class menu extends Activity {
             }else {
                 verificarLongButtonGastronomia = false;
             }
-
+                aplicacao.setVerificarLongButtonGastronomia(verificarLongButtonGastronomia);
             }
         });
 
@@ -148,6 +177,8 @@ public class menu extends Activity {
                     verificarLongButtonGastronomia = true;
                     verificarlinearGastronomia = false;
                 }
+                aplicacao.setVerificarLongButtonGastronomia(verificarLongButtonGastronomia);
+                aplicacao.setVerificarlinearGastronomia(verificarlinearGastronomia);
                 return false;
             }
         });
@@ -162,6 +193,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonAlojamento = false;
                 }
+                aplicacao.setVerificarLongButtonAlojamento(verificarLongButtonAlojamento);
             }
         });
 
@@ -177,6 +209,8 @@ public class menu extends Activity {
                     verificarLongButtonAlojamento = true;
                     verificarlinearAlojamento = false;
                 }
+                aplicacao.setVerificarLongButtonAlojamento(verificarLongButtonAlojamento);
+                aplicacao.setVerificarlinearAlojamento(verificarlinearAlojamento);
                 return false;
             }
         });
@@ -191,6 +225,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonAgenda = false;
                 }
+                aplicacao.setVerificarLongButtonAgenda(verificarLongButtonAgenda);
             }
         });
 
@@ -206,6 +241,8 @@ public class menu extends Activity {
                     verificarLongButtonAgenda = true;
                     verificarlinearAgenda = false;
                 }
+                aplicacao.setVerificarLongButtonMonumento(verificarLongButtonAgenda);
+                aplicacao.setVerificarlinearMonumento(verificarlinearAgenda);
                 return false;
             }
         });
@@ -220,6 +257,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonPraia = false;
                 }
+                aplicacao.setVerificarLongButtonPraia(verificarLongButtonPraia);
             }
         });
 
@@ -235,6 +273,8 @@ public class menu extends Activity {
                     verificarLongButtonPraia = true;
                     verificarlinearPraia = false;
                 }
+                aplicacao.setVerificarLongButtonPraia(verificarLongButtonPraia);
+                aplicacao.setVerificarlinearPraia(verificarlinearPraia);
                 return false;
             }
         });
@@ -249,6 +289,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonDesporto = false;
                 }
+                aplicacao.setVerificarLongButtonDesporto(verificarLongButtonDesporto);
             }
         });
 
@@ -264,6 +305,8 @@ public class menu extends Activity {
                     verificarLongButtonDesporto = true;
                     verificarlinearDesporto = false;
                 }
+                aplicacao.setVerificarLongButtonDesporto(verificarLongButtonDesporto);
+                aplicacao.setVerificarlinearDesporto(verificarlinearDesporto);
                 return false;
             }
         });
@@ -278,6 +321,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonEspaco = false;
                 }
+                aplicacao.setVerificarLongButtonEspaco(verificarLongButtonEspaco);
             }
         });
 
@@ -293,6 +337,8 @@ public class menu extends Activity {
                     verificarLongButtonEspaco = true;
                     verificarlinearEspaco = false;
                 }
+                aplicacao.setVerificarLongButtonEspaco(verificarLongButtonEspaco);
+                aplicacao.setVerificarlinearEspaco(verificarlinearEspaco);
                 return false;
             }
         });
@@ -307,6 +353,7 @@ public class menu extends Activity {
                 }else {
                     verificarLongButtonOutro = false;
                 }
+                aplicacao.setVerificarLongButtonOutro(verificarLongButtonOutro);
             }
         });
 
@@ -322,6 +369,8 @@ public class menu extends Activity {
                     verificarLongButtonOutro = true;
                     verificarlinearOutro = false;
                 }
+                aplicacao.setVerificarLongButtonOutro(verificarLongButtonOutro);
+                aplicacao.setVerificarlinearOutro(verificarlinearOutro);
                 return false;
             }
         });
@@ -337,5 +386,55 @@ public class menu extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        if (aplicacao.isVerificarlinearMonumento()){
+            linearMonumento.setBackgroundColor(Color.GREEN);
+        }else{
+            linearMonumento.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearCultura()){
+            linearCultura.setBackgroundColor(Color.GREEN);
+        }else{
+            linearCultura.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearGastronomia()){
+            linearGastronomia.setBackgroundColor(Color.GREEN);
+        }else{
+            linearGastronomia.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearAlojamento()){
+            linearAlojamento.setBackgroundColor(Color.GREEN);
+        }else{
+            linearAlojamento.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearAgenda()){
+            linearAgenda.setBackgroundColor(Color.GREEN);
+        }else{
+            linearAgenda.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearPraia()){
+            linearPraia.setBackgroundColor(Color.GREEN);
+        }else{
+            linearPraia.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearDesporto()){
+            linearDesporto.setBackgroundColor(Color.GREEN);
+        }else{
+            linearDesporto.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearEspaco()){
+            linearEspaco.setBackgroundColor(Color.GREEN);
+        }else{
+            linearEspaco.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearOutro()){
+            linearOutro.setBackgroundColor(Color.GREEN);
+        }else{
+            linearOutro.setBackgroundColor(Color.WHITE);
+        }
 
+    }
 }
