@@ -2,6 +2,7 @@ package ipvc.estg.guiaturistico;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class ListaMonumento extends ListActivity {
     Cursor obterDocumento;
     int idCategoria = 1;
 
+    DbHelper DbHelper;
     SQLiteDatabase db;
     SimpleCursorAdapter myCursorAdapter;
 
@@ -38,29 +41,70 @@ public class ListaMonumento extends ListActivity {
         CheckedTextView item = (CheckedTextView) v;
         final Object obj = list.getAdapter().getItem(position);
 
-        Cursor cursor2 = (Cursor) obj;
-        final String nomeItem=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
+        //db = DbHelper.getWritableDatabase();
 
-        Toast.makeText(this,  nomeItem+ " checked : " +
-                item.isChecked(), Toast.LENGTH_SHORT).show();
+        Cursor cursor2 = (Cursor) obj;
+        final String id2=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
+
+        if (item.isChecked()) {
+            ContentValues values = new ContentValues();
+            values.put(Contrato.pontos.COLUMN_CHECKED,1);
+
+            String selection = Contrato.pontos._ID + " LIKE ?";
+            String[] selectionArgs = {String.valueOf(id2)};
+            db.update(
+                    Contrato.pontos.TABLE_NAME,
+                    values, selection, selectionArgs);
+
+
+        }else {
+            ContentValues values = new ContentValues();
+            values.put(Contrato.pontos.COLUMN_CHECKED,0);
+
+            String selection = Contrato.pontos._ID + " LIKE ?";
+            String[] selectionArgs = {String.valueOf(id2)};
+            db.update(
+                    Contrato.pontos.TABLE_NAME,
+                    values, selection, selectionArgs);
+
+
+        }
+
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
 
-        list=getListView();
-       // list = (ListView) findViewById(R.id.li);
+        list = getListView();
+        // list = (ListView) findViewById(R.id.li);
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
 
         list.setTextFilterEnabled(true);
 
 
-        DbHelper dbHelper= new DbHelper(getApplicationContext());
-        db = dbHelper.getWritableDatabase();
+        DbHelper dbHelper = new DbHelper(getApplicationContext());
+        db = dbHelper.getReadableDatabase();
 
         BuildTable();
+
+        for (int i = 0; i < list.getCount(); i++) {
+
+            int id = (int) list.getItemIdAtPosition(i);
+            if(id==2){
+                list.setItemChecked(i,true);
+            }
+
+            Toast.makeText(getApplicationContext(), "" + id, Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
+
 
 
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
@@ -70,6 +114,8 @@ public class ListaMonumento extends ListActivity {
 
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
@@ -96,6 +142,7 @@ public class ListaMonumento extends ListActivity {
             }
         });
     }
+
 
     private void BuildTable() {
 

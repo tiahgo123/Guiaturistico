@@ -2,6 +2,7 @@ package ipvc.estg.guiaturistico;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,10 +38,31 @@ public class ListaPraia extends ListActivity {
         final Object obj = list.getAdapter().getItem(position);
 
         Cursor cursor2 = (Cursor) obj;
-        final String nomeItem=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
+        final String id2=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
 
-        Toast.makeText(this, nomeItem + " checked : " +
-                item.isChecked(), Toast.LENGTH_SHORT).show();
+        if (item.isChecked()) {
+            ContentValues values = new ContentValues();
+            values.put(Contrato.pontos.COLUMN_CHECKED,1);
+
+            String selection = Contrato.pontos._ID + " LIKE ?";
+            String[] selectionArgs = {String.valueOf(id2)};
+            db.update(
+                    Contrato.pontos.TABLE_NAME,
+                    values, selection, selectionArgs);
+
+
+        }else {
+            ContentValues values = new ContentValues();
+            values.put(Contrato.pontos.COLUMN_CHECKED,0);
+
+            String selection = Contrato.pontos._ID + " LIKE ?";
+            String[] selectionArgs = {String.valueOf(id2)};
+            db.update(
+                    Contrato.pontos.TABLE_NAME,
+                    values, selection, selectionArgs);
+
+
+        }
     }
 
     @Override
@@ -61,6 +83,7 @@ public class ListaPraia extends ListActivity {
         BuildTable();
 
 
+
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
         buttonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +91,7 @@ public class ListaPraia extends ListActivity {
 
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -100,6 +124,12 @@ public class ListaPraia extends ListActivity {
         obterMonumentos();
         Cursor c = obterDocumento;
         startManagingCursor(c);
+
+
+        if(c.getInt(c.getColumnIndex(Contrato.pontos.COLUMN_CHECKED))==1){
+            //list.setItemChecked(i,true);
+        }
+
 
         // Setup mapping from cursor to view fields:
         fromFieldNames = new String[] {Contrato.pontos.COLUMN_NOME,Contrato.pontos.COLUMN_DESCRICAO

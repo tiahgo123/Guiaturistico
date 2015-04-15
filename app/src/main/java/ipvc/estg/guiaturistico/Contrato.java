@@ -31,6 +31,8 @@ public final class Contrato {
         public static final String COLUMN_LATITUDE = "Latitude";
         public static final String COLUMN_LONGITUDE = "Longitude";
         public static final String COLUMN_IdCategoria = "Id_categoria";
+        public static final String COLUMN_CHECKED = "Checked";
+
 
     }
 
@@ -54,7 +56,8 @@ public final class Contrato {
                     pontos.COLUMN_IMAGEM + TEXT_TYPE + "," +
                     pontos.COLUMN_LATITUDE + TEXT_TYPE + "," +
                     pontos.COLUMN_LONGITUDE + TEXT_TYPE + "," +
-                    pontos.COLUMN_IdCategoria + INT_TYPE +
+                    pontos.COLUMN_IdCategoria + INT_TYPE + ","+
+                    pontos.COLUMN_CHECKED + INT_TYPE +
             ", FOREIGN KEY (" + pontos.COLUMN_IdCategoria + ") "
             + "REFERENCES " + categoria.TABLE_NAME + "(" + categoria._ID + "));";
 
