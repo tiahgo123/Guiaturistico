@@ -1,9 +1,13 @@
 package ipvc.estg.guiaturistico;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -14,9 +18,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tiago Sousa on 08/04/2015.
@@ -31,6 +38,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
+    Map<Integer, LatLng> myMap = new HashMap<>();
+
+
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -45,8 +55,29 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navegacao);
 
+        LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Atenção");
+            alert.setMessage("Por favor active o gps");
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(in);
+
+
+                }
+            });
+            alert.show();
+
+        }
+
+
+
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
+
 
         obterCategorias();
         arrayPontos();
@@ -131,18 +162,18 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 Contrato.pontos.COLUMN_TELEFONE
         };
 
-    //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
-    //    String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
-    //  String[] selectionArgs = {String.valueOf(checked)};
+        String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+      String[] selectionArgs = {String.valueOf(checked)};
 
         obterPonto = db.query(
                 Contrato.pontos.TABLE_NAME,
                 projection,
+                selection,
+                selectionArgs,
                 null,
                 null,
-                null,
-                null,
-                null
+                sortOrder
         );
 
         return obterPonto;
@@ -163,9 +194,10 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 categoria.setDescricaoCategoria(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO)));
                 categoria.setImagemCategoria(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM)));
                 categoria.setTelefoneCategoria(cursor.getInt(cursor.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE)));
-//                categoria.setLatitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE))));
-              //  categoria.setLongitudeCategoria( Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE))));
-
+                if(!(cursor==null)) {
+                    categoria.setLatitudeCategoria(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE))));
+                    categoria.setLongitudeCategoria(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE))));
+                }
                 // Add book to books
                 categorias.add(categoria);
             } while (cursor.moveToNext());
@@ -181,6 +213,13 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         if (categorias != null) {
             for (Categorias categoria : categorias) {
 
+                Log.e("latitude", String.valueOf(categoria.getLatitudeCategoria()));
+                Log.e("latitude", String.valueOf(categoria.getLatitudeCategoria()));
+
+                LatLng latLng = new LatLng(categoria.getLatitudeCategoria(),categoria.getLongitudeCategoria());
+
+                myMap.put(categoria.getIdCategoria(),latLng);
+
       //      Log.i("id",""+categoria.getIdCategoria());
       //      Log.i("idCategoria",""+categoria.getIdTipoCategoria());
       //      Log.i("Nome",categoria.getNomeCategoria());
@@ -188,6 +227,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
             }
         }
+
+        Log.e("teste", String.valueOf(myMap.values()));
     }
 
     @Override

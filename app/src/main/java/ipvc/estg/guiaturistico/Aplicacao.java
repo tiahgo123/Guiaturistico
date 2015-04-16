@@ -136,6 +136,7 @@ public class Aplicacao extends Application {
         this.verificarLongButtonEspaco = verificarLongButtonEspaco;
     }
 
+
     public boolean isVerificarLongButtonEspaco() {
         return verificarLongButtonEspaco;
     }
