@@ -8,6 +8,14 @@ import android.app.Application;
 public class Aplicacao extends Application {
 
     boolean verificaTransacaoMonumento;
+    boolean verificarTransacaoCultura;
+    boolean verificarTransacaoGastronomia;
+    boolean verificarTransacaoAlojamento;
+    boolean verificarTransacaoAgenda;
+    boolean verificarTransacaoPraia;
+    boolean verificarTransacaoDesporto;
+    boolean verificarTransacaoEspaco;
+    boolean verificarTransacaoOutro;
 
     boolean verificarLongButtonMonumento;
     boolean verificarLongButtonCultura;
@@ -36,6 +44,70 @@ public class Aplicacao extends Application {
 
     public boolean isVerificaTransacaoMonumento() {
         return verificaTransacaoMonumento;
+    }
+
+    public void setVerificarTransacaoAgenda(boolean verificarTransacaoAgenda) {
+        this.verificarTransacaoAgenda = verificarTransacaoAgenda;
+    }
+
+    public boolean isVerificarTransacaoAgenda() {
+        return verificarTransacaoAgenda;
+    }
+
+    public void setVerificarTransacaoAlojamento(boolean verificarTransacaoAlojamento) {
+        this.verificarTransacaoAlojamento = verificarTransacaoAlojamento;
+    }
+
+    public boolean isVerificarTransacaoAlojamento() {
+        return verificarTransacaoAlojamento;
+    }
+
+    public void setVerificarTransacaoCultura(boolean verificarTransacaoCultura) {
+        this.verificarTransacaoCultura = verificarTransacaoCultura;
+    }
+
+    public boolean isVerificarTransacaoCultura() {
+        return verificarTransacaoCultura;
+    }
+
+    public void setVerificarTransacaoDesporto(boolean verificarTransacaoDesporto) {
+        this.verificarTransacaoDesporto = verificarTransacaoDesporto;
+    }
+
+    public boolean isVerificarTransacaoDesporto() {
+        return verificarTransacaoDesporto;
+    }
+
+    public void setVerificarTransacaoEspaco(boolean verificarTransacaoEspaco) {
+        this.verificarTransacaoEspaco = verificarTransacaoEspaco;
+    }
+
+    public boolean isVerificarTransacaoEspaco() {
+        return verificarTransacaoEspaco;
+    }
+
+    public void setVerificarTransacaoGastronomia(boolean verificarTransacaoGastronomia) {
+        this.verificarTransacaoGastronomia = verificarTransacaoGastronomia;
+    }
+
+    public boolean isVerificarTransacaoGastronomia() {
+        return verificarTransacaoGastronomia;
+    }
+
+    public void setVerificarTransacaoOutro(boolean verificarTransacaoOutro) {
+        this.verificarTransacaoOutro = verificarTransacaoOutro;
+    }
+
+    public boolean isVerificarTransacaoOutro() {
+        return verificarTransacaoOutro;
+    }
+
+    public void setVerificarTransacaoPraia(boolean verificarTransacaoPraia) {
+        this.verificarTransacaoPraia = verificarTransacaoPraia;
+    }
+
+    public boolean isVerificarTransacaoPraia() {
+        return verificarTransacaoPraia;
     }
 
     public void setVerificarlinearAgenda(boolean verificarlinearAgenda) {
