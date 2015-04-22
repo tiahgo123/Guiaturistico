@@ -470,42 +470,42 @@ public class menu extends Activity {
         }else{
             linearMonumento.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearCultura()){
+        if (aplicacao.isVerificarlinearCultura()||aplicacao.isVerificarTransacaoCultura()){
             linearCultura.setBackgroundColor(Color.GREEN);
         }else{
             linearCultura.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearGastronomia()){
+        if (aplicacao.isVerificarlinearGastronomia()|| aplicacao.isVerificarTransacaoGastronomia()){
             linearGastronomia.setBackgroundColor(Color.GREEN);
         }else{
             linearGastronomia.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearAlojamento()){
+        if (aplicacao.isVerificarlinearAlojamento()|| aplicacao.isVerificarTransacaoAlojamento()){
             linearAlojamento.setBackgroundColor(Color.GREEN);
         }else{
             linearAlojamento.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearAgenda()){
+        if (aplicacao.isVerificarlinearAgenda()|| aplicacao.isVerificarTransacaoAgenda()){
             linearAgenda.setBackgroundColor(Color.GREEN);
         }else{
             linearAgenda.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearPraia()){
+        if (aplicacao.isVerificarlinearPraia()|| aplicacao.isVerificarTransacaoPraia()){
             linearPraia.setBackgroundColor(Color.GREEN);
         }else{
             linearPraia.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearDesporto()){
+        if (aplicacao.isVerificarlinearDesporto()|| aplicacao.isVerificarTransacaoDesporto()){
             linearDesporto.setBackgroundColor(Color.GREEN);
         }else{
             linearDesporto.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearEspaco()){
+        if (aplicacao.isVerificarlinearEspaco()|| aplicacao.isVerificarTransacaoEspaco()){
             linearEspaco.setBackgroundColor(Color.GREEN);
         }else{
             linearEspaco.setBackgroundColor(Color.WHITE);
         }
-        if (aplicacao.isVerificarlinearOutro()){
+        if (aplicacao.isVerificarlinearOutro()|| aplicacao.isVerificarTransacaoOutro()){
             linearOutro.setBackgroundColor(Color.GREEN);
         }else{
             linearOutro.setBackgroundColor(Color.WHITE);
