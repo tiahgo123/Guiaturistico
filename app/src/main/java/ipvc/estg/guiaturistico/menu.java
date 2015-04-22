@@ -118,7 +118,7 @@ public class menu extends Activity {
 
                 ContentValues values = new ContentValues();
                 values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                String selection = Contrato.pontos._ID + " LIKE ?";
+                String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                 String[] selectionArgs = {String.valueOf("1")};
                 db.update(
                         Contrato.pontos.TABLE_NAME,
@@ -159,7 +159,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("2")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -199,7 +199,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("3")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -239,7 +239,7 @@ public class menu extends Activity {
                     ContentValues values = new ContentValues();
 
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("4")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -278,7 +278,7 @@ public class menu extends Activity {
                     verificarlinearAgenda = false;
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("5")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -318,7 +318,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("6")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -358,7 +358,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("7")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -398,7 +398,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("8")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
@@ -438,7 +438,7 @@ public class menu extends Activity {
 
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
-                    String selection = Contrato.pontos._ID + " LIKE ?";
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("9")};
                     db.update(
                             Contrato.pontos.TABLE_NAME,
