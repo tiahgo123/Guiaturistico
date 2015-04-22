@@ -109,6 +109,7 @@ public class ListaDesporto extends ListActivity {
                 if( total != null && total.getCount() == 0){
                     aplicacao.setVerificarTransacaoDesporto(false);
                     Log.i("sair de verde", "sair de verde");
+
                 }else{
                     aplicacao.setVerificarTransacaoDesporto(true);
                     Log.i("fica verde","fica verde");

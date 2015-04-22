@@ -136,6 +136,7 @@ public class ListaAlojamento extends ListActivity  {
                 Cursor total = obterChecked();
                 if( total != null && total.getCount() == 0){
                     aplicacao.setVerificarTransacaoAlojamento(false);
+
                     Log.i("sair de verde", "sair de verde");
                 }else{
                     aplicacao.setVerificarTransacaoAlojamento(true);
