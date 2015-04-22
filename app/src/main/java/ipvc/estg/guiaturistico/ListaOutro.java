@@ -1,6 +1,5 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -25,7 +24,12 @@ public class ListaOutro extends ListActivity {
     ListView list;
     CheckBox checkBoxSeleciona;
     Cursor obterDocumento;
+    Cursor valoresChecked;
+    Cursor verificaNaoChecked;
+
     int idCategoria = 9;
+    int checked = 1;
+    int nChecked = 0;
 
     SQLiteDatabase db;
     SimpleCursorAdapter myCursorAdapter;
@@ -52,6 +56,7 @@ public class ListaOutro extends ListActivity {
 
 
         }else {
+            checkBoxSeleciona.setChecked(false);
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,0);
 
@@ -60,8 +65,12 @@ public class ListaOutro extends ListActivity {
             db.update(
                     Contrato.pontos.TABLE_NAME,
                     values, selection, selectionArgs);
-
-
+        }
+        Cursor c3 = verificarNaoChecked();
+        if( c3 != null && c3.getCount()>=1){
+            checkBoxSeleciona.setChecked(false);
+        }else{
+            checkBoxSeleciona.setChecked(true);
         }
     }
 
@@ -71,16 +80,43 @@ public class ListaOutro extends ListActivity {
         setContentView(R.layout.activity_lista);
 
         list=getListView();
-        // list = (ListView) findViewById(R.id.li);
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
-
         list.setTextFilterEnabled(true);
+        checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
 
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
 
         BuildTable();
+        obterChecked();
+
+        Cursor check = valoresChecked;
+        if( check != null && check.moveToFirst() ) {
+            check.moveToFirst();
+            do {
+                int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
+                //   Log.i("id",idChecked+"");
+                for (int i = 0; i < list.getCount(); i++) {
+                    int id = (int) list.getItemIdAtPosition(i);
+
+                    if (id == idChecked) {
+                        list.setItemChecked(i, true);
+                        //       Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            } while (check.moveToNext());
+        }else{
+            Toast.makeText(getApplicationContext(), "Cursor nulo ", Toast.LENGTH_SHORT).show();
+        }
+
+        Cursor c1 = verificarNaoChecked();
+        if( c1 != null && c1.getCount()>=1){
+            checkBoxSeleciona.setChecked(false);
+        }else{
+            checkBoxSeleciona.setChecked(true);
+        }
 
 
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
@@ -96,7 +132,7 @@ public class ListaOutro extends ListActivity {
 
 
 
-        checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
+
         checkBoxSeleciona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,13 +141,46 @@ public class ListaOutro extends ListActivity {
                     for ( int i=0; i < list.getCount(); i++ ) {
                         list.setItemChecked(i, true);
                     }
-                    //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
+                    Cursor c = obterMonumentos();
+                    if(c != null){
+                        c.moveToFirst();
+                        do{
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                            ContentValues values = new ContentValues();
+                            values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                            String selection = Contrato.pontos._ID + " LIKE ?";
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
+                            db.update(
+                                    Contrato.pontos.TABLE_NAME,
+                                    values, selection, selectionArgs);
+                        }while (c.moveToNext());
+                    }
                 }else {
                     for ( int i=0; i< list.getChildCount(); i++ ) {
                         list.setItemChecked(i, false);
                     }
                     checkBoxSeleciona.setChecked(false);
-                    //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
+                    Cursor c = obterMonumentos();
+                    if(c != null){
+                        c.moveToFirst();
+                        do{
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                            ContentValues values = new ContentValues();
+                            values.put(Contrato.pontos.COLUMN_CHECKED,0);
+                            String selection = Contrato.pontos._ID + " LIKE ?";
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
+                            db.update(
+                                    Contrato.pontos.TABLE_NAME,
+                                    values, selection, selectionArgs);
+
+                        }while (c.moveToNext());
+                    }
+                    Cursor c2 = verificarNaoChecked();
+                    if( c2 != null && c2.getCount()>=1){
+                        checkBoxSeleciona.setChecked(false);
+                    }else{
+                        checkBoxSeleciona.setChecked(true);
+                    }
                 }
 
             }
@@ -163,6 +232,54 @@ public class ListaOutro extends ListActivity {
         );
 
         return obterDocumento;
+    }
+
+    private Cursor obterChecked() {
+
+        String[] projection = {
+                Contrato.pontos.COLUMN_NOME,  Contrato.pontos._ID,
+                Contrato.pontos.COLUMN_IdCategoria, Contrato.pontos.COLUMN_CHECKED
+
+        };
+
+        //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
+        String selection = Contrato.pontos.COLUMN_IdCategoria + " =? and " + Contrato.pontos.COLUMN_CHECKED + "=?";
+        String[] selectionArgs = {String.valueOf(idCategoria), String.valueOf(checked)};
+
+        valoresChecked = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        return valoresChecked;
+    }
+
+    private Cursor verificarNaoChecked() {
+
+        String[] projection = {
+                Contrato.pontos.COLUMN_NOME,  Contrato.pontos._ID,
+                Contrato.pontos.COLUMN_IdCategoria, Contrato.pontos.COLUMN_CHECKED
+
+        };
+        //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
+        String selection = Contrato.pontos.COLUMN_IdCategoria + " =? and " + Contrato.pontos.COLUMN_CHECKED + "=?";
+        String[] selectionArgs = {String.valueOf(idCategoria), String.valueOf(nChecked)};
+        verificaNaoChecked = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        return verificaNaoChecked;
     }
 
 
