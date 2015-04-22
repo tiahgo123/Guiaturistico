@@ -111,6 +111,14 @@ public class menu extends Activity {
                 verificarLongButtonMonumento = true;
                 linearMonumento.setBackgroundColor(Color.GREEN);
                 verificarlinearMonumento = true;
+
+                ContentValues values = new ContentValues();
+                values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                String[] selectionArgs = {String.valueOf("1")};
+                db.update(
+                        Contrato.pontos.TABLE_NAME,
+                        values, selection, selectionArgs);
             }else{
                 verificarLongButtonMonumento = true;
                 verificarlinearMonumento = false;
@@ -152,6 +160,14 @@ public class menu extends Activity {
                     verificarLongButtonCultura = true;
                     linearCultura.setBackgroundColor(Color.GREEN);
                     verificarlinearCultura = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("2")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearCultura.setBackgroundColor(Color.WHITE);
                     verificarLongButtonCultura = true;
@@ -192,6 +208,15 @@ public class menu extends Activity {
                     verificarLongButtonGastronomia = true;
                     linearGastronomia.setBackgroundColor(Color.GREEN);
                     verificarlinearGastronomia = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("3")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
+
                 }else{
                     linearGastronomia.setBackgroundColor(Color.WHITE);
                     verificarLongButtonGastronomia = true;
@@ -232,12 +257,20 @@ public class menu extends Activity {
                     verificarLongButtonAlojamento = true;
                     linearAlojamento.setBackgroundColor(Color.GREEN);
                     verificarlinearAlojamento = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("4")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearAlojamento.setBackgroundColor(Color.WHITE);
                     verificarLongButtonAlojamento = true;
                     verificarlinearAlojamento = false;
-                    ContentValues values = new ContentValues();
 
+                    ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
                     String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
                     String[] selectionArgs = {String.valueOf("4")};
@@ -272,10 +305,19 @@ public class menu extends Activity {
                     verificarLongButtonAgenda = true;
                     linearAgenda.setBackgroundColor(Color.GREEN);
                     verificarlinearAgenda = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("5")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearAgenda.setBackgroundColor(Color.WHITE);
                     verificarLongButtonAgenda = true;
                     verificarlinearAgenda = false;
+
                     ContentValues values = new ContentValues();
                     values.put(Contrato.pontos.COLUMN_CHECKED,0);
                     String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
@@ -311,6 +353,14 @@ public class menu extends Activity {
                     verificarLongButtonPraia = true;
                     linearPraia.setBackgroundColor(Color.GREEN);
                     verificarlinearPraia = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("6")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearPraia.setBackgroundColor(Color.WHITE);
                     verificarLongButtonPraia = true;
@@ -351,6 +401,14 @@ public class menu extends Activity {
                     verificarLongButtonDesporto = true;
                     linearDesporto.setBackgroundColor(Color.GREEN);
                     verificarlinearDesporto = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("7")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearDesporto.setBackgroundColor(Color.WHITE);
                     verificarLongButtonDesporto = true;
@@ -391,6 +449,14 @@ public class menu extends Activity {
                     verificarLongButtonEspaco = true;
                     linearEspaco.setBackgroundColor(Color.GREEN);
                     verificarlinearEspaco = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("8")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearEspaco.setBackgroundColor(Color.WHITE);
                     verificarLongButtonEspaco = true;
@@ -431,6 +497,14 @@ public class menu extends Activity {
                     verificarLongButtonOutro = true;
                     linearOutro.setBackgroundColor(Color.GREEN);
                     verificarlinearOutro = true;
+
+                    ContentValues values = new ContentValues();
+                    values.put(Contrato.pontos.COLUMN_CHECKED,1);
+                    String selection = Contrato.pontos.COLUMN_IdCategoria + " LIKE ?";
+                    String[] selectionArgs = {String.valueOf("9")};
+                    db.update(
+                            Contrato.pontos.TABLE_NAME,
+                            values, selection, selectionArgs);
                 }else{
                     linearOutro.setBackgroundColor(Color.WHITE);
                     verificarLongButtonOutro = true;
