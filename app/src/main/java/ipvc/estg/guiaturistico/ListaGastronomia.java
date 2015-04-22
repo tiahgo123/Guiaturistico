@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -79,11 +80,10 @@ public class ListaGastronomia extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
         list=getListView();
-        // list = (ListView) findViewById(R.id.li);
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
-
         list.setTextFilterEnabled(true);
         checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
 
@@ -127,6 +127,14 @@ public class ListaGastronomia extends ListActivity {
             @Override
             public void onClick(View v) {
 
+                Cursor total = obterChecked();
+                if( total != null && total.getCount() == 0){
+                    aplicacao.setVerificarTransacaoGastronomia(false);
+                    Log.i("sair de verde", "sair de verde");
+                }else{
+                    aplicacao.setVerificarTransacaoGastronomia(true);
+                    Log.i("fica verde","fica verde");
+                }
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();
