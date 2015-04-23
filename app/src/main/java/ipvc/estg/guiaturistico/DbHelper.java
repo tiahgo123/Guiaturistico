@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "categorias.db";
 
     public DbHelper(Context context) {
@@ -90,6 +90,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (45,'Centro Hospitalar Alto Minho Epe','Estrada de Santa Luzia',258802100,'sem email','Hospital','sem site','sem imagem','41.6968676','-8.8330213',9,0);");
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (46,'Estação de Viana do Castelo','sem morada',null,'sem email','Estação de Comboios','sem site','sem imagem','41.6948863','-8.831216',9,0);");
+
+
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (47,'Teste','sem morada',null,'sem email','fala que eu gosto de te ouvir','sem site','sem imagem','41.6940098','-8.8322639',9,0);");
 
 
 

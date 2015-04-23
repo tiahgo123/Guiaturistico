@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
-    Map<Integer, LatLng> myMap = new HashMap<>();
+    HashMap<Integer, LatLng> myMap = new HashMap<>();
 
 
 
@@ -130,8 +131,82 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
       //  txtLong.setText("Longitude: " + String.valueOf(mCurrentLocation.getLongitude()));
         Log.i("Latitude", String.valueOf(mCurrentLocation.getLatitude()));
         Log.i("Longitude",String.valueOf(mCurrentLocation.getLongitude()));
-        Toast.makeText(getApplicationContext(),mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude(),Toast.LENGTH_SHORT).show();
+
+       verifica();
+
+
+       // Toast.makeText(getApplicationContext(),mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude(),Toast.LENGTH_SHORT).show();
     }
+
+    private void verifica() {
+        Location location = new Location("teste");
+        float discancia;
+        for (LatLng latLng :myMap.values()) {
+               Log.e("localizacao",""+latLng.latitude);
+               location.setLatitude(latLng.latitude);
+               location.setLongitude(latLng.longitude);
+               discancia= mCurrentLocation.distanceTo(location);
+               Toast.makeText(getApplicationContext(),"esta a "+discancia + "metros de distancia",Toast.LENGTH_LONG).show();
+
+
+
+
+
+        }
+
+
+
+
+//        Iterator myVeryOwnIterator = myMap.keySet().iterator();
+//        while(myVeryOwnIterator.hasNext()) {
+//            Integer key=(Integer)myVeryOwnIterator.next();
+//            Location location = new Location("teste");
+//            LatLng value=myMap.get
+//
+//            LatLng teste = myMap.get(value);
+//           // Double teste2 = myMap.get(value);
+//
+//
+//
+//            Log.e("teste",""+value.toString());
+
+           // LatLng latLng2 = myMap.get(value).describeContents();
+
+          //  Double aDouble = latLng2.latitude;
+            //Double aDouble1 = latLng2.longitude;
+            //Log.e("teste",""+aDouble.toString());
+
+
+          //  LatLng latLng = new LatLng(myMap.get(value).latitude,myMap.get(value).longitude);
+           // location.setLatitude(aDouble);
+            //location.setLongitude(aDouble1);
+
+           // float metros= mCurrentLocation.distanceTo(location);
+            //Toast.makeText(getApplicationContext(),"esta a "+metros + "de distancia do seu local" ,Toast.LENGTH_LONG).show();
+        //    Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
+        }
+
+
+//        Cursor coord = obterLatitudeLongitude();
+//        if( coord != null && coord.moveToFirst() ) {
+//
+//            latitudeString = coord.getString(coord.getColumnIndex("fim_latitude"));
+//            longitudeString = coord.getString(coord.getColumnIndex("fim_longitude"));
+//            moradaFim = coord.getString(coord.getColumnIndex("fim_morada"));
+//
+//            dest_lat = Double.parseDouble(latitudeString);
+//            dest_long = Double.parseDouble(longitudeString);
+//
+//        }else{
+//            Toast.makeText(getActivity(), R.string.cursorNulo, Toast.LENGTH_SHORT).show();
+//        }
+
+
+
+
+
+
+
     @Override
     protected void onPause() {
         // SE A APLICAÇÃO ENTRA NESTE ESTADO, PARAR OS PEDIDOS PARA POUPAR RECURSOS
