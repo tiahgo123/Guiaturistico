@@ -535,7 +535,7 @@ public class menu extends Activity {
 
 
 
-
+        
         progresso.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override

@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,7 +220,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
         obterPonto.moveToFirst();
         obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
-        imagem.seti
+
+        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+
 
 
 
