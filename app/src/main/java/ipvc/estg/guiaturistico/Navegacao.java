@@ -10,6 +10,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
     HashMap<Integer, LatLng> myMap = new HashMap<>();
+    int valor=0;
+
 
 
 
@@ -48,6 +52,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private Location mCurrentLocation;
     private TextView txtLat;
     private TextView txtLong;
+    private TextView textdistancia;
+    private ImageView imagem;
 
 
 
@@ -55,6 +61,10 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navegacao);
+
+       textdistancia = (TextView) findViewById(R.id.textView16);
+       imagem = (ImageView) findViewById(R.id.imageView);
+
 
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -74,6 +84,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
         }
 
+        Intent intent = getIntent();
+        valor=intent.getIntExtra("valor",0);
 
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
@@ -140,18 +152,17 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     private void verifica() {
         Location location = new Location("teste");
-        float discancia;
+        float distancia;
         for (LatLng latLng :myMap.values()) {
-               Log.e("localizacao",""+latLng.latitude);
                location.setLatitude(latLng.latitude);
                location.setLongitude(latLng.longitude);
-               discancia= mCurrentLocation.distanceTo(location);
-               Toast.makeText(getApplicationContext(),"esta a "+discancia + "metros de distancia",Toast.LENGTH_LONG).show();
-
-
-
-
-
+               distancia= mCurrentLocation.distanceTo(location);
+            Log.e("distancia",""+distancia);
+            if(distancia<=valor){
+                textdistancia.setText(""+distancia+" Metros");
+                Toast.makeText(getApplicationContext(),"esta a "+distancia + "metros de distancia",Toast.LENGTH_LONG).show();
+                getrecursos(latLng);
+            }
         }
 
 
@@ -185,6 +196,37 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             //Toast.makeText(getApplicationContext(),"esta a "+metros + "de distancia do seu local" ,Toast.LENGTH_LONG).show();
         //    Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
         }
+
+    private void getrecursos(LatLng latLng) {
+
+        String[] projection = {
+                Contrato.pontos.COLUMN_NOME, Contrato.pontos.COLUMN_IMAGEM, Contrato.pontos._ID, Contrato.pontos.COLUMN_IdCategoria,
+                Contrato.pontos.COLUMN_DESCRICAO, Contrato.pontos.COLUMN_LATITUDE, Contrato.pontos.COLUMN_LONGITUDE,
+                Contrato.pontos.COLUMN_TELEFONE
+        };
+        String selection = Contrato.pontos.COLUMN_LATITUDE + " =?  + and " + Contrato.pontos.COLUMN_LONGITUDE + "=?";
+        String[] selectionArgs = {String.valueOf(latLng.latitude), String.valueOf(latLng.longitude)};
+
+        obterPonto = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        obterPonto.moveToFirst();
+        obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+        imagem.seti
+
+
+
+
+
+
+    }
 
 
 //        Cursor coord = obterLatitudeLongitude();

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 /**
  * Created by tiago on 04/03/2015.
@@ -46,6 +48,10 @@ public class menu extends Activity {
     LinearLayout linearEspaco;
     LinearLayout linearOutro;
 
+    TextView resultadoProgresso;
+    SeekBar progresso;
+    int valor=0;
+
     SQLiteDatabase db;
 
 
@@ -63,6 +69,9 @@ public class menu extends Activity {
         linearDesporto = (LinearLayout) findViewById(R.id.layoutDesporto);
         linearEspaco = (LinearLayout) findViewById(R.id.layoutEspaco);
         linearOutro = (LinearLayout) findViewById(R.id.layoutOutro);
+
+        final TextView resultadoProgresso = (TextView) findViewById(R.id.textView3);
+        progresso = (SeekBar) findViewById(R.id.seekBar);
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         verificarLongButtonMonumento = aplicacao.isVerificarLongButtonMonumento();
@@ -524,11 +533,36 @@ public class menu extends Activity {
             }
         });
 
+
+
+
+        progresso.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                valor=progress;
+                resultadoProgresso.setText(valor +" Metros");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
         Button buttonIniciar = (Button) findViewById(R.id.buttonIniciar);
         buttonIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), Navegacao.class);
+                intent.putExtra("valor",valor);
                 startActivity(intent);
             }
         });

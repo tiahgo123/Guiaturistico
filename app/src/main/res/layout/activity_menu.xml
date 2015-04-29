@@ -294,7 +294,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/seekBar"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:max="750"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/textView3" />
     </LinearLayout>
 
 
