@@ -1,21 +1,10 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 
 public class EscolheLingua extends ActionBarActivity {
@@ -26,8 +15,6 @@ public class EscolheLingua extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
-
-
 
        Button avancar = (Button) findViewById(R.id.buttonAvancar);
         avancar.setOnClickListener(new View.OnClickListener() {
@@ -42,10 +29,7 @@ public class EscolheLingua extends ActionBarActivity {
 
     }
 
-
-
-
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_escolhe_lingua, menu);
@@ -66,6 +50,7 @@ public class EscolheLingua extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 
     }
 
