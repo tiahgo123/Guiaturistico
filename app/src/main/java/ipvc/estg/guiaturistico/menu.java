@@ -65,6 +65,7 @@ public class menu extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+
         linearMonumento = (LinearLayout) findViewById(R.id.layoutMomumento);
         linearCultura = (LinearLayout) findViewById(R.id.layoutCultura);
         linearGastronomia = (LinearLayout) findViewById(R.id.layoutGastronomia);
