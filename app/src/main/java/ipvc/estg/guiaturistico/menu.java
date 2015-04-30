@@ -1,11 +1,16 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,7 +21,7 @@ import android.widget.TextView;
 /**
  * Created by tiago on 04/03/2015.
  */
-public class menu extends Activity {
+public class menu extends ActionBarActivity {
 
     boolean verificarLongButtonMonumento = false;
     boolean verificarLongButtonCultura = false;
@@ -568,6 +573,84 @@ public class menu extends Activity {
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        boolean teste = true;
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+
+        if (id == R.id.btSom) {
+            aplicacao.setVerificaSom(true);
+
+            return true;
+        }
+
+        if (id == R.id.btAjuda) {
+            Intent intent = new Intent(getApplicationContext(), Ajuda.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.btSair) {
+            pergunta();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void pergunta(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(R.string.atencao);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(R.string.aviso)
+                .setCancelable(false)
+                .setPositiveButton(R.string.sim,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                finish();
+
+                            }
+                        })
+                .setNegativeButton(R.string.nao,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
 
     @Override
     protected void onResume() {
