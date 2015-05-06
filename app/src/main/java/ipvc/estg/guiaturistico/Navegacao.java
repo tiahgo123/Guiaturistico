@@ -163,7 +163,6 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 textdistancia.setText(""+distancia+" Metros");
                 Toast.makeText(getApplicationContext(),"esta a "+distancia + "metros de distancia",Toast.LENGTH_LONG).show();
                 getrecursos(latLng);
-
             }
         }
 
@@ -224,6 +223,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
         Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
+
+        //fdfsgdfdgdfgfh
 
 
 
