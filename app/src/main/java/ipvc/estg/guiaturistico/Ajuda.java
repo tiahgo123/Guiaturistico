@@ -16,11 +16,14 @@ public class Ajuda extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_ajuda);
 
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+
         Button voltar = (Button) findViewById(R.id.button2);
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                aplicacao.setVerificaOnResume(true);
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();

@@ -8,6 +8,7 @@ import android.app.Application;
 public class Aplicacao extends Application {
 
     boolean verificaSom;
+    boolean verificaOnResume = false;
 
     boolean verificaTransacaoMonumento;
     boolean verificarTransacaoCultura;
@@ -39,6 +40,14 @@ public class Aplicacao extends Application {
     boolean verificarlinearDesporto;
     boolean verificarlinearEspaco;
     boolean verificarlinearOutro;
+
+    public void setVerificaOnResume(boolean verificaOnResume) {
+        this.verificaOnResume = verificaOnResume;
+    }
+
+    public boolean isVerificaOnResume() {
+        return verificaOnResume;
+    }
 
     public void setVerificaSom(boolean verificaSom) {
         this.verificaSom = verificaSom;
