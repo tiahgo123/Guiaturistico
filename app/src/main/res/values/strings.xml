@@ -30,4 +30,15 @@
     <string name="seleciona">Selecionar tudo</string>
     <string name="remove">Remover escolhas</string>
 
+    <string name="sair">Sair</string>
+    <string name="som">Som</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="textoAjuda">Ajuda</string>
+    <string name="aviso">Deseja mesmo sair da aplicação</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="atencao">Atenção! </string>
+
+
+
 </resources>

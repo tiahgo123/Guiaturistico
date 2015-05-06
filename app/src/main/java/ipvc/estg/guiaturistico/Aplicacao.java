@@ -7,6 +7,8 @@ import android.app.Application;
  */
 public class Aplicacao extends Application {
 
+    boolean verificaSom;
+
     boolean verificaTransacaoMonumento;
     boolean verificarTransacaoCultura;
     boolean verificarTransacaoGastronomia;
@@ -37,6 +39,14 @@ public class Aplicacao extends Application {
     boolean verificarlinearDesporto;
     boolean verificarlinearEspaco;
     boolean verificarlinearOutro;
+
+    public void setVerificaSom(boolean verificaSom) {
+        this.verificaSom = verificaSom;
+    }
+
+    public boolean isVerificaSom() {
+        return verificaSom;
+    }
 
     public void setVerificaTransacaoMonumento(boolean verificaTransacaoMonumento) {
         this.verificaTransacaoMonumento = verificaTransacaoMonumento;
