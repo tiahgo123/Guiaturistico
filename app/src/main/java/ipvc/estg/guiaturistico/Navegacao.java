@@ -221,11 +221,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         obterPonto.moveToFirst();
         obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
-        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+      a  Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
-
-        //fdfsgdfdgdfgfh
-
+dsadsa
 
 
 
