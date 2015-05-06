@@ -55,7 +55,7 @@ public class menu extends ActionBarActivity {
 
     TextView resultadoProgresso;
     SeekBar progresso;
-    int valor=0;
+    float valor=0;
 
     SQLiteDatabase db;
 
@@ -547,7 +547,7 @@ public class menu extends ActionBarActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 valor=progress;
-                resultadoProgresso.setText(valor +" Metros");
+                resultadoProgresso.setText(valor+1 +" Metros");
             }
 
             @Override

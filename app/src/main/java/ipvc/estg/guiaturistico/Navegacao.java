@@ -8,8 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -43,7 +47,13 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
     HashMap<Integer, LatLng> myMap = new HashMap<>();
-    int valor=0;
+    float valor=0;
+    String descricao;
+    int telefone;
+    Double latitude;
+    Double longitude;
+
+    TextToSpeech ttobj;
 
 
 
@@ -54,7 +64,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private TextView txtLat;
     private TextView txtLong;
     private TextView textdistancia;
-    private ImageView imagem;
+    private ImageButton imagem;
+    private ImageButton ligatelefone;
+    private ImageButton vergooglemaps;
 
 
 
@@ -63,9 +75,20 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navegacao);
 
-       textdistancia = (TextView) findViewById(R.id.textView16);
-       imagem = (ImageView) findViewById(R.id.imageView);
+        ttobj=new TextToSpeech(getApplicationContext(),
+                new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR){
+                            ttobj.setLanguage(Locale.ROOT);
+                        }
+                    }
+                });
 
+       textdistancia = (TextView) findViewById(R.id.textView16);
+       imagem = (ImageButton) findViewById(R.id.imageView);
+       ligatelefone = (ImageButton) findViewById(R.id.imageButton22);
+       vergooglemaps = (ImageButton) findViewById(R.id.imageButton23);
 
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -85,8 +108,41 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
         }
 
+        ligatelefone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
+                startActivity(intent);
+            }
+        });
+
+        vergooglemaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new  Intent ( android . content . Intent . ACTION_VIEW ,
+                        Uri . parse ( "http://maps.google.com/maps?saddr="+mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude() + "&daddr=+"+latitude+","+longitude));
+                startActivity ( intent );
+
+            }
+        });
+
+        imagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                intent.putExtra("descricao",descricao);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         Intent intent = getIntent();
-        valor=intent.getIntExtra("valor",0);
+        valor=intent.getFloatExtra("valor",0);
+
+        Log.e("valor3",""+valor);
 
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
@@ -153,18 +209,46 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     private void verifica() {
         Location location = new Location("teste");
-        float distancia;
+       ArrayList<Float> distancia = null;
+        ArrayList<Location> locations = null;
+        locations = new ArrayList<>();
+        distancia = new ArrayList<>();
+        Float min;
         for (LatLng latLng :myMap.values()) {
-               location.setLatitude(latLng.latitude);
-               location.setLongitude(latLng.longitude);
-               distancia= mCurrentLocation.distanceTo(location);
-            Log.e("distancia",""+distancia);
-            if(distancia<=valor){
-                textdistancia.setText(""+distancia+" Metros");
-                Toast.makeText(getApplicationContext(),"esta a "+distancia + "metros de distancia",Toast.LENGTH_LONG).show();
-                getrecursos(latLng);
-            }
+            location.setLatitude(latLng.latitude);
+            location.setLongitude(latLng.longitude);
+            Log.e("distancialocalizacao", "" + mCurrentLocation.distanceTo(location));
+            Log.e("valor5",""+valor);
+            if (mCurrentLocation.distanceTo(location) >= valor) {
+                distancia.add(mCurrentLocation.distanceTo(location));
+                locations.add(location);
+            }     Log.e("distancia",""+distancia.size());
         }
+        if(!distancia.isEmpty()) {
+            min = distancia.get(0);
+            Log.e("distanciaget0",""+distancia.get(0));
+
+            for (int i = 0; i < distancia.size(); i++) {
+                if (min >= distancia.get(i)) {
+                    min = distancia.get(i);
+                   // textdistancia.setText("" + distancia + " Metros");
+                    //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
+                    getrecursos(locations.get(i));
+
+                }else{
+                    getrecursos(locations.get(i));
+
+                }
+
+            }
+
+            String teste = String.valueOf(min);
+            //ttobj.speak("Está a uma distancia de "+teste+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+        }
+
+        }
+
+
 
 
 
@@ -196,17 +280,17 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
            // float metros= mCurrentLocation.distanceTo(location);
             //Toast.makeText(getApplicationContext(),"esta a "+metros + "de distancia do seu local" ,Toast.LENGTH_LONG).show();
         //    Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
-        }
 
-    private void getrecursos(LatLng latLng) {
+
+    private void getrecursos(Location latLng) {
 
         String[] projection = {
                 Contrato.pontos.COLUMN_NOME, Contrato.pontos.COLUMN_IMAGEM, Contrato.pontos._ID, Contrato.pontos.COLUMN_IdCategoria,
                 Contrato.pontos.COLUMN_DESCRICAO, Contrato.pontos.COLUMN_LATITUDE, Contrato.pontos.COLUMN_LONGITUDE,
                 Contrato.pontos.COLUMN_TELEFONE
         };
-        String selection = Contrato.pontos.COLUMN_LATITUDE + " =?  + and " + Contrato.pontos.COLUMN_LONGITUDE + "=?";
-        String[] selectionArgs = {String.valueOf(latLng.latitude), String.valueOf(latLng.longitude)};
+        String selection = Contrato.pontos.COLUMN_LATITUDE + " =?  and " + Contrato.pontos.COLUMN_LONGITUDE + "=?";
+        String[] selectionArgs = {String.valueOf(latLng.getLatitude()), String.valueOf(latLng.getLongitude())};
 
         obterPonto = db.query(
                 Contrato.pontos.TABLE_NAME,
@@ -219,17 +303,26 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         );
 
         obterPonto.moveToFirst();
-        obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+       //obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+        descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
+        Log.e("descricao",descricao);
+        telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
+        latitude = latLng.getLatitude();
+        longitude = latLng.getLongitude();
 
-      a  Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
-dsadsa
+
+
+          Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+
 
 
 
 
 
     }
+
+
 
 
 //        Cursor coord = obterLatitudeLongitude();
@@ -257,6 +350,7 @@ dsadsa
         // SE A APLICAÇÃO ENTRA NESTE ESTADO, PARAR OS PEDIDOS PARA POUPAR RECURSOS
         super.onPause();
         stopLocationUpdates();
+        ttobj.stop();
     }
     protected void stopLocationUpdates() {
         // VERIFICACAO SE O SERVICO DO GOOGLE PLAY ESTA CONETADO E SE SIM REMOVER PEDIDOS
