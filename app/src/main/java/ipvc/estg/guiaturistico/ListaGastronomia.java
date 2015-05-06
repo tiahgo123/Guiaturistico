@@ -135,6 +135,7 @@ public class ListaGastronomia extends ListActivity {
                     aplicacao.setVerificarTransacaoGastronomia(true);
                     Log.i("fica verde","fica verde");
                 }
+                aplicacao.setVerificaOnResume(true);
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();

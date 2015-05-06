@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +58,12 @@ public class menu extends ActionBarActivity {
     int valor=0;
 
     SQLiteDatabase db;
+
+    //Realizar a verificação da actionbar, para o som
+     Menu menu;
+     boolean onResume = false;
+     boolean veSom = true;
+    boolean veSom1;
 
 
     @Override
@@ -578,8 +584,20 @@ public class menu extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_menu, menu);
+        Log.i("entrei no menu","entrei no menu");
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_menu, menu);
+        if(onResume){
+            if (!veSom1){
+                //sem som
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                veSom = false;
+            } else{
+                //com som
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                veSom = true;
+            }
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -588,15 +606,25 @@ public class menu extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        boolean teste = true;
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-
-
         if (id == R.id.btSom) {
-            aplicacao.setVerificaSom(true);
+            if (!veSom){
+                // par
+                //coloca com som
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                veSom = true;
+                aplicacao.setVerificaSom(true);
+            } else{
+                //impar
+                //coloca sem som
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                veSom = false;
+                aplicacao.setVerificaSom(false);
+            }
+            Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
             return true;
         }
@@ -656,6 +684,7 @@ public class menu extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("entrei onResume","adsada");
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificarlinearMonumento()|| aplicacao.isVerificaTransacaoMonumento()){
             linearMonumento.setBackgroundColor(Color.GREEN);
@@ -702,6 +731,19 @@ public class menu extends ActionBarActivity {
         }else{
             linearOutro.setBackgroundColor(Color.WHITE);
         }
+        if (aplicacao.isVerificaOnResume()){
+            Log.i("verificaSom",""+aplicacao.isVerificaSom());
+            if(aplicacao.isVerificaSom()){
+                veSom1 = true;
+            }else{
+                veSom1 = false;
+            }
+            onResume = true;
+        }else{
+             onResume = false;
+        }
+
+
 
     }
 }

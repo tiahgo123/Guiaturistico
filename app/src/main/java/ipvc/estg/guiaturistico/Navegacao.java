@@ -10,7 +10,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Tiago Sousa on 08/04/2015.
@@ -221,9 +218,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         obterPonto.moveToFirst();
         obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
-      a  Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
-dsadsa
+
 
 
 

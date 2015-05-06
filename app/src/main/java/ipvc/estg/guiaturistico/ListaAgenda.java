@@ -1,6 +1,5 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -139,6 +138,7 @@ public class ListaAgenda extends ListActivity {
                     aplicacao.setVerificarTransacaoAgenda(true);
                     Log.i("fica verde","fica verde");
                 }
+                aplicacao.setVerificaOnResume(true);
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();

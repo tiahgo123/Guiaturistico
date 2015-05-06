@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <item android:id="@+id/btSom"
             android:icon="@drawable/abc_ic_voice_search_api_mtrl_alpha"
             android:title="@string/som"
-            android:state_pressed="true"
+            app:showAsAction="ifRoom"
             />
 
 
     <item android:id="@+id/btAjuda"
         android:icon="@drawable/abc_ic_menu_selectall_mtrl_alpha"
         android:title="@string/ajuda"
+        app:showAsAction="ifRoom"
 
         />
     <item android:id="@+id/btSair"
         android:icon="@drawable/ic_plusone_small_off_client"
         android:title="@string/sair"
+        app:showAsAction="ifRoom"
         />
 
 

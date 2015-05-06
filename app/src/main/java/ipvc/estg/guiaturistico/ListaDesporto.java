@@ -1,6 +1,5 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Created by Tiago Sousa on 02/04/2015.
@@ -114,6 +112,7 @@ public class ListaDesporto extends ListActivity {
                     aplicacao.setVerificarTransacaoDesporto(true);
                     Log.i("fica verde","fica verde");
                 }
+                aplicacao.setVerificaOnResume(true);
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();
