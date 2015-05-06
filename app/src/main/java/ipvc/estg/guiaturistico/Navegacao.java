@@ -163,6 +163,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 textdistancia.setText(""+distancia+" Metros");
                 Toast.makeText(getApplicationContext(),"esta a "+distancia + "metros de distancia",Toast.LENGTH_LONG).show();
                 getrecursos(latLng);
+
             }
         }
 
