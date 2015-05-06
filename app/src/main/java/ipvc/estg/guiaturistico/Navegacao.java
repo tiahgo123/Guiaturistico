@@ -8,8 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -240,7 +243,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             }
 
             String teste = String.valueOf(min);
-            //ttobj.speak("Está a uma distancia de "+teste+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+            ttobj.speak("Está a uma distancia de "+teste+" Metros", TextToSpeech.QUEUE_FLUSH, null);
         }
 
         }
