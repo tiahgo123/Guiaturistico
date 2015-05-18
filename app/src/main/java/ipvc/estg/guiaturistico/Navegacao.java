@@ -2,19 +2,26 @@ package ipvc.estg.guiaturistico;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.hardware.GeomagneticField;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,17 +35,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by Tiago Sousa on 08/04/2015.
  */
 public class Navegacao extends Activity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, SensorEventListener {
 
 
     Cursor obterPonto;
@@ -55,9 +60,6 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     TextToSpeech ttobj;
 
-
-
-
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
@@ -67,6 +69,33 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private ImageButton imagem;
     private ImageButton ligatelefone;
     private ImageButton vergooglemaps;
+
+
+    //variaveis para saber o lado que esta o monumento
+
+    GeomagneticField geoField ;
+
+    // device sensor manager
+    private  SensorManager mSensorManager;
+    Sensor accelerometer;
+    Sensor magnetometer;
+
+    private WindowManager mWindowManager;
+    private Display mDisplay;
+
+    private float currentDegree = 0f;
+    TextView tvHeading;
+    float azimuth ;
+    float baseAzimuth;
+
+    float degree;
+    float direction;
+
+    String bearingText = "N";
+    String bearingTextImagem = "N";
+
+    Location locInicio = new Location("Inicio");
+    Location locFim = new Location("Fim");
 
 
 
@@ -85,10 +114,21 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                     }
                 });
 
+        tvHeading = (TextView) findViewById(R.id.tvHeading);
        textdistancia = (TextView) findViewById(R.id.textView16);
        imagem = (ImageButton) findViewById(R.id.imageView);
        ligatelefone = (ImageButton) findViewById(R.id.imageButton22);
        vergooglemaps = (ImageButton) findViewById(R.id.imageButton23);
+
+        // initialize your android device sensor capabilities
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+
+        // Get an instance of the WindowManager
+        mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = mWindowManager.getDefaultDisplay();
 
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -134,9 +174,6 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 startActivity(intent);
             }
         });
-
-
-
 
 
         Intent intent = getIntent();
@@ -310,10 +347,10 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         latitude = latLng.getLatitude();
         longitude = latLng.getLongitude();
 
+        locFim.setLatitude(latitude);
+        locFim.setLongitude(longitude);
 
-
-
-          Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
 
 
@@ -340,16 +377,15 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 //        }
 
 
-
-
-
-
-
     @Override
     protected void onPause() {
         // SE A APLICAÇÃO ENTRA NESTE ESTADO, PARAR OS PEDIDOS PARA POUPAR RECURSOS
         super.onPause();
         stopLocationUpdates();
+        // to stop the listener and save battery
+        mSensorManager.unregisterListener(this);
+
+
         ttobj.stop();
     }
     protected void stopLocationUpdates() {
@@ -366,6 +402,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         if (mGoogleApiClient.isConnected()) {
             startLocationUpdates();
         }
+        // for the system's orientation sensor registered listeners
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                SensorManager.SENSOR_DELAY_GAME);
     }
 
     private Cursor obterPontos() {
@@ -455,4 +494,277 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        // If we don't have a Location, we break out
+        if ( mCurrentLocation == null ){
+            return;
+        }
+
+        degree = Math.round(event.values[0]);
+        Log.i("degre",""+degree);
+
+        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+
+        currentDegree = -degree;
+
+        azimuth = event.values[0];
+        baseAzimuth = azimuth;
+
+         geoField = new GeomagneticField( Double
+                .valueOf( mCurrentLocation.getLatitude() ).floatValue(), Double
+                .valueOf( mCurrentLocation.getLongitude() ).floatValue(),
+                Double.valueOf( mCurrentLocation.getAltitude() ).floatValue(),
+                System.currentTimeMillis() );
+
+        azimuth -= geoField.getDeclination(); // converts magnetic north into true north
+
+        // Store the bearingTo in the bearTo variable
+        float bearTo = mCurrentLocation.bearingTo( locFim );
+        // If the bearTo is smaller than 0, add 360 to get the rotation clockwise.
+        if (bearTo < 0) {
+            bearTo = bearTo + 360;
+        }
+        //This is where we choose to point it
+        direction = bearTo - azimuth;
+        // If the direction is smaller than 0, add 360 to get the rotation clockwise.
+        if (direction < 0) {
+            direction = direction + 360;
+        }
+
+        // saber direcao telemovel
+        saberDirecao();
+        colocarImagem();
+
+        Toast.makeText(getApplicationContext(),"lado do telemovel e: " + bearingText + "e a imagem esta para o lado: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    private void colocarImagem() {
+        if(bearingText.equals("N")){
+            if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
+                //colocar imagem em cima do tele
+                Log.i("Cima","Cima");
+                bearingTextImagem = "N";
+            }
+            else if (direction > 22.5 && direction < 67.5){
+                //colocar imagem lado direito tele
+                Log.i("direito","direito");
+                bearingTextImagem = "NE";
+            }
+            else if (direction >= 67.5 && direction <= 112.5){
+                //colocar imagem lado direito telemovel
+                Log.i("direito","direito");
+                bearingTextImagem = "E";
+            }
+            else if (direction > 112.5 && direction < 157.5){
+                //colocar imagem lado direito telemovel
+                Log.i("direito","direito");
+                bearingTextImagem = "SE";
+            }
+            else if (direction >= 157.5 && direction <= 202.5){
+                Log.i("baixo","baixo");
+                //colocar imagem em baixo telemovel
+                bearingTextImagem = "S";
+            }
+            else if (direction > 202.5 && direction < 247.5){
+                //lado esquerdo
+                bearingTextImagem = "SW";
+            }
+            else if (direction >= 247.5 && direction <= 292.5){
+                //lado esquerdo
+                bearingTextImagem = "W";
+            }
+            else if (direction > 292.5 && direction < 337.5){
+                // lado esquerdo
+                bearingTextImagem = "NW";
+            }
+
+        }else if (degree >= 157.5 && degree <= 202.5){
+           // bearingText = "S";
+            if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
+                //colocar imagem em baixo do tele
+                Log.i("Baixo","Baixo");
+                bearingTextImagem = "N";
+            }
+            else if (direction > 22.5 && direction < 67.5){
+                //colocar imagem lado esquerdo tele
+                Log.i("esquerda","esquerda");
+                bearingTextImagem = "NE";
+            }
+            else if (direction >= 67.5 && direction <= 112.5){
+                //colocar imagem lado esquerdo telemovel
+                Log.i("esquerdo","esquerdo");
+                bearingTextImagem = "E";
+            }
+            else if (direction > 112.5 && direction < 157.5){
+                //colocar imagem lado esquerdo telemovel
+                Log.i("esquerdo","esquerdo");
+                bearingTextImagem = "SE";
+            }
+            else if (direction >= 157.5 && direction <= 202.5){
+                Log.i("cima","cima");
+                //colocar imagem em cima telemovel
+                bearingTextImagem = "S";
+            }
+            else if (direction > 202.5 && direction < 247.5){
+                Log.i("direita","direita");
+                //lado direita
+                bearingTextImagem = "SW";
+            }
+            else if (direction >= 247.5 && direction <= 292.5){
+                Log.i("direita","direita");
+                //lado direito
+                bearingTextImagem = "W";
+            }
+            else if (direction > 292.5 && direction < 337.5){
+                Log.i("direita","direita");
+                // lado direito
+                bearingTextImagem = "NW";
+            }
+        }else if (degree >= 67.5 && degree <= 112.5){
+          //  bearingText = "E";
+            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
+                Log.i("esquerda","esquerda");
+                // lado esquerdo
+                bearingTextImagem = "N";
+
+            }
+            else if (degree > 22.5 && degree < 67.5){
+                Log.i("esquerda","esquerda");
+                // lado esquerdo
+                bearingTextImagem = "NE";
+
+            }
+            else if (degree >= 67.5 && degree <= 112.5){
+                Log.i("cima","cima");
+                // lado cima
+                bearingTextImagem = "E";
+
+            }
+            else if (degree > 112.5 && degree < 157.5){
+                Log.i("direita","direita");
+                // lado direito
+                bearingTextImagem = "SE";
+
+            }
+            else if (degree >= 157.5 && degree <= 202.5){
+                Log.i("direita","direita");
+                // lado direito
+                bearingTextImagem = "S";
+
+            }
+            else if (degree > 202.5 && degree < 247.5){
+                Log.i("direita","direita");
+                // lado direito
+                bearingTextImagem = "SW";
+
+            }
+            else if (degree >= 247.5 && degree <= 292.5){
+                Log.i("baixo","baixo");
+                // lado baixo
+                bearingTextImagem = "W";
+
+            }
+            else if (degree > 292.5 && degree < 337.5){
+                Log.i("esquerda","esquerda");
+                // lado esquerda
+                bearingTextImagem = "NW";
+            }
+        }else if (degree >= 247.5 && degree <= 292.5){
+          //  bearingText = "W";
+            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
+                Log.i("direita","direita");
+                // lado direita
+                bearingTextImagem = "N";
+
+            }
+            else if (degree > 22.5 && degree < 67.5){
+                Log.i("direita","direita");
+                // lado direita
+                bearingTextImagem = "NE";
+
+            }
+            else if (degree >= 67.5 && degree <= 112.5){
+                Log.i("baixo","baixo");
+                // lado baixo
+                bearingTextImagem = "E";
+
+            }
+            else if (degree > 112.5 && degree < 157.5){
+                Log.i("esuqerda","esquerda");
+                // lado esquerdo
+                bearingTextImagem = "SE";
+
+            }
+            else if (degree >= 157.5 && degree <= 202.5){
+                Log.i("esquerda","esquerda");
+                // lado esquerdo
+                bearingTextImagem = "S";
+
+            }
+            else if (degree > 202.5 && degree < 247.5){
+                Log.i("esquerda","esquerda");
+                // lado esquerdo
+                bearingTextImagem = "SW";
+
+            }
+            else if (degree >= 247.5 && degree <= 292.5){
+                Log.i("cima","cima");
+                // lado cima
+                bearingTextImagem = "W";
+
+            }
+            else if (degree > 292.5 && degree < 337.5){
+                Log.i("direita","direita");
+                // lado direito
+                bearingTextImagem = "NW";
+            }
+
+        }
+
+    }
+    private void saberDirecao() {
+        if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
+            bearingText = "N";
+            Toast.makeText(getApplicationContext(), "lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree > 22.5 && degree < 67.5){
+            bearingText = "NE";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree >= 67.5 && degree <= 112.5){
+            bearingText = "E";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree > 112.5 && degree < 157.5){
+            bearingText = "SE";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree >= 157.5 && degree <= 202.5){
+            bearingText = "S";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree > 202.5 && degree < 247.5){
+            bearingText = "SW";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree >= 247.5 && degree <= 292.5){
+            bearingText = "W";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else if (degree > 292.5 && degree < 337.5){
+            bearingText = "NW";
+            Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
+        }
+        else{
+            bearingText = "?";
+        }
+    }
 }
