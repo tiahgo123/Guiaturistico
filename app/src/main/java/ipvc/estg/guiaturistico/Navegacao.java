@@ -8,8 +8,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -102,8 +104,13 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                     startActivity(in);
 
 
+
+               //     Intent on = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                   // startActivity(on);
                 }
             });
+
+
             alert.show();
 
         }
