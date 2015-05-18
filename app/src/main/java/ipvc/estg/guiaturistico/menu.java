@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -642,6 +643,12 @@ public class menu extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        pergunta();
+
+    }
+
     public void pergunta(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
@@ -657,8 +664,11 @@ public class menu extends ActionBarActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
-                                // if this button is clicked, close
-                                // current activity
+                                ContentValues valores = new ContentValues();
+                                valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
+                                String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+                                String[] selectionArgs = {"1"};
+                                db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
                                 finish();
 
                             }
