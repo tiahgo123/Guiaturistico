@@ -18,7 +18,7 @@ import java.util.Locale;
  */
 public class Descricao extends Activity {
 
-    TextToSpeech ttobj;
+    TextToSpeech ttobj2;
     TextView txtdescricao ;
     Button anterior;
 
@@ -34,19 +34,19 @@ public class Descricao extends Activity {
         txtdescricao = (TextView) findViewById(R.id.textView18);
         txtdescricao.setText(descricao);
 
-        ttobj=new TextToSpeech(getApplicationContext(),
+        ttobj2=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
                     @Override
                     public void onInit(int status) {
                         if(status != TextToSpeech.ERROR){
-                            ttobj.setLanguage(Locale.ROOT);
+                            ttobj2.setLanguage(Locale.ROOT);
                         }
                     }
                 });
 
 
 
-        ttobj.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
+        ttobj2.speak("ola", TextToSpeech.QUEUE_FLUSH, null);
 
         anterior= (Button) findViewById(R.id.button2);
         anterior.setOnClickListener(new View.OnClickListener() {
