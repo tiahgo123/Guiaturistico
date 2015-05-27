@@ -31,6 +31,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -396,7 +397,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
             cont++;
 
@@ -413,7 +414,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
         }else{
             descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
@@ -425,7 +426,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
             ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
         }
