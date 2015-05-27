@@ -94,6 +94,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (47,'Teste','sem morada',919643063,'sem email','fala que eu gosto de te ouvir','sem site','sem imagem','41.6940098','-8.8322639',9,0);");
 
+        //inserir para testar a bussula
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (48,'TesteBussula','frente ao nosso quarto',919643063,'sem email','fala que eu gosto de te ouvir','sem site','sem imagem','41.693822','-8.832688',9,0);");
+
+
+
 
 
 

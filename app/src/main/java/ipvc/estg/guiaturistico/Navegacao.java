@@ -14,10 +14,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Display;
@@ -68,7 +66,6 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private TextView txtLat;
     private TextView txtLong;
     private TextView textdistancia;
-    private ImageButton imagem;
     private ImageButton ligatelefone;
     private ImageButton vergooglemaps;
 
@@ -100,6 +97,19 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     Location locFim = new Location("Fim");
 
 
+    private ImageButton imagemButton1;
+    private ImageButton imagemButton2;
+    private ImageButton imagemButton3;
+    private ImageButton imagemButton4;
+    private ImageButton imagemButton5;
+    private ImageButton imagemButton6;
+    private ImageButton imagemButton7;
+    private ImageButton imagemButton8;
+    private ImageButton imagemButton9;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +127,24 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 });
 
         tvHeading = (TextView) findViewById(R.id.tvHeading);
-       textdistancia = (TextView) findViewById(R.id.textView16);
-       imagem = (ImageButton) findViewById(R.id.imageView);
+       textdistancia = (TextView) findViewById(R.id.textViewDistancia);
+
        ligatelefone = (ImageButton) findViewById(R.id.imageButton22);
        vergooglemaps = (ImageButton) findViewById(R.id.imageButton23);
+
+        imagemButton1 = (ImageButton) findViewById(R.id.image1);
+        imagemButton2 = (ImageButton) findViewById(R.id.image2);
+        imagemButton3 = (ImageButton) findViewById(R.id.image3);
+        imagemButton4 = (ImageButton) findViewById(R.id.image4);
+        imagemButton6 = (ImageButton) findViewById(R.id.image6);
+        imagemButton7 = (ImageButton) findViewById(R.id.image7);
+        imagemButton8 = (ImageButton) findViewById(R.id.image8);
+        imagemButton9 = (ImageButton) findViewById(R.id.image9);
+
+
+
+
+
 
         // initialize your android device sensor capabilities
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -173,7 +197,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             }
         });
 
-        imagem.setOnClickListener(new View.OnClickListener() {
+        // verificar onde colocar
+        imagemButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Descricao.class);
@@ -357,7 +382,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         locFim.setLatitude(latitude);
         locFim.setLongitude(longitude);
 
-        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+
+        // verificar onde colocar
+        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
 
 
 
@@ -510,9 +537,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         }
 
         degree = Math.round(event.values[0]);
-        Log.i("degre",""+degree);
+       // Log.i("degre",""+degree);
 
-        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+      //  tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
         currentDegree = -degree;
 
@@ -542,6 +569,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
         // saber direcao telemovel
         saberDirecao();
+
+        //colocar imagem do telemovel
         colocarImagem();
 
         Toast.makeText(getApplicationContext(),"lado do telemovel e: " + bearingText + "e a imagem esta para o lado: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
@@ -562,7 +591,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             }
             else if (direction > 22.5 && direction < 67.5){
                 //colocar imagem lado direito tele
-                Log.i("direito","direito");
+                Log.i("direito","entre norte e este");
                 bearingTextImagem = "NE";
             }
             else if (direction >= 67.5 && direction <= 112.5){
@@ -572,7 +601,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             }
             else if (direction > 112.5 && direction < 157.5){
                 //colocar imagem lado direito telemovel
-                Log.i("direito","direito");
+                Log.i("direito","entre sul e sudoeste");
                 bearingTextImagem = "SE";
             }
             else if (direction >= 157.5 && direction <= 202.5){
@@ -581,33 +610,37 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
             }
             else if (direction > 202.5 && direction < 247.5){
+                Log.i("baixo","entre sul e oeste");
                 //lado esquerdo
                 bearingTextImagem = "SW";
             }
             else if (direction >= 247.5 && direction <= 292.5){
+                Log.i("esquerdo","esquerdo");
                 //lado esquerdo
                 bearingTextImagem = "W";
             }
             else if (direction > 292.5 && direction < 337.5){
+                Log.i("esquerdo","entre norte e oeste");
                 // lado esquerdo
                 bearingTextImagem = "NW";
             }
 
         }else if (degree >= 157.5 && degree <= 202.5){
            // bearingText = "S";
+            //imagem virada para sul
             if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
                 //colocar imagem em baixo do tele
                 Log.i("Baixo","Baixo");
                 bearingTextImagem = "N";
             }
             else if (direction > 22.5 && direction < 67.5){
-                //colocar imagem lado esquerdo tele
-                Log.i("esquerda","esquerda");
+                //colocar imagem lado direito tele
+                Log.i("esquerda","entre norte e este");
                 bearingTextImagem = "NE";
             }
             else if (direction >= 67.5 && direction <= 112.5){
-                //colocar imagem lado esquerdo telemovel
-                Log.i("esquerdo","esquerdo");
+                //colocar imagem lado direito telemovel
+                Log.i("direito","direito");
                 bearingTextImagem = "E";
             }
             else if (direction > 112.5 && direction < 157.5){
@@ -740,34 +773,42 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private void saberDirecao() {
         if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
             bearingText = "N";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(), "lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree > 22.5 && degree < 67.5){
             bearingText = "NE";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree >= 67.5 && degree <= 112.5){
             bearingText = "E";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree > 112.5 && degree < 157.5){
             bearingText = "SE";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree >= 157.5 && degree <= 202.5){
             bearingText = "S";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree > 202.5 && degree < 247.5){
             bearingText = "SW";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree >= 247.5 && degree <= 292.5){
             bearingText = "W";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else if (degree > 292.5 && degree < 337.5){
             bearingText = "NW";
+            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
             Toast.makeText(getApplicationContext(),"lado e: " + bearingText, Toast.LENGTH_SHORT).show();
         }
         else{
