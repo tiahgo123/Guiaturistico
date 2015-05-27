@@ -71,6 +71,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private ImageButton imagem;
     private ImageButton ligatelefone;
     private ImageButton vergooglemaps;
+    int cont=0;
 
 
     //variaveis para saber o lado que esta o monumento
@@ -178,6 +179,8 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Descricao.class);
                 intent.putExtra("descricao",descricao);
+                ttobj.stop();
+
                 startActivity(intent);
             }
         });
@@ -258,12 +261,16 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         locations = new ArrayList<>();
         distancia = new ArrayList<>();
         Float min;
+
+        //percorre todo o hasmap com os valores selecionados
+
         for (LatLng latLng :myMap.values()) {
             location.setLatitude(latLng.latitude);
             location.setLongitude(latLng.longitude);
             Log.e("distancialocalizacao", "" + mCurrentLocation.distanceTo(location));
             Log.e("valor5",""+valor);
-            if (mCurrentLocation.distanceTo(location) >= valor) {
+            if (mCurrentLocation.distanceTo(location) <= valor) {
+                //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
                 distancia.add(mCurrentLocation.distanceTo(location));
                 locations.add(location);
             }     Log.e("distancia",""+distancia.size());
@@ -272,22 +279,27 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             min = distancia.get(0);
             Log.e("distanciaget0",""+distancia.get(0));
 
+
+
             for (int i = 0; i < distancia.size(); i++) {
                 if (min >= distancia.get(i)) {
                     min = distancia.get(i);
                    // textdistancia.setText("" + distancia + " Metros");
                     //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
-                    getrecursos(locations.get(i));
+                        getrecursos(locations.get(i),min);
 
                 }else{
-                    getrecursos(locations.get(i));
+                    getrecursos(locations.get(i),min);
 
                 }
 
             }
 
+
+            Double numero = Double.valueOf(min);
+         //  int testeint =  min;
             String teste = String.valueOf(min);
-            ttobj.speak("Está a uma distancia de "+teste+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+
         }
 
         }
@@ -326,7 +338,9 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         //    Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
 
 
-    private void getrecursos(Location latLng) {
+    private void getrecursos(Location latLng,Float min) {
+
+
 
         String[] projection = {
                 Contrato.pontos.COLUMN_NOME, Contrato.pontos.COLUMN_IMAGEM, Contrato.pontos._ID, Contrato.pontos.COLUMN_IdCategoria,
@@ -347,19 +361,54 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         );
 
         obterPonto.moveToFirst();
-       //obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
-        descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
-        Log.e("descricao",descricao);
-        telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
-        latitude = latLng.getLatitude();
-        longitude = latLng.getLongitude();
-
-        locFim.setLatitude(latitude);
-        locFim.setLongitude(longitude);
-
-        Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
 
 
+
+        if(latLng.getLatitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE)) && latLng.getLongitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE)) && cont==0 ) {
+
+            //obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+            descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
+            Log.e("descricao", descricao);
+            telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
+            latitude = latLng.getLatitude();
+            longitude = latLng.getLongitude();
+
+            locFim.setLatitude(latitude);
+            locFim.setLongitude(longitude);
+
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+            cont++;
+
+
+
+        }else if(latLng.getLatitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE)) && latLng.getLongitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE)) && cont!=0 ) {
+
+            descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
+            Log.e("descricao", descricao);
+            telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
+            latitude = latLng.getLatitude();
+            longitude = latLng.getLongitude();
+
+            locFim.setLatitude(latitude);
+            locFim.setLongitude(longitude);
+
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            cont++;
+        }else{
+            descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
+            Log.e("descricao", descricao);
+            telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
+            latitude = latLng.getLatitude();
+            longitude = latLng.getLongitude();
+
+            locFim.setLatitude(latitude);
+            locFim.setLongitude(longitude);
+
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagem);
+            cont++;
+            ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+        }
 
 
 
