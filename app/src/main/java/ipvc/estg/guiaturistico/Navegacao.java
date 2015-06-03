@@ -361,7 +361,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     private void getrecursos(Location latLng,Float min) {
 
-
+        Float metros = min/100;
 
         String[] projection = {
                 Contrato.pontos.COLUMN_NOME, Contrato.pontos.COLUMN_IMAGEM, Contrato.pontos._ID, Contrato.pontos.COLUMN_IdCategoria,
@@ -398,7 +398,21 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLongitude(longitude);
 
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-            ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
+
+
+
             cont++;
 
 
@@ -414,7 +428,16 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
             cont++;
         }else{
             descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
@@ -428,7 +451,16 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
-            ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
         }
 
 
