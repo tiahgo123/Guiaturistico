@@ -410,7 +410,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLongitude(longitude);
 
             verificaImagens();
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+           // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
 
 
             if(metros>200){
