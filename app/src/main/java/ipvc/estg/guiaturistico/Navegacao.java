@@ -108,6 +108,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private ImageButton imagemButton8;
     private ImageButton imagemButton9;
 
+
     private boolean imagem1 = false;
     private boolean imagem2 = false;
     private boolean imagem3 = false;
@@ -117,10 +118,6 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private boolean imagem7 = false;
     private boolean imagem8 = false;
     private boolean imagem9 = false;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -375,6 +372,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
     private void getrecursos(Location latLng,Float min) {
 
+        Float metros = min/100;
 
 
         String[] projection = {
@@ -412,6 +410,22 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLongitude(longitude);
 
             verificaImagens();
+            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+
+
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
+
+
+
             colocarImagem();
 
 
@@ -432,6 +446,16 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
             verificaImagens();
             colocarImagem();
 
@@ -452,7 +476,16 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
          //   Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
-            ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
+            if(metros>200){
+
+                ttobj.speak("Está a uma distancia de mais de dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+
+            }else if(metros<=200 && metros>100){
+                ttobj.speak("Está a uma distancia entre cem a dozentos Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }else{
+
+                ttobj.speak("Está a uma distancia entre a menos de cem Metros", TextToSpeech.QUEUE_FLUSH, null);
+            }
         }
 
 
