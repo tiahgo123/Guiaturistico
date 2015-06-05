@@ -41,6 +41,17 @@ public class Aplicacao extends Application {
     boolean verificarlinearEspaco;
     boolean verificarlinearOutro;
 
+    float valorSeekBar;
+
+    public void setValorSeekBar(float valorSeekBar) {
+        this.valorSeekBar = valorSeekBar;
+    }
+
+
+    public float getValorSeekBar() {
+        return valorSeekBar;
+    }
+
     public void setVerificaOnResume(boolean verificaOnResume) {
         this.verificaOnResume = verificaOnResume;
     }

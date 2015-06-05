@@ -125,19 +125,7 @@ public class ListaOutro extends ListActivity {
         buttonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Cursor total = obterChecked();
-                if( total != null && total.getCount() == 0){
-                    aplicacao.setVerificarTransacaoOutro(false);
-                    Log.i("sair de verde", "sair de verde");
-                }else{
-                    aplicacao.setVerificarTransacaoOutro(true);
-                    Log.i("fica verde","fica verde");
-                }
-                aplicacao.setVerificaOnResume(true);
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-                finish();
+                volta();
             }
         });
 
@@ -293,5 +281,25 @@ public class ListaOutro extends ListActivity {
         return verificaNaoChecked;
     }
 
+    public void volta(){
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        Cursor total = obterChecked();
+        if( total != null && total.getCount() == 0){
+            aplicacao.setVerificarTransacaoOutro(false);
+            Log.i("sair de verde", "sair de verde");
+        }else{
+            aplicacao.setVerificarTransacaoOutro(true);
+            Log.i("fica verde","fica verde");
+        }
+        aplicacao.setVerificaOnResume(true);
+        Intent intent = new Intent(getApplicationContext(),menu.class);
+        startActivity(intent);
+        finish();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        volta();
+    }
 }

@@ -102,7 +102,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private ImageButton imagemButton2;
     private ImageButton imagemButton3;
     private ImageButton imagemButton4;
-    private ImageButton imagemButton5;
+
     private ImageButton imagemButton6;
     private ImageButton imagemButton7;
     private ImageButton imagemButton8;
@@ -135,10 +135,10 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 });
 
         tvHeading = (TextView) findViewById(R.id.tvHeading);
-       textdistancia = (TextView) findViewById(R.id.textViewDistancia);
+        textdistancia = (TextView) findViewById(R.id.textViewDistancia);
 
-       ligatelefone = (ImageButton) findViewById(R.id.imageButton22);
-       vergooglemaps = (ImageButton) findViewById(R.id.imageButton23);
+        ligatelefone = (ImageButton) findViewById(R.id.imageButton22);
+        vergooglemaps = (ImageButton) findViewById(R.id.imageButton23);
 
         imagemButton1 = (ImageButton) findViewById(R.id.image1);
         imagemButton2 = (ImageButton) findViewById(R.id.image2);
@@ -690,6 +690,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
 
                 }
@@ -699,6 +700,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (direction >= 67.5 && direction <= 112.5){
@@ -707,6 +709,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (direction > 112.5 && direction < 157.5){
@@ -715,6 +718,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (direction >= 157.5 && direction <= 202.5){
@@ -722,6 +726,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (direction > 202.5 && direction < 247.5){
@@ -729,6 +734,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (direction >= 247.5 && direction <= 292.5){
@@ -736,6 +742,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (direction > 292.5 && direction < 337.5){
@@ -743,6 +750,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
 
@@ -753,6 +761,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (direction > 22.5 && direction < 67.5){
@@ -760,6 +769,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (direction >= 67.5 && direction <= 112.5){
@@ -767,6 +777,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (direction > 112.5 && direction < 157.5){
@@ -774,6 +785,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (direction >= 157.5 && direction <= 202.5){
@@ -781,6 +793,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
             }
             else if (direction > 202.5 && direction < 247.5){
@@ -788,6 +801,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (direction >= 247.5 && direction <= 292.5){
@@ -795,6 +809,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (direction > 292.5 && direction < 337.5){
@@ -802,6 +817,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
         }else if (bearingText.equals("E")){
@@ -811,6 +827,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
 
             }
@@ -819,6 +836,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
 
             }
@@ -827,6 +845,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
 
             }
@@ -834,6 +853,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
 
             }
@@ -842,6 +862,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
 
             }
@@ -850,6 +871,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
 
             }
@@ -858,6 +880,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
 
             }
@@ -866,6 +889,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
         }else if (bearingText.equals("W")){
@@ -875,6 +899,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (degree > 22.5 && degree < 67.5){
@@ -882,6 +907,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (degree >= 67.5 && degree <= 112.5){
@@ -889,6 +915,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (degree > 112.5 && degree < 157.5){
@@ -896,6 +923,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (degree >= 157.5 && degree <= 202.5){
@@ -903,6 +931,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (degree > 202.5 && degree < 247.5){
@@ -910,6 +939,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
             else if (degree >= 247.5 && degree <= 292.5){
@@ -917,6 +947,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
             }
             else if (degree > 292.5 && degree < 337.5){
@@ -924,6 +955,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
 
@@ -934,6 +966,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
             else if (degree > 22.5 && degree < 67.5){
@@ -941,6 +974,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
             }
             else if (degree >= 67.5 && degree <= 112.5){
@@ -948,6 +982,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (degree > 112.5 && degree < 157.5){
@@ -955,6 +990,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (degree >= 157.5 && degree <= 202.5){
@@ -962,6 +998,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (degree > 202.5 && degree < 247.5){
@@ -969,6 +1006,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (degree >= 247.5 && degree <= 292.5){
@@ -976,6 +1014,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (degree > 292.5 && degree < 337.5){
@@ -983,6 +1022,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
 
@@ -995,6 +1035,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (degree > 22.5 && degree < 67.5){
@@ -1002,6 +1043,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (degree >= 67.5 && degree <= 112.5){
@@ -1009,6 +1051,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
             else if (degree > 112.5 && degree < 157.5){
@@ -1016,6 +1059,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
             }
             else if (degree >= 157.5 && degree <= 202.5){
@@ -1023,6 +1067,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (degree > 202.5 && degree < 247.5){
@@ -1030,6 +1075,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (degree >= 247.5 && degree <= 292.5){
@@ -1037,6 +1083,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (degree > 292.5 && degree < 337.5){
@@ -1044,6 +1091,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
 
@@ -1055,6 +1103,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (degree > 22.5 && degree < 67.5){
@@ -1062,6 +1111,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (degree >= 67.5 && degree <= 112.5){
@@ -1069,6 +1119,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (degree > 112.5 && degree < 157.5){
@@ -1076,6 +1127,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (degree >= 157.5 && degree <= 202.5){
@@ -1083,12 +1135,14 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                imagemButton1.setClickable(true);
                 imagem1 = true;
             }
             else if (degree > 202.5 && degree < 247.5){
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                imagemButton2.setClickable(true);
                 imagem2 = true;
             }
             else if (degree >= 247.5 && degree <= 292.5){
@@ -1096,12 +1150,14 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (degree > 292.5 && degree < 337.5){
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
 
@@ -1112,6 +1168,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "N";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+                imagemButton3.setClickable(true);
                 imagem3 = true;
             }
             else if (degree > 22.5 && degree < 67.5){
@@ -1119,6 +1176,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "NE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+                imagemButton6.setClickable(true);
                 imagem6 = true;
             }
             else if (degree >= 67.5 && degree <= 112.5){
@@ -1126,6 +1184,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "E";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+                    imagemButton9.setClickable(true);
                 imagem9 = true;
             }
             else if (degree > 112.5 && degree < 157.5){
@@ -1133,6 +1192,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SE";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+                    imagemButton8.setClickable(true);
                 imagem8 = true;
             }
             else if (degree >= 157.5 && degree <= 202.5){
@@ -1140,6 +1200,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "S";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+                    imagemButton7.setClickable(true);
                 imagem7 = true;
             }
             else if (degree > 202.5 && degree < 247.5){
@@ -1147,6 +1208,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "SW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+                    imagemButton4.setClickable(true);
                 imagem4 = true;
             }
             else if (degree >= 247.5 && degree <= 292.5){
@@ -1154,12 +1216,14 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
                 bearingTextImagem = "W";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+                    imagemButton1.setClickable(true);
                 imagem1 = true;
             }
             else if (degree > 292.5 && degree < 337.5){
                 bearingTextImagem = "NW";
                 Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
                 Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+                    imagemButton2.setClickable(true);
                 imagem2 = true;
             }
 
@@ -1217,34 +1281,42 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
     private void verificaImagens(){
         if(imagem1){
              imagemButton1.setImageResource(android.R.color.transparent);
+            imagemButton1.setClickable(false);
             imagem1 = false;
         }
         if(imagem2){
             imagemButton2.setImageResource(android.R.color.transparent);
+            imagemButton2.setClickable(false);
             imagem2 = false;
         }
         if(imagem3){
             imagemButton3.setImageResource(android.R.color.transparent);
+            imagemButton3.setClickable(false);
             imagem3 = false;
         }
         if(imagem4){
             imagemButton4.setImageResource(android.R.color.transparent);
+            imagemButton4.setClickable(false);
             imagem4 = false;
         }
         if(imagem6){
             imagemButton6.setImageResource(android.R.color.transparent);
+            imagemButton6.setClickable(false);
             imagem6 = false;
         }
         if(imagem7){
             imagemButton7.setImageResource(android.R.color.transparent);
+            imagemButton7.setClickable(false);
             imagem7 = false;
         }
         if(imagem8){
             imagemButton8.setImageResource(android.R.color.transparent);
+            imagemButton8.setClickable(false);
             imagem8 = false;
         }
         if(imagem9){
             imagemButton9.setImageResource(android.R.color.transparent);
+            imagemButton9.setClickable(false);
             imagem9 = false;
         }
 

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -64,7 +63,7 @@ public class menu extends ActionBarActivity {
      Menu menu;
      boolean onResume = false;
      boolean veSom = true;
-    boolean veSom1;
+     boolean veSom1;
 
 
     @Override
@@ -118,6 +117,7 @@ public class menu extends ActionBarActivity {
             if(!verificarLongButtonMonumento) {
             Intent intent = new Intent(getApplicationContext(), ListaMonumento.class);
             startActivity(intent);
+            finish();
             }else{
                 verificarLongButtonMonumento = false;
 
@@ -167,6 +167,7 @@ public class menu extends ActionBarActivity {
                 if (!verificarLongButtonCultura) {
                         Intent intent = new Intent(getApplicationContext(),ListaCultura.class);
                         startActivity(intent);
+                        finish();
                 } else {
                     verificarLongButtonCultura = false;
                 }
@@ -216,6 +217,7 @@ public class menu extends ActionBarActivity {
             if(!verificarLongButtonGastronomia){
                     Intent intent = new Intent(getApplicationContext(),ListaGastronomia.class);
                     startActivity(intent);
+                    finish();
             }else {
                 verificarLongButtonGastronomia = false;
             }
@@ -265,6 +267,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonAlojamento){
                          Intent intent = new Intent(getApplicationContext(),ListaAlojamento.class);
                          startActivity(intent);
+                         finish();
                 }else {
                     verificarLongButtonAlojamento = false;
                 }
@@ -313,6 +316,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonAgenda){
                         Intent intent = new Intent(getApplicationContext(),ListaAgenda.class);
                         startActivity(intent);
+                        finish();
                 }else {
                     verificarLongButtonAgenda = false;
                 }
@@ -348,8 +352,8 @@ public class menu extends ActionBarActivity {
                             Contrato.pontos.TABLE_NAME,
                             values, selection, selectionArgs);
                 }
-                aplicacao.setVerificarLongButtonMonumento(verificarLongButtonAgenda);
-                aplicacao.setVerificarlinearMonumento(verificarlinearAgenda);
+                aplicacao.setVerificarLongButtonAgenda(verificarLongButtonAgenda);
+                aplicacao.setVerificarlinearAgenda(verificarlinearAgenda);
                 return false;
             }
         });
@@ -361,6 +365,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonPraia){
                          Intent intent = new Intent(getApplicationContext(),ListaPraia.class);
                          startActivity(intent);
+                          finish();
                 }else {
                     verificarLongButtonPraia = false;
                 }
@@ -409,6 +414,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonDesporto){
                          Intent intent = new Intent(getApplicationContext(),ListaDesporto.class);
                          startActivity(intent);
+                         finish();
                 }else {
                     verificarLongButtonDesporto = false;
                 }
@@ -457,6 +463,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonEspaco){
                          Intent intent = new Intent(getApplicationContext(),ListaEspaco.class);
                          startActivity(intent);
+                         finish();
                 }else {
                     verificarLongButtonEspaco = false;
                 }
@@ -505,6 +512,7 @@ public class menu extends ActionBarActivity {
                 if(!verificarLongButtonOutro){
                          Intent intent = new Intent(getApplicationContext(),ListaOutro.class);
                          startActivity(intent);
+                         finish();
                 }else {
                     verificarLongButtonOutro = false;
                 }
@@ -554,6 +562,7 @@ public class menu extends ActionBarActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 valor=progress;
+                aplicacao.setValorSeekBar(valor);
                 resultadoProgresso.setText(valor+1 +" Metros");
             }
 
@@ -577,6 +586,7 @@ public class menu extends ActionBarActivity {
                 Intent intent = new Intent(getApplicationContext(), Navegacao.class);
                 intent.putExtra("valor",valor);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -696,6 +706,8 @@ public class menu extends ActionBarActivity {
         super.onResume();
         Log.i("entrei onResume","adsada");
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+
+
         if (aplicacao.isVerificarlinearMonumento()|| aplicacao.isVerificaTransacaoMonumento()){
             linearMonumento.setBackgroundColor(Color.GREEN);
         }else{
@@ -741,8 +753,10 @@ public class menu extends ActionBarActivity {
         }else{
             linearOutro.setBackgroundColor(Color.WHITE);
         }
+
+
         if (aplicacao.isVerificaOnResume()){
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
+          //  Log.i("verificaSom",""+aplicacao.isVerificaSom());
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
             }else{
@@ -753,6 +767,8 @@ public class menu extends ActionBarActivity {
              onResume = false;
         }
 
+
+        progresso.setProgress((int) aplicacao.getValorSeekBar());
 
 
     }
