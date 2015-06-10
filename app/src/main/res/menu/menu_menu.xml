@@ -8,6 +8,12 @@
             app:showAsAction="ifRoom"
             />
 
+    <item android:id="@+id/btfala"
+        android:icon="@drawable/abc_ic_voice_search_api_mtrl_alpha"
+        android:title="@string/fala"
+        app:showAsAction="ifRoom"
+        />
+
 
     <item android:id="@+id/btAjuda"
         android:icon="@drawable/abc_ic_menu_selectall_mtrl_alpha"

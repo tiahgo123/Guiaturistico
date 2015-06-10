@@ -106,6 +106,9 @@ public class menu extends ActionBarActivity {
         verificarlinearEspaco = aplicacao.isVerificarlinearEspaco();
         verificarlinearOutro = aplicacao.isVerificarlinearOutro();
 
+
+        resultadoProgresso.setText("1 Metro");
+
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
 
@@ -556,14 +559,26 @@ public class menu extends ActionBarActivity {
 
 
 
-        
+
         progresso.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                valor=progress;
-                aplicacao.setValorSeekBar(valor);
-                resultadoProgresso.setText(valor+1 +" Metros");
+
+                float min=1;
+
+                if(progress<min){
+                    valor=1;
+
+                    aplicacao.setValorSeekBar(valor);
+                    resultadoProgresso.setText(valor + " Metros");
+                }else {
+
+
+                    valor = progress;
+                    aplicacao.setValorSeekBar(valor);
+                    resultadoProgresso.setText(valor + " Metros");
+                }
             }
 
             @Override

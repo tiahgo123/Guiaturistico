@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ipvc.estg.guiaturistico.ListaMonumento"/>
+      <point      
+        x = "608"      
+        y = "1036"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ipvc.estg.guiaturistico.EscolheLingua"/>
+      <point      
+        x = "652"      
+        y = "-4"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "ipvc.estg.guiaturistico.EscolheLingua"/>
+      <point      
+        x = "1632"      
+        y = "-4"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ipvc.estg.guiaturistico.menu"/>
+      <point      
+        x = "550"      
+        y = "1050"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
