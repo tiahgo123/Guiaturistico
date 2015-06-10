@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -45,7 +46,7 @@ import java.util.Locale;
 /**
  * Created by Tiago Sousa on 08/04/2015.
  */
-public class Navegacao extends Activity implements GoogleApiClient.ConnectionCallbacks,
+public class Navegacao extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, SensorEventListener {
 
@@ -222,6 +223,11 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Descricao.class);
                 intent.putExtra("descricao",descricao);
+                intent.putExtra("telefone",telefone);
+                intent.putExtra("locfimlat",locFim.getLatitude());
+                intent.putExtra("locfimlog",locFim.getLongitude());
+                intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                intent.putExtra("logactu",mCurrentLocation.getLongitude());
                 ttobj.stop();
 
                 startActivity(intent);
@@ -300,7 +306,7 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
         if (id == R.id.btfala) {
             Intent i  = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            i.putExtra(RecognizerIntent.EXTRA_PROMPT,"Fala agora caralho");
+            i.putExtra(RecognizerIntent.EXTRA_PROMPT,"Fala agora");
             startActivityForResult(i, check);
             return true;
         }
@@ -311,21 +317,40 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==1111 & resultCode==RESULT_OK) {
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
             for (int i = 0; i < result.size(); i++) {
-                if (result.get(i).toString().equals("subir volume")) {
+                if (result.get(i).toString().equals(getResources().getString(R.string.comandosubirvolume))) {
                     AudioManager audioManager =
                             (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                     // Set the volume of played media to maximum.
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 10, 0);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 2, 0);
                     // audioManager.setStreamVolume (
                     //      AudioManager.STREAM_MUSIC,
                     //    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
                     //  0);
+                }else if(result.get(i).toString().equals(getResources().getString(R.string.comandodescervolume))){
+
+                    AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,2,0);
+
+                }else if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))){
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
+                    startActivity(intent);
+
+                }else if (result.get(i).toString().equals(getResources().getString(R.string.irpara))){
+                    Intent intent =  new  Intent ( android . content . Intent . ACTION_VIEW ,
+                            Uri . parse ( "http://maps.google.com/maps?saddr="+mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude() + "&daddr=+"+latitude+","+longitude));
+                    startActivity ( intent );
+
+                }else if(result.get(i).toString().equals(getResources().getString(R.string.verdescricao))){
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    startActivity(intent);
+
                 }
 
 
@@ -510,7 +535,12 @@ public class Navegacao extends Activity implements GoogleApiClient.ConnectionCal
             verificaImagens();
            // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
 
-            if(metros>50 && metros <=100) {
+            if(metros<50){
+                ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
+            }
+
+
+           else if(metros>50 && metros <=100) {
                 ttobj.speak(getResources().getString(R.string.cinquentacem), TextToSpeech.QUEUE_FLUSH, null);
 
 
