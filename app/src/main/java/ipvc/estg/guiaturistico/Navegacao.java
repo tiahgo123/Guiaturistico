@@ -51,9 +51,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         LocationListener, SensorEventListener {
 
 
+    static final int check = 1111;
     Cursor obterPonto;
     int checked = 1;
-
     SQLiteDatabase db;
     List<Categorias> categorias = new ArrayList<>();
     HashMap<Integer, LatLng> myMap = new HashMap<>();
@@ -62,14 +62,25 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     int telefone;
     Double latitude;
     Double longitude;
-
     Menu menu;
     boolean onResume = false;
-    static final int check = 1111;
-
-
     TextToSpeech ttobj;
+    int cont=0;
+    GeomagneticField geoField ;
+    Sensor accelerometer;
+    Sensor magnetometer;
+    TextView tvHeading;
+    float azimuth ;
+    float baseAzimuth;
+    float degree;
+    float direction;
 
+
+    //variaveis para saber o lado que esta o monumento
+    String bearingText = "N";
+    String bearingTextImagem = "N";
+    Location locInicio = new Location("Inicio");
+    Location locFim = new Location("Fim");
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
@@ -78,36 +89,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private TextView textdistancia;
     private ImageButton ligatelefone;
     private ImageButton vergooglemaps;
-    int cont=0;
-
-
-    //variaveis para saber o lado que esta o monumento
-
-    GeomagneticField geoField ;
-
     // device sensor manager
     private  SensorManager mSensorManager;
-    Sensor accelerometer;
-    Sensor magnetometer;
-
     private WindowManager mWindowManager;
     private Display mDisplay;
-
     private float currentDegree = 0f;
-    TextView tvHeading;
-    float azimuth ;
-    float baseAzimuth;
-
-    float degree;
-    float direction;
-
-    String bearingText = "N";
-    String bearingTextImagem = "N";
-
-    Location locInicio = new Location("Inicio");
-    Location locFim = new Location("Fim");
-
-
     private ImageButton imagemButton1;
     private ImageButton imagemButton2;
     private ImageButton imagemButton3;
@@ -218,21 +204,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         });
 
         // verificar onde colocar
-        imagemButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Descricao.class);
-                intent.putExtra("descricao",descricao);
-                intent.putExtra("telefone",telefone);
-                intent.putExtra("locfimlat",locFim.getLatitude());
-                intent.putExtra("locfimlog",locFim.getLongitude());
-                intent.putExtra("latactu",mCurrentLocation.getLatitude());
-                intent.putExtra("logactu",mCurrentLocation.getLongitude());
-                ttobj.stop();
 
-                startActivity(intent);
-            }
-        });
 
 
         Intent intent = getIntent();
@@ -827,6 +799,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
             imagemButton2.setClickable(true);
             imagem2 = true;
+            imagemButton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -835,6 +822,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
             imagemButton3.setClickable(true);
             imagem3 = true;
+            imagemButton3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
            // tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
 
@@ -844,6 +846,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
             imagemButton6.setClickable(true);
             imagem6 = true;
+            imagemButton6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -852,6 +869,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
             imagemButton9.setClickable(true);
             imagem9 = true;
+            imagemButton9.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
             // stvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -861,6 +893,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
             imagemButton8.setClickable(true);
             imagem8 = true;
+            imagemButton8.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
 
         }
         else if (direction > 202.5 && direction < 247.5){
@@ -869,6 +916,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
             imagemButton7.setClickable(true);
             imagem7 = true;
+            imagemButton7.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
 
         }
         else if (direction >= 247.5 && direction <= 292.5){
@@ -876,6 +938,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
             imagemButton4.setClickable(true);
             imagem4 = true;
+            imagemButton4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
         }
@@ -885,6 +962,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             imagemButton1.setClickable(true);
             imagem1 = true;
+            imagemButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
+                    intent.putExtra("descricao",descricao);
+                    intent.putExtra("telefone",telefone);
+                    intent.putExtra("locfimlat",locFim.getLatitude());
+                    intent.putExtra("locfimlog",locFim.getLongitude());
+                    intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                    intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    ttobj.stop();
+
+                    startActivity(intent);
+                }
+            });
 
         }
         else{
