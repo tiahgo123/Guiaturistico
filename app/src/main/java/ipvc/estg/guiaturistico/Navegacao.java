@@ -106,6 +106,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private ImageButton imagemButton9;
 
 
+    private String imagem;
+
+
     private boolean imagem1 = false;
     private boolean imagem2 = false;
     private boolean imagem3 = false;
@@ -118,7 +121,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
     private boolean imagem22 = false;
     private boolean imagem23 = false;
-    private boolean veSom=false;
+    private boolean veSom=true;
     private boolean veSom1;
 
     @Override
@@ -502,6 +505,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
+            imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+
             verificaImagens();
            // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
 
@@ -803,7 +808,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
             bearingText = "N";
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+
+
+
+            String imagemfinal = "R.drawable."+imagem;
+          //  imagemButton2.setImageResource(R.drawable.);
+
+            Picasso.with(getApplicationContext()).load(imagemfinal);
+          //  Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
             imagemButton2.setClickable(true);
             imagem2 = true;
             imagemButton2.setOnClickListener(new View.OnClickListener() {
@@ -827,7 +839,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction > 22.5 && direction < 67.5){
             bearingText = "NE";
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
+            String imagemfinal = "R.drawable."+imagem;
+            //imagemButton3.setImageResource(imagemfinal);
+
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton3);
+
             imagemButton3.setClickable(true);
             imagem3 = true;
             imagemButton3.setOnClickListener(new View.OnClickListener() {
@@ -852,7 +868,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction >= 67.5 && direction <= 112.5){
             bearingText = "E";
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
+
+            String imagemfinal = "R.drawable."+imagem;
+            //imagemButton6.setImageResource(imagemfinal);
+
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton6);
             imagemButton6.setClickable(true);
             imagem6 = true;
             imagemButton6.setOnClickListener(new View.OnClickListener() {
@@ -876,7 +896,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction > 112.5 && direction < 157.5){
             bearingText = "SE";
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
+
+            String imagemfinal ="R.drawable."+imagem;
+            //imagemButton9.setImageResource(imagemfinal);
+
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton9);
             imagemButton9.setClickable(true);
             imagem9 = true;
             imagemButton9.setOnClickListener(new View.OnClickListener() {
@@ -901,7 +925,10 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction >= 157.5 && direction <= 202.5){
             bearingText = "S";
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
+            String imagemfinal = "R.drawable."+imagem;
+           // imagemButton8.setImageResource(imagemfinal);
+
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton8);
             imagemButton8.setClickable(true);
             imagem8 = true;
             imagemButton8.setOnClickListener(new View.OnClickListener() {
@@ -925,7 +952,12 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction > 202.5 && direction < 247.5){
             bearingText = "SW";
            //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
+
+
+            String imagemfinal = "R.drawable."+imagem;
+           // imagemButton7.setImageResource(imagemfinal);
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton7);
+
             imagemButton7.setClickable(true);
             imagem7 = true;
             imagemButton7.setOnClickListener(new View.OnClickListener() {
@@ -948,7 +980,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction >= 247.5 && direction <= 292.5){
             bearingText = "W";
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
+            ;
+            String imagemfinal = "R.drawable."+imagem;
+           // imagemButton4.setImageResource(imagemfinal);
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton4);
+
             imagemButton4.setClickable(true);
             imagem4 = true;
             imagemButton4.setOnClickListener(new View.OnClickListener() {
@@ -973,7 +1009,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction > 292.5 && direction < 337.5){
             bearingText = "NW";
            // tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
-            Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+
+            String imagemfinal = "R.drawable."+imagem;
+            //imagemButton1.setImageResource(imagemfinal);
+            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton1);
+
             imagemButton1.setClickable(true);
             imagem1 = true;
             imagemButton1.setOnClickListener(new View.OnClickListener() {

@@ -693,6 +693,15 @@ public class menu extends ActionBarActivity {
                                 String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
                                 String[] selectionArgs = {"1"};
                                 db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
+                                linearMonumento.setBackgroundColor(Color.WHITE);
+                                linearAgenda.setBackgroundColor(Color.WHITE);
+                                linearCultura.setBackgroundColor(Color.WHITE);
+                                linearAlojamento.setBackgroundColor(Color.WHITE);
+                                linearEspaco.setBackgroundColor(Color.WHITE);
+                                linearDesporto.setBackgroundColor(Color.WHITE);
+                                linearOutro.setBackgroundColor(Color.WHITE);
+                                linearGastronomia.setBackgroundColor(Color.WHITE);
+                                linearPraia.setBackgroundColor(Color.WHITE);
                                 finish();
 
                             }
