@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -114,6 +115,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private boolean imagem7 = false;
     private boolean imagem8 = false;
     private boolean imagem9 = false;
+
+    private boolean imagem22 = false;
+    private boolean imagem23 = false;
     private boolean veSom=false;
     private boolean veSom1;
 
@@ -185,23 +189,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         }
 
-        ligatelefone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
-                startActivity(intent);
-            }
-        });
 
-        vergooglemaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =  new  Intent ( android . content . Intent . ACTION_VIEW ,
-                        Uri . parse ( "http://maps.google.com/maps?saddr="+mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude() + "&daddr=+"+latitude+","+longitude));
-                startActivity ( intent );
-
-            }
-        });
 
         // verificar onde colocar
 
@@ -262,12 +250,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 //coloca com som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
                 veSom = true;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,false);
                 aplicacao.setVerificaSom(true);
             } else{
                 //impar
                 //coloca sem som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
                 veSom = false;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,true);
                 aplicacao.setVerificaSom(false);
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
@@ -299,7 +291,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                             (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                     // Set the volume of played media to maximum.
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 2, 0);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,7,AudioManager.FLAG_SHOW_UI);
                     // audioManager.setStreamVolume (
                     //      AudioManager.STREAM_MUSIC,
                     //    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
@@ -307,7 +299,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 }else if(result.get(i).toString().equals(getResources().getString(R.string.comandodescervolume))){
 
                     AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,2,0);
+                    audioManager.setStreamVolume(AudioManager.ADJUST_LOWER,7,AudioManager.FLAG_SHOW_UI);
 
                 }else if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))){
                     Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
@@ -409,15 +401,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
             for (int i = 0; i < distancia.size(); i++) {
+
+
+
+                Log.e("distanciatotototototo",""+distancia.get(i));
                 if (min >= distancia.get(i)) {
                     min = distancia.get(i);
+
+                    Log.e("mint",""+min);
                    // textdistancia.setText("" + distancia + " Metros");
                     //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
-                        getrecursos(locations.get(i),min);
+                        getrecursos(locations.get(i), min);
 
                 }else{
                     getrecursos(locations.get(i),min);
-
+                    Log.e("min2",""+min);
                 }
 
             }
@@ -545,7 +543,12 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-            if(metros>50 && metros <=100) {
+            if(metros<50){
+                ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
+            }
+
+
+            else if(metros>50 && metros <=100) {
                 ttobj.speak(getResources().getString(R.string.cinquentacem), TextToSpeech.QUEUE_FLUSH, null);
 
 
@@ -578,7 +581,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
          //   Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
-            if(metros>50 && metros <=100) {
+            if(metros<50){
+                ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
+            }
+
+            else if(metros>50 && metros <=100) {
                 ttobj.speak(getResources().getString(R.string.cinquentacem), TextToSpeech.QUEUE_FLUSH, null);
 
 
@@ -814,6 +821,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -837,6 +845,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
            // tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
 
@@ -861,6 +870,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -884,6 +894,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
             // stvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -908,6 +919,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
 
         }
         else if (direction > 202.5 && direction < 247.5){
@@ -931,6 +943,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
 
         }
         else if (direction >= 247.5 && direction <= 292.5){
@@ -953,7 +966,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
-            //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+
+            disponiblizabotoes();
 
         }
         else if (direction > 292.5 && direction < 337.5){
@@ -977,6 +991,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     startActivity(intent);
                 }
             });
+            disponiblizabotoes();
 
         }
         else{
@@ -1022,12 +1037,32 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             imagemButton8.setClickable(false);
             imagem8 = false;
         }
-        if(imagem9){
+        if(imagem9) {
             imagemButton9.setImageResource(android.R.color.transparent);
             imagemButton9.setClickable(false);
             imagem9 = false;
         }
 
+    }
+
+    private void disponiblizabotoes(){
+        ligatelefone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
+                startActivity(intent);
+            }
+        });
+
+        vergooglemaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new  Intent ( android . content . Intent . ACTION_VIEW ,
+                        Uri . parse ( "http://maps.google.com/maps?saddr="+mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude() + "&daddr=+"+latitude+","+longitude));
+                startActivity ( intent );
+
+            }
+        });
     }
 
 //    private void colocarImagem() {

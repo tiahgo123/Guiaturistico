@@ -55,7 +55,7 @@ public class menu extends ActionBarActivity {
 
     TextView resultadoProgresso;
     SeekBar progresso;
-    float valor=0;
+    float valor=1;
 
     SQLiteDatabase db;
 
@@ -601,7 +601,6 @@ public class menu extends ActionBarActivity {
                 Intent intent = new Intent(getApplicationContext(), Navegacao.class);
                 intent.putExtra("valor",valor);
                 startActivity(intent);
-                finish();
             }
         });
 

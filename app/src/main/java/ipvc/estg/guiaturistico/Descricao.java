@@ -57,12 +57,6 @@ public class Descricao extends ActionBarActivity {
         latactu= intent.getDoubleExtra("latactu",0);
         logactu = intent.getDoubleExtra("logactu",0);
 
-
-        Log.e("descricao",descricao);
-
-        txtdescricao = (TextView) findViewById(R.id.textView18);
-        txtdescricao.setText(descricao);
-
         ttobj2=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
                     @Override
@@ -73,9 +67,12 @@ public class Descricao extends ActionBarActivity {
                     }
                 });
 
+        ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
 
+        Log.e("descricao",descricao);
 
-        ttobj2.speak("ola", TextToSpeech.QUEUE_FLUSH, null);
+        txtdescricao = (TextView) findViewById(R.id.textView18);
+        txtdescricao.setText(descricao);
 
         anterior= (Button) findViewById(R.id.button2);
         anterior.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +107,12 @@ public class Descricao extends ActionBarActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -126,12 +129,16 @@ public class Descricao extends ActionBarActivity {
                 //coloca com som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
                 veSom = true;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,false);
                 aplicacao.setVerificaSom(true);
             } else{
                 //impar
                 //coloca sem som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
                 veSom = false;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,true);
                 aplicacao.setVerificaSom(false);
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
@@ -162,7 +169,7 @@ public class Descricao extends ActionBarActivity {
                             (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                     // Set the volume of played media to maximum.
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 2, 0);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,7,AudioManager.FLAG_SHOW_UI);
                     // audioManager.setStreamVolume (
                     //      AudioManager.STREAM_MUSIC,
                     //    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
@@ -170,7 +177,9 @@ public class Descricao extends ActionBarActivity {
                 }else if(result.get(i).toString().equals(getResources().getString(R.string.comandodescervolume))){
 
                     AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,2,0);
+                   // audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,4,0);
+
+                    audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
 
                 }else if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))){
                     Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
@@ -182,21 +191,11 @@ public class Descricao extends ActionBarActivity {
                     startActivity ( intent );
 
                 }else if(result.get(i).toString().equals(getResources().getString(R.string.verdescricao))){
-                    ttobj2=new TextToSpeech(getApplicationContext(),
-                            new TextToSpeech.OnInitListener() {
-                                @Override
-                                public void onInit(int status) {
-                                    if(status != TextToSpeech.ERROR){
-                                        ttobj2.setLanguage(Locale.ROOT);
-                                    }
-                                }
-                            });
-
-
-
                     ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
+
+                Log.e("dito",result.get(i).toString());
 
 
             }
