@@ -693,15 +693,39 @@ public class menu extends ActionBarActivity {
                                 String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
                                 String[] selectionArgs = {"1"};
                                 db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
-                                linearMonumento.setBackgroundColor(Color.WHITE);
-                                linearAgenda.setBackgroundColor(Color.WHITE);
-                                linearCultura.setBackgroundColor(Color.WHITE);
-                                linearAlojamento.setBackgroundColor(Color.WHITE);
-                                linearEspaco.setBackgroundColor(Color.WHITE);
-                                linearDesporto.setBackgroundColor(Color.WHITE);
-                                linearOutro.setBackgroundColor(Color.WHITE);
-                                linearGastronomia.setBackgroundColor(Color.WHITE);
-                                linearPraia.setBackgroundColor(Color.WHITE);
+
+                                final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+
+
+                                aplicacao.setVerificarlinearMonumento(false);
+                                aplicacao.setVerificaTransacaoMonumento(false);
+
+                                aplicacao.setVerificarlinearCultura(false);
+                                aplicacao.setVerificarTransacaoCultura(false);
+
+                                aplicacao.setVerificarlinearGastronomia(false);
+                                aplicacao.setVerificarTransacaoGastronomia(false);
+
+                                aplicacao.setVerificarlinearAlojamento(false);
+                                aplicacao.setVerificarTransacaoAlojamento(false);
+
+                                aplicacao.setVerificarlinearAgenda(false);
+                                aplicacao.setVerificarTransacaoAgenda(false);
+
+                                aplicacao.setVerificarlinearPraia(false);
+                                aplicacao.setVerificarTransacaoPraia(false);
+
+                                aplicacao.setVerificarlinearDesporto(false);
+                                aplicacao.setVerificarTransacaoDesporto(false);
+
+                                aplicacao.setVerificarlinearEspaco(false);
+                                aplicacao.setVerificarTransacaoEspaco(false);
+
+                                aplicacao.setVerificarlinearOutro(false);
+                                aplicacao.setVerificarTransacaoOutro(false);
+
+
+
                                 finish();
 
                             }
