@@ -598,29 +598,36 @@ public class menu extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                aplicacao.setVerificaOnResume(true);
+
                 Intent intent = new Intent(getApplicationContext(), Navegacao.class);
-                intent.putExtra("valor",valor);
                 startActivity(intent);
+                finish();
             }
         });
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu","entrei no menu");
+        Log.i("entrei no menu1","entrei no menu adadadasdasda");
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         if(onResume){
             if (!veSom1){
                 //sem som
+                Log.e("estou a dar mico","estou a dar mico");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
                 veSom = false;
             } else{
                 //com som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+
                 veSom = true;
+
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -724,6 +731,7 @@ public class menu extends ActionBarActivity {
                                 aplicacao.setVerificarlinearOutro(false);
                                 aplicacao.setVerificarTransacaoOutro(false);
 
+                                aplicacao.setVerificaOnResume(false);
 
 
                                 finish();
@@ -803,7 +811,7 @@ public class menu extends ActionBarActivity {
 
 
         if (aplicacao.isVerificaOnResume()){
-          //  Log.i("verificaSom",""+aplicacao.isVerificaSom());
+           // Log.i("verificaSom",""+aplicacao.isVerificaSom());
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
             }else{

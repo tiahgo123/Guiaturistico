@@ -1,6 +1,5 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,7 +27,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,7 +37,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +120,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private boolean imagem23 = false;
     private boolean veSom=true;
     private boolean veSom1;
+    private boolean ativarGps = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,10 +175,10 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+
                     Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(in);
-
-
+                    ativarGps = true;
 
                //     Intent on = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                    // startActivity(on);
@@ -189,6 +187,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
             alert.show();
+            ativarGps = true;
 
         }
 
@@ -219,7 +218,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu","entrei no menu");
+    //    Log.i("entrei no menu","entrei no menu");
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_navegacao, menu);
         if(onResume){
@@ -648,12 +647,48 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     public void onResume() {
         // QUANDO A APLICAÇÃO ESTA NESTE ESTADO RETOMAR OS PEDIDOS
         super.onResume();
-        if (mGoogleApiClient.isConnected()) {
+
+   if (mGoogleApiClient.isConnected()) {
             startLocationUpdates();
         }
         // for the system's orientation sensor registered listeners
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
+
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        if (aplicacao.isVerificaOnResume() ){
+
+            //  Log.i("verificaSom",""+aplicacao.isVerificaSom());
+            if(aplicacao.isVerificaSom()){
+                veSom1 = true;
+            }else{
+                veSom1 = false;
+            }
+            onResume = true;
+        }else{
+            onResume = false;
+        }
+
+        if(ativarGps){
+
+            aplicacao.setVerificaOnResume(true);
+        }
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        aplicacao.setVerificaOnResume(true);
+    //    Log.e("onbackpressed","o valor é: "+aplicacao.isVerificaOnResume());
+    //    Log.e("verificaSom1","o valor do som é: "+aplicacao.isVerificaSom());
+
+        Intent intent = new Intent(getApplicationContext(), menu.class);
+        startActivity(intent);
+        finish();
     }
 
     private Cursor obterPontos() {
