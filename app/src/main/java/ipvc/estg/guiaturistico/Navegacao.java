@@ -401,7 +401,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             min = distancia.get(0);
             Log.e("distanciaget0",""+distancia.get(0));
 
-
+            int teste3 = 0;
+            int teste2 = 0;
 
             for (int i = 0; i < distancia.size(); i++) {
 
@@ -415,10 +416,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                    // textdistancia.setText("" + distancia + " Metros");
                     //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
                         getrecursos(locations.get(i), min);
+                        teste3++;
+                    Log.e("quantasvezes",""+teste3);
+
+
 
                 }else{
                     getrecursos(locations.get(i),min);
                     Log.e("min2",""+min);
+                    teste2++;
+                    Log.e("quantasvedes",""+teste2);
                 }
 
             }
@@ -506,6 +513,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             locFim.setLongitude(longitude);
 
             imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+
+            Log.e("imagem",imagem);
 
             verificaImagens();
            // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
@@ -811,11 +820,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
 
-            String imagemfinal = "R.drawable."+imagem;
-          //  imagemButton2.setImageResource(R.drawable.);
 
-            Picasso.with(getApplicationContext()).load(imagemfinal);
-          //  Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+//            imagemButton2.setImageResource(resID);
+
+          //  String imagemfinal = "R.drawable."+imagem;
+
+
+         //   Picasso.with(getApplicationContext()).load(imagemfinal);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton2);
             imagemButton2.setClickable(true);
             imagem2 = true;
             imagemButton2.setOnClickListener(new View.OnClickListener() {
@@ -839,10 +853,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction > 22.5 && direction < 67.5){
             bearingText = "NE";
-            String imagemfinal = "R.drawable."+imagem;
+            //String imagemfinal = "R.drawable."+imagem;
             //imagemButton3.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton3);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton3);
+
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+//            imagemButton3.setImageResource(resID);
 
             imagemButton3.setClickable(true);
             imagem3 = true;
@@ -869,10 +887,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction >= 67.5 && direction <= 112.5){
             bearingText = "E";
 
-            String imagemfinal = "R.drawable."+imagem;
+           // String imagemfinal = "R.drawable."+imagem;
             //imagemButton6.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton6);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton6);
+
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+//            imagemButton6.setImageResource(resID);
+
             imagemButton6.setClickable(true);
             imagem6 = true;
             imagemButton6.setOnClickListener(new View.OnClickListener() {
@@ -897,10 +920,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction > 112.5 && direction < 157.5){
             bearingText = "SE";
 
-            String imagemfinal ="R.drawable."+imagem;
+           // String imagemfinal ="R.drawable."+imagem;
             //imagemButton9.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton9);
+            //Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton9);
+
+            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+            Log.e("res",""+resID);
+            imagemButton9.setImageResource(resID);
+
             imagemButton9.setClickable(true);
             imagem9 = true;
             imagemButton9.setOnClickListener(new View.OnClickListener() {
@@ -925,10 +953,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         else if (direction >= 157.5 && direction <= 202.5){
             bearingText = "S";
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
-            String imagemfinal = "R.drawable."+imagem;
+           // String imagemfinal = "R.drawable."+imagem;
            // imagemButton8.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton8);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton8);
+
+            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+            Log.e("res",""+resID);
+            imagemButton8.setImageResource(resID);
             imagemButton8.setClickable(true);
             imagem8 = true;
             imagemButton8.setOnClickListener(new View.OnClickListener() {
@@ -954,9 +986,13 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
            //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
 
-            String imagemfinal = "R.drawable."+imagem;
+            //String imagemfinal = "R.drawable."+imagem;
            // imagemButton7.setImageResource(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton7);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton7);
+
+           // int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+            //Log.e("res",""+resID);
+            //imagemButton7.setImageResource(resID);
 
             imagemButton7.setClickable(true);
             imagem7 = true;
@@ -980,10 +1016,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         else if (direction >= 247.5 && direction <= 292.5){
             bearingText = "W";
-            ;
-            String imagemfinal = "R.drawable."+imagem;
+
+           // String imagemfinal = "R.drawable."+imagem;
            // imagemButton4.setImageResource(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton4);
+           Picasso.with(getApplicationContext()).load(imagem).into(imagemButton4);
+
+            //int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+            //Log.e("res",""+resID);
+            //imagemButton4.setImageResource(resID);
 
             imagemButton4.setClickable(true);
             imagem4 = true;
@@ -1010,9 +1050,13 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             bearingText = "NW";
            // tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
-            String imagemfinal = "R.drawable."+imagem;
+          //  String imagemfinal = "R.drawable."+imagem;
             //imagemButton1.setImageResource(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton1);
+            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton1);
+
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+//            imagemButton1.setImageResource(resID);
 
             imagemButton1.setClickable(true);
             imagem1 = true;
