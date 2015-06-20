@@ -1,5 +1,6 @@
 package ipvc.estg.guiaturistico;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -28,6 +30,8 @@ public class EscolheLingua extends ActionBarActivity {
     CheckBox checkDados;
 
     boolean isEnabled;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,14 @@ public class EscolheLingua extends ActionBarActivity {
 
 
                 if (((CheckBox) v).isChecked()) {
+
+                   // Intent intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                    //startActivity(intent);
+
+                   // Intent intent=new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+                   // ComponentName cName = new ComponentName("com.android.phone","com.android.phone.Settings");
+                 //   intent.setComponent(cName);
+                //    startActivity(intent);
 
                     try {
                         setMobileDataEnabled(getApplicationContext(),true);
