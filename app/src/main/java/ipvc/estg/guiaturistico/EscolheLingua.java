@@ -1,10 +1,12 @@
 package ipvc.estg.guiaturistico;
 
 import android.content.ContentValues;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
@@ -74,11 +76,14 @@ public class EscolheLingua extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
 
                 if (((CheckBox) v).isChecked()) {
+
                     try {
                         setMobileDataEnabled(getApplicationContext(),true);
+                        toggleWiFi(true);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (NoSuchFieldException e) {
@@ -94,9 +99,13 @@ public class EscolheLingua extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
 
                 }else {
+                    toggleWiFi(false);
+
+
 
                     try {
                         setMobileDataEnabled(getApplicationContext(),false);
+                        wifiManager.setWifiEnabled(false);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (NoSuchFieldException e) {
@@ -115,11 +124,6 @@ public class EscolheLingua extends ActionBarActivity {
 
             }
         });
-
-
-
-
-
 
 
 
@@ -155,18 +159,20 @@ public class EscolheLingua extends ActionBarActivity {
         }
     }
 
+    public void toggleWiFi(boolean status) {
+        WifiManager wifiManager = (WifiManager) this
+                .getSystemService(Context.WIFI_SERVICE);
+        if (status == true && !wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(true);
+        } else if (status == false && wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(false);
+        }
+    }
+
 
     // quando iniciar a aplicação zera tudo
 
     private void resetApp() {
-        DbHelper dbHelper= new DbHelper(getApplicationContext());
-        db = dbHelper.getWritableDatabase();
-
-        ContentValues valores = new ContentValues();
-        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
-        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
-        String[] selectionArgs = {"1"};
-        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
@@ -201,7 +207,12 @@ public class EscolheLingua extends ActionBarActivity {
 
     }
 
-  /*  @Override
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+    /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_escolhe_lingua, menu);

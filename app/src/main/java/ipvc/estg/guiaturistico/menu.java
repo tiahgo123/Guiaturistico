@@ -796,6 +796,16 @@ public class menu extends ActionBarActivity {
 
 
     @Override
+    protected void onDestroy() {
+        ContentValues valores = new ContentValues();
+        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+        String[] selectionArgs = {"1"};
+        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
+        super.onDestroy();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.i("entrei onResume","adsada");

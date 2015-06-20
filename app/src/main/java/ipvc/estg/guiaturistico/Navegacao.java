@@ -1,11 +1,15 @@
 package ipvc.estg.guiaturistico;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +19,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -27,6 +32,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -37,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -125,6 +132,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         setContentView(R.layout.activity_navegacao);
 
         ttobj=new TextToSpeech(getApplicationContext(),
@@ -179,6 +188,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(in);
                     ativarGps = true;
+
+
 
                //     Intent on = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                    // startActivity(on);
@@ -376,16 +387,18 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     }
 
     private void verifica() {
-        Location location = new Location("teste");
+        int cont=0;
        ArrayList<Float> distancia = null;
         ArrayList<Location> locations = null;
         locations = new ArrayList<>();
         distancia = new ArrayList<>();
-        Float min;
+        Float min = null;
+        int indice = 0;
 
         //percorre todo o hasmap com os valores selecionados
 
         for (LatLng latLng :myMap.values()) {
+            Location location = new Location("teste"+cont);
             location.setLatitude(latLng.latitude);
             location.setLongitude(latLng.longitude);
             Log.e("distancialocalizacao", "" + mCurrentLocation.distanceTo(location));
@@ -394,53 +407,64 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
                 distancia.add(mCurrentLocation.distanceTo(location));
                 locations.add(location);
+                cont++;
             }     Log.e("distancia",""+distancia.size());
         }
         if(!distancia.isEmpty()) {
-            min = distancia.get(0);
-            Log.e("distanciaget0",""+distancia.get(0));
 
-            int teste3 = 0;
-            int teste2 = 0;
-
-            for (int i = 0; i < distancia.size(); i++) {
+            calculamin(locations,distancia,min,indice);
 
 
 
-                Log.e("distanciatotototototo",""+distancia.get(i));
-                if (min >= distancia.get(i)) {
-                    min = distancia.get(i);
-
-                    Log.e("mint",""+min);
-                   // textdistancia.setText("" + distancia + " Metros");
-                    //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
-                        getrecursos(locations.get(i), min);
-                        teste3++;
-                    Log.e("quantasvezes",""+teste3);
 
 
+         //   Double numero = Double.valueOf(min);
+         //  int testeint =  min;
+          //  String teste = String.valueOf(min);
 
-                }else{
-                    getrecursos(locations.get(i),min);
-                    Log.e("min2",""+min);
-                    teste2++;
-                    Log.e("quantasvedes",""+teste2);
-                }
+        }
+
+        }
+
+    private void calculamin(ArrayList<Location> locations, ArrayList<Float> distancia, Float min, int indice) {
+
+        min = distancia.get(0);
+        Log.e("distanciaget0",""+distancia.get(0));
+
+        int teste3 = 0;
+        int teste2 = 0;
+
+        for (int i = 0; i < distancia.size(); i++) {
+
+
+
+            Log.e("distanciatotototototo",""+distancia.get(i));
+            if (min >= distancia.get(i)) {
+                min = distancia.get(i);
+                indice = distancia.indexOf(min);
+
+
+                Log.e("mint",""+min);
+                // textdistancia.setText("" + distancia + " Metros");
+                //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
+                //  getrecursos(, min);
+                teste3++;
+                Log.e("quantasvezes",""+teste3);
+
+
+
+            }else{
+          //      getrecursos(locations.get(i),min);
+                Log.e("min2",""+min);
+                teste2++;
+                Log.e("quantasvedes",""+teste2);
 
             }
-
-
-            Double numero = Double.valueOf(min);
-         //  int testeint =  min;
-            String teste = String.valueOf(min);
+            //
 
         }
-
-        }
-
-
-
-
+        getrecursos(locations.get(indice),min);
+    }
 
 
 //        Iterator myVeryOwnIterator = myMap.keySet().iterator();
@@ -556,6 +580,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
+            imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
+
+
             if(metros<50){
                 ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
             }
@@ -586,6 +613,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
+
+
+            imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
             verificaImagens();
            // colocarImagem();
@@ -848,6 +878,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     }
 
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void colocaimagem2(){
 
         if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
@@ -864,7 +895,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
          //   Picasso.with(getApplicationContext()).load(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton2);
+            //Picasso.with(getApplicationContext()).load(imagem).into(imagemButton2);
+
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Log.e("ididididid",""+id);
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton2.setImageDrawable(drawable);
+
+
             imagemButton2.setClickable(true);
             imagem2 = true;
             imagemButton2.setOnClickListener(new View.OnClickListener() {
@@ -891,11 +931,17 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             //String imagemfinal = "R.drawable."+imagem;
             //imagemButton3.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton3);
+         //   Picasso.with(getApplicationContext()).load(imagem).into(imagemButton3);
 
 //            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
 //            Log.e("res",""+resID);
 //            imagemButton3.setImageResource(resID);
+
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton3.setImageDrawable(drawable);
 
             imagemButton3.setClickable(true);
             imagem3 = true;
@@ -925,11 +971,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
            // String imagemfinal = "R.drawable."+imagem;
             //imagemButton6.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton6);
+          //  Picasso.with(getApplicationContext()).load(imagem).into(imagemButton6);
 
 //            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
 //            Log.e("res",""+resID);
 //            imagemButton6.setImageResource(resID);
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton6.setImageDrawable(drawable);
 
             imagemButton6.setClickable(true);
             imagem6 = true;
@@ -960,9 +1011,13 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             //Picasso.with(getApplicationContext()).load(imagemfinal).into(imagemButton9);
 
-            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
-            Log.e("res",""+resID);
-            imagemButton9.setImageResource(resID);
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton9.setImageDrawable(drawable);
 
             imagemButton9.setClickable(true);
             imagem9 = true;
@@ -991,12 +1046,19 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
            // String imagemfinal = "R.drawable."+imagem;
            // imagemButton8.setImageResource(imagemfinal);
 
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton8);
+//            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton8);
+//
+//            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
+//            Log.e("res",""+resID);
+//            imagemButton8.setImageResource(resID);
 
-            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
-            Log.e("res",""+resID);
-            imagemButton8.setImageResource(resID);
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton8.setImageDrawable(drawable);
             imagemButton8.setClickable(true);
+
             imagem8 = true;
             imagemButton8.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1023,11 +1085,18 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             //String imagemfinal = "R.drawable."+imagem;
            // imagemButton7.setImageResource(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton7);
+           // Picasso.with(getApplicationContext()).load(imagem).into(imagemButton7);
+
+
+
 
            // int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
             //Log.e("res",""+resID);
             //imagemButton7.setImageResource(resID);
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton7.setImageDrawable(drawable);
 
             imagemButton7.setClickable(true);
             imagem7 = true;
@@ -1054,11 +1123,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
            // String imagemfinal = "R.drawable."+imagem;
            // imagemButton4.setImageResource(imagemfinal);
-           Picasso.with(getApplicationContext()).load(imagem).into(imagemButton4);
+          // Picasso.with(getApplicationContext()).load(imagem).into(imagemButton4);
 
             //int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
             //Log.e("res",""+resID);
             //imagemButton4.setImageResource(resID);
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton4.setImageDrawable(drawable);
 
             imagemButton4.setClickable(true);
             imagem4 = true;
@@ -1087,11 +1159,18 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
           //  String imagemfinal = "R.drawable."+imagem;
             //imagemButton1.setImageResource(imagemfinal);
-            Picasso.with(getApplicationContext()).load(imagem).into(imagemButton1);
+            //Picasso.with(getApplicationContext()).load(imagem).into(imagemButton1);
 
 //            int resID = getResources().getIdentifier(imagem , "drawable-hdpi", getPackageName());
 //            Log.e("res",""+resID);
 //            imagemButton1.setImageResource(resID);
+
+
+            int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+            Drawable drawable = getResources().getDrawable(id);
+            imagemButton1.setImageDrawable(drawable);
+
+           // imagemButton1.setImageResource(id);
 
             imagemButton1.setClickable(true);
             imagem1 = true;
@@ -1121,43 +1200,46 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
     private void verificaImagens(){
+
+
+        Drawable drawable = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         if(imagem1){
-            imagemButton1.setImageResource(android.R.color.transparent);
+            imagemButton1.setImageDrawable(drawable);
             imagemButton1.setClickable(false);
             imagem1 = false;
         }
         if(imagem2){
-            imagemButton2.setImageResource(android.R.color.transparent);
+            imagemButton2.setImageDrawable(drawable);
             imagemButton2.setClickable(false);
             imagem2 = false;
         }
         if(imagem3){
-            imagemButton3.setImageResource(android.R.color.transparent);
+            imagemButton3.setImageDrawable(drawable);
             imagemButton3.setClickable(false);
             imagem3 = false;
         }
         if(imagem4){
-            imagemButton4.setImageResource(android.R.color.transparent);
+            imagemButton4.setImageDrawable(drawable);
             imagemButton4.setClickable(false);
             imagem4 = false;
         }
         if(imagem6){
-            imagemButton6.setImageResource(android.R.color.transparent);
+            imagemButton6.setImageDrawable(drawable);
             imagemButton6.setClickable(false);
             imagem6 = false;
         }
         if(imagem7){
-            imagemButton7.setImageResource(android.R.color.transparent);
+            imagemButton7.setImageDrawable(drawable);
             imagemButton7.setClickable(false);
             imagem7 = false;
         }
         if(imagem8){
-            imagemButton8.setImageResource(android.R.color.transparent);
+            imagemButton8.setImageDrawable(drawable);
             imagemButton8.setClickable(false);
             imagem8 = false;
         }
         if(imagem9) {
-            imagemButton9.setImageResource(android.R.color.transparent);
+            imagemButton9.setImageDrawable(drawable);
             imagemButton9.setClickable(false);
             imagem9 = false;
         }
@@ -1184,7 +1266,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         });
     }
 
-//    private void colocarImagem() {
+    @Override
+    public boolean isFinishing() {
+        Log.e("isfinis","isfinis");
+        return super.isFinishing();
+
+
+           }
+
+
+    //    private void colocarImagem() {
 //        if(bearingText.equals("N")){
 //            if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
 //
