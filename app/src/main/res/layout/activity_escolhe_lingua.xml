@@ -1,7 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+
     tools:context=".EscolheLingua"
     >
 
@@ -25,7 +25,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -102,6 +103,75 @@
 
                 </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perguntaFuncionalidades"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/textView9"
+                    android:layout_marginTop="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/funcionalidadesNet"
+                        android:id="@+id/textView10"
+                        android:layout_marginTop="10dp"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/dadosMoveis"
+                        android:id="@+id/checkBoxDados"/>
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/funcionalidadesSom"
+                        android:id="@+id/textView11"
+                        android:layout_marginTop="10dp"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/som"
+                        android:id="@+id/checkBoxSom"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/funcionalidadesInformacao"
+                    android:layout_marginTop="3dp"/>
+
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -121,4 +191,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

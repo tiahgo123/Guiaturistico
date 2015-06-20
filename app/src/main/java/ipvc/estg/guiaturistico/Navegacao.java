@@ -170,9 +170,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Atenção");
-            alert.setMessage("Por favor active o gps");
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            alert.setTitle(R.string.atencao);
+            alert.setMessage(R.string.ativarGps);
+            alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 

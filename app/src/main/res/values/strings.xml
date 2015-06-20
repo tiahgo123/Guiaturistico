@@ -53,6 +53,16 @@
     <string name="irpara">ir para</string>
     <string name="verdescricao">ver descrição</string>
 
+    <string name="btInicia">Por favor escolha pelo menos um ponto.</string>
+    <string name="ativarGps">Por favor active o gps</string>
+    <string name="ok">Ok</string>
+    <string name="perguntaFuncionalidades">Funcionalidades Especiais</string>
+    <string name="funcionalidadesNet">Para utilizar diversas funcionalidades (Reconhecimento de voz, Obter caminho) necessita de aceder a internet.</string>
+    <string name="dadosMoveis">Dados móveis</string>
+    <string name="funcionalidadesSom">Deseja que a aplicação fale durante a viagem.</string>
+    <string name="funcionalidadesInformacao">Pode sempre alterar uma das suas escolhas durante a utilização do Guia.</string>
+
+
 
 
 </resources>

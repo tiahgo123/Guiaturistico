@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by tiago on 04/03/2015.
@@ -64,6 +66,12 @@ public class menu extends ActionBarActivity {
      boolean onResume = false;
      boolean veSom = true;
      boolean veSom1;
+
+    Cursor valoresChecked;
+    int checked = 1;
+
+
+
 
 
     @Override
@@ -598,12 +606,19 @@ public class menu extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                aplicacao.setVerificaOnResume(true);
 
-                Intent intent = new Intent(getApplicationContext(), Navegacao.class);
-                startActivity(intent);
-                finish();
-            }
+                Cursor cursor = verSeExisteChecked();
+                if(cursor!=null && cursor.getCount()>=1){
+                    aplicacao.setVerificaOnResume(true);
+
+                    Intent intent = new Intent(getApplicationContext(), Navegacao.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                   Toast.makeText(getApplicationContext(),R.string.btInicia, Toast.LENGTH_LONG).show();
+
+                }
+ }
         });
 
     }
@@ -680,6 +695,31 @@ public class menu extends ActionBarActivity {
 
     }
 
+    private Cursor verSeExisteChecked() {
+
+        String[] projection = {
+                Contrato.pontos.COLUMN_NOME,  Contrato.pontos._ID,
+                Contrato.pontos.COLUMN_IdCategoria, Contrato.pontos.COLUMN_CHECKED
+
+        };
+
+        //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
+        String selection = Contrato.pontos.COLUMN_CHECKED + "=?";
+        String[] selectionArgs = {String.valueOf(checked)};
+
+        valoresChecked = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        return valoresChecked;
+    }
+
     public void pergunta(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
@@ -702,7 +742,6 @@ public class menu extends ActionBarActivity {
                                 db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
 
                                 final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-
 
                                 aplicacao.setVerificarlinearMonumento(false);
                                 aplicacao.setVerificaTransacaoMonumento(false);
