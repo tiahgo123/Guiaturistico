@@ -59,11 +59,11 @@ public class AjudaVideoGrande extends ActionBarActivity {
             if (!veSom1){
                 //sem som
                 //   Log.e("estou a dar mico","estou a dar mico");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = false;
             } else{
                 //com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
 
                 veSom = true;
 
@@ -85,14 +85,14 @@ public class AjudaVideoGrande extends ActionBarActivity {
             if (!veSom){
                 // par
                 //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = true;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             } else{
                 //impar
                 //coloca sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = false;
                 aplicacao.setVerificaSom(false);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
