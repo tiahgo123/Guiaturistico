@@ -35,7 +35,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image1"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/left_up"
                     android:layout_gravity="center"/>
             </LinearLayout>
 
@@ -52,7 +52,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image2"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/up"
                     android:layout_gravity="center"/>
 
 
@@ -71,7 +71,7 @@
                     android:layout_height="75dp"
                     android:id="@+id/image3"
                     android:layout_gravity="center"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha" />
+                    android:src="@drawable/right_up" />
             </LinearLayout>
 
 
@@ -96,7 +96,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image4"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/left"
                     android:layout_gravity="center"/>
             </LinearLayout>
 
@@ -113,7 +113,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image5"
-                    android:background="@drawable/outro"
+                    android:background="@drawable/steering_wheel"
                     android:layout_gravity="center"/>
 
 
@@ -140,7 +140,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image6"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/right"
                     android:layout_gravity="center"/>
             </LinearLayout>
 
@@ -165,7 +165,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image7"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/left_down"
                     android:layout_gravity="center"/>
             </LinearLayout>
 
@@ -182,7 +182,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image8"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/down"
                     android:layout_gravity="center"/>
 
 
@@ -200,7 +200,7 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/image9"
-                    android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+                    android:src="@drawable/right_down"
                     android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
@@ -222,8 +222,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
                 android:id="@+id/imageButton22"
-                android:src="@android:drawable/sym_action_call"
+
                 android:layout_marginBottom="31dp"
+                android:src="@drawable/phone"
  />
 
 
@@ -238,7 +239,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
                 android:id="@+id/imageButton23"
-                android:src="@android:drawable/ic_dialog_map"
+                android:src="@drawable/map_marker"
  />
         </LinearLayout>
         </LinearLayout>

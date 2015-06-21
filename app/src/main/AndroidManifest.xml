@@ -12,6 +12,11 @@
     <uses-feature android:name="android.hardware.wifi" />
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyAW78Lz2ScVtFdZA975XGdSFqdlbmEyWb4"/>
+
     <application
         android:name=".Aplicacao"
         android:allowBackup="true"

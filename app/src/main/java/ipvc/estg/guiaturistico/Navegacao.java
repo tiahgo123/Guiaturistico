@@ -21,6 +21,7 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -42,14 +43,25 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by Tiago Sousa on 08/04/2015.
@@ -82,6 +94,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     float baseAzimuth;
     float degree;
     float direction;
+
+    String[] separated;
 
 
     //variaveis para saber o lado que esta o monumento
@@ -131,6 +145,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private boolean veSom=true;
     private boolean veSom1;
     private boolean ativarGps = false;
+
+    Integer distance = 0;
+    String duration = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,11 +255,11 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         if(onResume){
             if (!veSom1){
                 //sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = false;
             } else{
                 //com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
             }
         }
@@ -264,7 +281,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             if (!veSom){
                 // par
                 //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = true;
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC,false);
@@ -272,7 +289,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             } else{
                 //impar
                 //coloca sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = false;
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC,true);
@@ -411,28 +428,42 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (mWifi.isConnected()) {
 
-                LatLng latLng1 = new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude());
-                LatLng latLng2 = new LatLng(location.getLatitude(),location.getLongitude());
+                LatLng latLng1 = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                LatLng latLng2 = new LatLng(location.getLatitude(), location.getLongitude());
 
-                if(CalculationByDistance(latLng1,latLng2)<=valor){
-                    distancia.add((float) CalculationByDistance(latLng1,latLng2));
-                    locations.add(location);
+                String url = getDirectionsUrl(latLng1, latLng2);
 
+                DownloadTask downloadTask = new DownloadTask();
+
+                // Start downloading json data from Google Directions API
+                downloadTask.execute(url);
+
+
+                // ver depois
+
+                if (distance != 0) {
+
+                    if (distance <= valor) {
+                        distancia.add(Float.valueOf(distance));
+                        locations.add(location);
+
+
+                    }
+                }
+                } else {
+                    if (mCurrentLocation.distanceTo(location) <= valor) {
+                        //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
+                        distancia.add(mCurrentLocation.distanceTo(location));
+                        locations.add(location);
+                        cont++;
+                    }
+                    Log.e("distancia", "" + distancia.size());
 
                 }
-            }else {
-                if (mCurrentLocation.distanceTo(location) <= valor) {
-                    //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
-                    distancia.add(mCurrentLocation.distanceTo(location));
-                    locations.add(location);
-                    cont++;
-                }     Log.e("distancia",""+distancia.size());
 
             }
 
 
-
-        }
         if(!distancia.isEmpty()) {
 
             calculamin(locations,distancia,min,indice);
@@ -1213,72 +1244,52 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
     }
 
-    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-        return Radius * c;
-    }
-
-
     private void verificaImagens(){
 
-
-        Drawable drawable = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         if(imagem1){
+            Drawable drawable = getResources().getDrawable(R.drawable.left_up);
             imagemButton1.setImageDrawable(drawable);
             imagemButton1.setClickable(false);
             imagem1 = false;
         }
         if(imagem2){
+            Drawable drawable = getResources().getDrawable(R.drawable.up);
             imagemButton2.setImageDrawable(drawable);
             imagemButton2.setClickable(false);
             imagem2 = false;
         }
         if(imagem3){
+            Drawable drawable = getResources().getDrawable(R.drawable.right_up);
             imagemButton3.setImageDrawable(drawable);
             imagemButton3.setClickable(false);
             imagem3 = false;
         }
         if(imagem4){
+            Drawable drawable = getResources().getDrawable(R.drawable.left);
             imagemButton4.setImageDrawable(drawable);
             imagemButton4.setClickable(false);
             imagem4 = false;
         }
         if(imagem6){
+            Drawable drawable = getResources().getDrawable(R.drawable.right);
             imagemButton6.setImageDrawable(drawable);
             imagemButton6.setClickable(false);
             imagem6 = false;
         }
         if(imagem7){
+            Drawable drawable = getResources().getDrawable(R.drawable.left_down);
             imagemButton7.setImageDrawable(drawable);
             imagemButton7.setClickable(false);
             imagem7 = false;
         }
         if(imagem8){
+            Drawable drawable = getResources().getDrawable(R.drawable.down);
             imagemButton8.setImageDrawable(drawable);
             imagemButton8.setClickable(false);
             imagem8 = false;
         }
         if(imagem9) {
+            Drawable drawable = getResources().getDrawable(R.drawable.right_down);
             imagemButton9.setImageDrawable(drawable);
             imagemButton9.setClickable(false);
             imagem9 = false;
@@ -1307,602 +1318,188 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     }
 
 
+    private String getDirectionsUrl(LatLng origin, LatLng dest)
+    {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
-    //    private void colocarImagem() {
-//        if(bearingText.equals("N")){
-//            if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
-//
-//                Log.i("Cima","Cima");
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//
-//                }
-//            else if (direction > 22.5 && direction < 67.5){
-//
-//                Log.i("direito","entre norte e este");
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (direction >= 67.5 && direction <= 112.5){
-//
-//                Log.i("direito","direito");
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (direction > 112.5 && direction < 157.5){
-//
-//                Log.i("direito","entre sul e sudoeste");
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (direction >= 157.5 && direction <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (direction > 202.5 && direction < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (direction >= 247.5 && direction <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (direction > 292.5 && direction < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//
-//        }else if (bearingText.equals("S")){
-//           // bearingText = "S";
-//            if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (direction > 22.5 && direction < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (direction >= 67.5 && direction <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (direction > 112.5 && direction < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (direction >= 157.5 && direction <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//            else if (direction > 202.5 && direction < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (direction >= 247.5 && direction <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (direction > 292.5 && direction < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//        }else if (bearingText.equals("E")){
-//          //  bearingText = "E";
-//            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//        }else if (bearingText.equals("W")){
-//          //  bearingText = "W";
-//            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//
-//        }       else if (bearingText.equals("NE")){
-//          //  bearingText = "NE";
-//            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//
-//        }
-//        else if (bearingText.equals("SE")){
-//       //     bearingText = "SE";
-//
-//            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//
-//        } else if (bearingText.equals("SW")){
-//          //  bearingText = "SW";
-//
-//            if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//
-//        }    else if (bearingText.equals("NW")){
-//        //    bearingText = "NW";
-//                if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-//
-//                bearingTextImagem = "N";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton3);
-//                imagemButton3.setClickable(true);
-//                imagem3 = true;
-//            }
-//            else if (degree > 22.5 && degree < 67.5){
-//
-//                bearingTextImagem = "NE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton6);
-//                imagemButton6.setClickable(true);
-//                imagem6 = true;
-//            }
-//            else if (degree >= 67.5 && degree <= 112.5){
-//
-//                bearingTextImagem = "E";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton9);
-//                    imagemButton9.setClickable(true);
-//                imagem9 = true;
-//            }
-//            else if (degree > 112.5 && degree < 157.5){
-//
-//                bearingTextImagem = "SE";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton8);
-//                    imagemButton8.setClickable(true);
-//                imagem8 = true;
-//            }
-//            else if (degree >= 157.5 && degree <= 202.5){
-//
-//                bearingTextImagem = "S";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton7);
-//                    imagemButton7.setClickable(true);
-//                imagem7 = true;
-//            }
-//            else if (degree > 202.5 && degree < 247.5){
-//
-//                bearingTextImagem = "SW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton4);
-//                    imagemButton4.setClickable(true);
-//                imagem4 = true;
-//            }
-//            else if (degree >= 247.5 && degree <= 292.5){
-//
-//                bearingTextImagem = "W";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-//                    imagemButton1.setClickable(true);
-//                imagem1 = true;
-//            }
-//            else if (degree > 292.5 && degree < 337.5){
-//                bearingTextImagem = "NW";
-//                Toast.makeText(getApplicationContext(), "lado e: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
-//                Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton2);
-//                    imagemButton2.setClickable(true);
-//                imagem2 = true;
-//            }
-//
-//        }
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
+        // Sensor enabled
+        String sensor = "sensor=false";
 
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
 
-   // }
-   /* private void saberDirecao() {
-        if ( (360 >= degree && degree >= 337.5) || (0 <= degree && degree <= 22.5) ){
-            bearingText = "N";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
+        // Output format
+        String output = "json";
 
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+        Log.e("link",url);
+
+        return url;
+    }
+
+    /** A method to download json data from url */
+    private String downloadUrl(String strUrl) throws IOException
+    {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try
+        {
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        } catch (Exception e)
+        {
+          //  Log.d("Exception while downloading url", e.toString());
+        } finally
+        {
+            iStream.close();
+            urlConnection.disconnect();
         }
-        else if (degree > 22.5 && degree < 67.5){
-            bearingText = "NE";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
+        return data;
+    }
 
-        }
-        else if (degree >= 67.5 && degree <= 112.5){
-            bearingText = "E";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
+    // Fetches data from url passed
+    private class DownloadTask extends AsyncTask<String, Void, String>
+    {
+        // Downloading data in non-ui thread
+        @Override
+        protected String doInBackground(String... url)
+        {
 
-        }
-        else if (degree > 112.5 && degree < 157.5){
-            bearingText = "SE";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
+            // For storing data from web service
+            String data = "";
 
+            try
+            {
+                // Fetching the data from web service
+                data = Navegacao.this.downloadUrl(url[0]);
+            } catch (Exception e)
+            {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
         }
-        else if (degree >= 157.5 && degree <= 202.5){
-            bearingText = "S";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
-        }
-        else if (degree > 202.5 && degree < 247.5){
-            bearingText = "SW";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+        // Executes in UI thread, after the execution of
+        // doInBackground()
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
 
-        }
-        else if (degree >= 247.5 && degree <= 292.5){
-            bearingText = "W";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+            ParserTask parserTask = new ParserTask();
 
-        }
-        else if (degree > 292.5 && degree < 337.5){
-            bearingText = "NW";
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
 
-        }
-        else{
-            bearingText = "?";
         }
     }
 
-   */
+    /** A class to parse the Google Places in JSON format */
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, Integer>>>>
+    {
+
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<HashMap<String, Integer>>> doInBackground(String... jsonData)
+        {
+            JSONObject jObject;
+            List<List<HashMap<String, Integer>>> routes = null;
+
+            try
+            {
+                jObject = new JSONObject(jsonData[0]);
+                JsonParser parser = new JsonParser();
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, Integer>>> result)
+        {
+            ArrayList<LatLng> points = null;
+            PolylineOptions lineOptions = null;
+            MarkerOptions markerOptions = new MarkerOptions();
+
+
+            if (result.size() < 1)
+            {
+                Toast.makeText(Navegacao.this.getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Traversing through all the routes
+            for (int i = 0; i < result.size(); i++)
+            {
+                points = new ArrayList<LatLng>();
+                lineOptions = new PolylineOptions();
+
+                // Fetching i-th route
+                List<HashMap<String, Integer>> path = result.get(i);
+
+                // Fetching all the points in i-th route
+                for (int j = 0; j < path.size(); j++)
+                {
+                    HashMap<String, Integer> point = path.get(j);
+
+                    if (j == 0)
+                    { // Get distance from the list
+                        distance = point.get("distance");
+                        continue;
+                    }
+                   // double lat = Double.parseDouble(point.get("lat"));
+                   // double lng = Double.parseDouble(point.get("lng"));
+                   // LatLng position = new LatLng(lat, lng);
+                    //points.add(position);
+                }
+
+                // Adding all the points in the route to LineOptions
+               // lineOptions.addAll(points);
+              //  lineOptions.width(2);
+             //   lineOptions.color(Color.RED);
+            }
+
+            Toast.makeText(getApplicationContext(),"Distance:" + distance,Toast.LENGTH_LONG).show();
+
+            // Drawing polyline in the Google Map for the i-th route
+           // Navegacao.this.map.addPolyline(lineOptions);
+        }
+    }
+
 }
