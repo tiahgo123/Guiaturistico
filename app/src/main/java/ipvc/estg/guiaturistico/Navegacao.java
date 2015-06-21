@@ -1306,13 +1306,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         });
     }
 
-    @Override
-    public boolean isFinishing() {
-        Log.e("isfinis","isfinis");
-        return super.isFinishing();
-
-
-           }
 
 
     //    private void colocarImagem() {
