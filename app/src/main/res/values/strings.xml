@@ -63,5 +63,10 @@
     <string name="funcionalidadesInformacao">Pode sempre alterar uma das suas escolhas durante a utilização do Guia.</string>
     <string name="wifi">Wifi</string>
 
+    <string name="trabalhoElaborado">Trabalho Elaborado por:</string>
+    <string name="tiagoSousa">Tiago Sousa</string>
+    <string name="tiagoCoelho">Tiago Coelho</string>
+
+
 
 </resources>
