@@ -43,6 +43,17 @@ public class Aplicacao extends Application {
 
     float valorSeekBar;
 
+    int posVideo1;
+
+    public void setPosVideo(int posVideo1) {
+        this.posVideo1 = posVideo1;
+    }
+
+
+    public int getPosVideo() {
+        return posVideo1;
+    }
+
     public void setValorSeekBar(float valorSeekBar) {
         this.valorSeekBar = valorSeekBar;
     }

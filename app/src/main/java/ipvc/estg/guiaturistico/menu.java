@@ -679,6 +679,8 @@ public class menu extends ActionBarActivity {
         if (id == R.id.btAjuda) {
             Intent intent = new Intent(getApplicationContext(), Ajuda.class);
             startActivity(intent);
+            aplicacao.setVerificaOnResume(true);
+            finish();
             return true;
         }
         if (id == R.id.btSair) {

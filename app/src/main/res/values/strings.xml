@@ -67,6 +67,8 @@
     <string name="tiagoSousa">Tiago Sousa</string>
     <string name="tiagoCoelho">Tiago Coelho</string>
 
+    <string name="aumentaVideo">Ampliar</string>
+    <string name="diminuiVideo">Diminuir</string>
 
 
 </resources>

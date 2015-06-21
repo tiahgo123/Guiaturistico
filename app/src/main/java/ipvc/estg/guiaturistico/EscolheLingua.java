@@ -2,15 +2,12 @@ package ipvc.estg.guiaturistico;
 
 import android.content.ComponentName;
 import android.content.ContentValues;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -31,7 +28,10 @@ public class EscolheLingua extends ActionBarActivity {
     CheckBox checkDados;
     CheckBox checkwifi;
 
-    boolean isEnabled;
+  //  boolean isEnabled;
+
+    WifiManager wifiManager;
+    TelephonyManager telephonyManager;
 
 
 
@@ -39,17 +39,6 @@ public class EscolheLingua extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
-
-
-        DbHelper dbHelper= new DbHelper(getApplicationContext());
-        db = dbHelper.getWritableDatabase();
-
-        ContentValues valores = new ContentValues();
-        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
-        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
-        String[] selectionArgs = {"1"};
-        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
-
 
         resetApp();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
@@ -59,19 +48,12 @@ public class EscolheLingua extends ActionBarActivity {
         checkwifi = (CheckBox) findViewById(R.id.checkBoxwifi);
 
 
-        //Verificar internet
-        TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 
-        if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
-            isEnabled = true;
-            checkDados.setChecked(true);
-           // Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
-        }else{
-            isEnabled = false;
-            checkDados.setChecked(false);
-           // Toast.makeText(getApplicationContext(),"desligada",Toast.LENGTH_SHORT).show();
-        }
+        wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 
+        functionVeWifi();
+        functionVeDados();
 
 
         checkSom.setOnClickListener(new View.OnClickListener() {
@@ -95,21 +77,17 @@ public class EscolheLingua extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-
-
-
                 if (((CheckBox) v).isChecked()) {
 
                     Intent intent = new Intent(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
                     startActivity(intent);
-
 
                    // Intent intent=new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
                    // ComponentName cName = new ComponentName("com.android.phone","com.android.phone.Settings");
                  //   intent.setComponent(cName);
                 //    startActivity(intent);
 
-                    try {
+      /*              try {
                         setMobileDataEnabled(getApplicationContext(),true);
 
                     } catch (ClassNotFoundException e) {
@@ -124,14 +102,16 @@ public class EscolheLingua extends ActionBarActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
+            //        Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
+
+            */
 
                 }else {
 
+                    Intent intent = new Intent(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
+                    startActivity(intent);
 
-
-
-                    try {
+        /*            try {
                         setMobileDataEnabled(getApplicationContext(),false);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -145,7 +125,9 @@ public class EscolheLingua extends ActionBarActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(getApplicationContext(),"desligar",Toast.LENGTH_SHORT).show();
+                    */
+
+               //     Toast.makeText(getApplicationContext(),"desligar",Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -158,13 +140,10 @@ public class EscolheLingua extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
 
                 if(((CheckBox) v).isChecked()){
                     openWifiSettings();
-
-
-
 
                 }else{
                     wifiManager.setWifiEnabled(false);
@@ -195,6 +174,30 @@ public class EscolheLingua extends ActionBarActivity {
 
 
     }
+
+    //detetar wifi
+    void functionVeWifi(){
+        if(wifiManager.isWifiEnabled()){
+            checkwifi.setChecked(true);
+        }else{
+            checkwifi.setChecked(false);
+        }
+    }
+
+    //detetar dados
+    void functionVeDados(){
+        if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
+
+            checkDados.setChecked(true);
+
+        }else{
+
+            checkDados.setChecked(false);
+
+        }
+    }
+
+
     //alterar os valores da net
     private void setMobileDataEnabled(Context context, boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -227,6 +230,15 @@ public class EscolheLingua extends ActionBarActivity {
     // quando iniciar a aplicação zera tudo
 
     private void resetApp() {
+
+        DbHelper dbHelper= new DbHelper(getApplicationContext());
+        db = dbHelper.getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+        String[] selectionArgs = {"1"};
+        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
@@ -263,46 +275,64 @@ public class EscolheLingua extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (mWifi.isConnected()) {
 
-            checkwifi.setChecked(true);
-            // Do whatever
-        }else {
-            checkwifi.setChecked(false);
-        }
+        functionVeWifi();
+        functionVeDados();
 
         super.onResume();
     }
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
     }
-    /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_escolhe_lingua, menu);
-        return true;
-    }
 
+    //detetar se a barra é utilizada
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        try
+        {
+            if(!hasFocus)
+            {
+                Object service  = getSystemService("statusbar");
+                Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+                Method collapse = statusbarManager.getMethod("collapse");
+                collapse .setAccessible(true);
+                collapse .invoke(service);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            }else{
+     //           Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
+                functionVeWifi();
+                functionVeDados();
+
+            }
         }
+        catch(Exception ex)
+        {
+            if(!hasFocus)
+            {
+                try {
+                    Object service  = getSystemService("statusbar");
+                    Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+                    Method collapse = statusbarManager.getMethod("collapse");
+                    collapse .setAccessible(true);
+                    collapse .invoke(service);
 
-        return super.onOptionsItemSelected(item);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                ex.printStackTrace();
+            }
+         //   Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
+        }
     }
-    */
+
+
 
     }
 

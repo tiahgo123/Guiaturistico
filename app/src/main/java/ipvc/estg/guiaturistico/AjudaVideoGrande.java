@@ -9,16 +9,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 /**
- * Created by Tiago Sousa on 29/04/2015.
+ * Created by Tiago Sousa on 21/06/2015.
  */
-public class Ajuda extends ActionBarActivity {
-
+public class AjudaVideoGrande extends ActionBarActivity {
 
     VideoView video;
     MediaController mc;
@@ -33,42 +30,23 @@ public class Ajuda extends ActionBarActivity {
     int posVideo;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_ajuda);
+        setContentView(R.layout.layout_ajuda_video);
+
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
         mc= new MediaController(this);
         audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
 
-        video = (VideoView) findViewById(R.id.videoView);
+        video = (VideoView) findViewById(R.id.videoView1);
 
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.teste);
         video.setMediaController(mc);
         video.setVideoURI(uri);
-
-
-
-
-        Button voltar = (Button) findViewById(R.id.button2);
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                video.stopPlayback();
-                aplicacao.setVerificaOnResume(true);
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-                finish();
-
-
-            }
-        });
-
-    }
+ }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,7 +58,7 @@ public class Ajuda extends ActionBarActivity {
         if(onResume){
             if (!veSom1){
                 //sem som
-             //   Log.e("estou a dar mico","estou a dar mico");
+                //   Log.e("estou a dar mico","estou a dar mico");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
                 veSom = false;
             } else{
@@ -122,58 +100,31 @@ public class Ajuda extends ActionBarActivity {
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
             return true;
-        }
-        if(id == R.id.btAmplia){
-           // video.stopPlayback();
-            video.pause();
+        }else {
+            Log.i("sair","sair");
+            aplicacao.setVerificaOnResume(true);
             posVideo = video.getCurrentPosition();
             aplicacao.setPosVideo(posVideo);
-            aplicacao.setVerificaOnResume(true);
-            Intent intent = new Intent(getApplicationContext(),AjudaVideoGrande.class);
+
+            Intent intent = new Intent(getApplicationContext(),Ajuda.class);
             startActivity(intent);
             finish();
 
-            return true;
+          //  return true;
 
         }
-
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-      //  Log.i("onStop","onStop");
-        posVideo = video.getCurrentPosition();
-        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-        aplicacao.setPosVideo(posVideo);
-      //  Log.i("onStop1","onStop"+posVideo);
-
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-      //  Log.i("onREstart","onRestart");
-        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-        video.start();
-        video.seekTo(aplicacao.getPosVideo());
-      //  Log.i("onRestart1","onRestart"+posVideo);
-
-    }
-
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        video.stopPlayback();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         aplicacao.setVerificaOnResume(true);
-        aplicacao.setPosVideo(0);
-        Intent intent = new Intent(getApplicationContext(),menu.class);
-        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        posVideo = video.getCurrentPosition();
+        aplicacao.setPosVideo(posVideo);
+        Intent intent = new Intent(getApplicationContext(),Ajuda.class);
         startActivity(intent);
         finish();
 
@@ -192,13 +143,34 @@ public class Ajuda extends ActionBarActivity {
                 veSom1 = false;
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             }
-
             video.start();
             video.seekTo(aplicacao.getPosVideo());
-
             onResume = true;
         }else{
             onResume = false;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //  Log.i("onStop","onStop");
+        posVideo = video.getCurrentPosition();
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        aplicacao.setPosVideo(posVideo);
+        //  Log.i("onStop1","onStop"+posVideo);
+
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //  Log.i("onREstart","onRestart");
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        video.start();
+        video.seekTo(aplicacao.getPosVideo());
+        //  Log.i("onRestart1","onRestart"+posVideo);
+
     }
 }
