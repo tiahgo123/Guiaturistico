@@ -61,8 +61,7 @@
     <string name="dadosMoveis">Dados móveis</string>
     <string name="funcionalidadesSom">Deseja que a aplicação fale durante a viagem.</string>
     <string name="funcionalidadesInformacao">Pode sempre alterar uma das suas escolhas durante a utilização do Guia.</string>
-
-
+    <string name="wifi">Wifi</string>
 
 
 </resources>

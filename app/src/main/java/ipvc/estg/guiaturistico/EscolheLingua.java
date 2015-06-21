@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -28,6 +29,7 @@ public class EscolheLingua extends ActionBarActivity {
 
     CheckBox checkSom;
     CheckBox checkDados;
+    CheckBox checkwifi;
 
     boolean isEnabled;
 
@@ -38,11 +40,24 @@ public class EscolheLingua extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
 
+
+        DbHelper dbHelper= new DbHelper(getApplicationContext());
+        db = dbHelper.getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+        String[] selectionArgs = {"1"};
+        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
+
+
         resetApp();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
         checkSom = (CheckBox) findViewById(R.id.checkBoxSom);
         checkDados = (CheckBox) findViewById(R.id.checkBoxDados);
+        checkwifi = (CheckBox) findViewById(R.id.checkBoxwifi);
+
 
         //Verificar internet
         TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
@@ -80,13 +95,14 @@ public class EscolheLingua extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
 
 
                 if (((CheckBox) v).isChecked()) {
 
-                   // Intent intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
-                    //startActivity(intent);
+                    Intent intent = new Intent(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
+                    startActivity(intent);
+
 
                    // Intent intent=new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
                    // ComponentName cName = new ComponentName("com.android.phone","com.android.phone.Settings");
@@ -95,7 +111,7 @@ public class EscolheLingua extends ActionBarActivity {
 
                     try {
                         setMobileDataEnabled(getApplicationContext(),true);
-                        toggleWiFi(true);
+
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (NoSuchFieldException e) {
@@ -111,13 +127,12 @@ public class EscolheLingua extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
 
                 }else {
-                    toggleWiFi(false);
+
 
 
 
                     try {
                         setMobileDataEnabled(getApplicationContext(),false);
-                        wifiManager.setWifiEnabled(false);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (NoSuchFieldException e) {
@@ -137,6 +152,33 @@ public class EscolheLingua extends ActionBarActivity {
             }
         });
 
+
+        checkwifi.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+                if(((CheckBox) v).isChecked()){
+                    openWifiSettings();
+
+
+
+
+                }else{
+                    wifiManager.setWifiEnabled(false);
+                    checkwifi.setChecked(false);
+
+
+
+                }
+
+
+
+
+            }
+        });
 
 
        Button avancar = (Button) findViewById(R.id.buttonAvancar);
@@ -171,14 +213,14 @@ public class EscolheLingua extends ActionBarActivity {
         }
     }
 
-    public void toggleWiFi(boolean status) {
-        WifiManager wifiManager = (WifiManager) this
-                .getSystemService(Context.WIFI_SERVICE);
-        if (status == true && !wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
-        } else if (status == false && wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(false);
-        }
+    public void openWifiSettings(){
+
+        final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.wifi.WifiSettings");
+        intent.setComponent(cn);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity( intent);
     }
 
 
@@ -217,6 +259,21 @@ public class EscolheLingua extends ActionBarActivity {
 
         aplicacao.setVerificaOnResume(false);
 
+    }
+
+    @Override
+    protected void onResume() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWifi.isConnected()) {
+
+            checkwifi.setChecked(true);
+            // Do whatever
+        }else {
+            checkwifi.setChecked(false);
+        }
+
+        super.onResume();
     }
 
     @Override

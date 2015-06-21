@@ -18,6 +18,8 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +44,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -403,24 +406,36 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             location.setLongitude(latLng.longitude);
             Log.e("distancialocalizacao", "" + mCurrentLocation.distanceTo(location));
             Log.e("valor5",""+valor);
-            if (mCurrentLocation.distanceTo(location) <= valor) {
-                //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
-                distancia.add(mCurrentLocation.distanceTo(location));
-                locations.add(location);
-                cont++;
-            }     Log.e("distancia",""+distancia.size());
+
+            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (mWifi.isConnected()) {
+
+                LatLng latLng1 = new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude());
+                LatLng latLng2 = new LatLng(location.getLatitude(),location.getLongitude());
+
+                if(CalculationByDistance(latLng1,latLng2)<=valor){
+                    distancia.add((float) CalculationByDistance(latLng1,latLng2));
+                    locations.add(location);
+
+
+                }
+            }else {
+                if (mCurrentLocation.distanceTo(location) <= valor) {
+                    //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
+                    distancia.add(mCurrentLocation.distanceTo(location));
+                    locations.add(location);
+                    cont++;
+                }     Log.e("distancia",""+distancia.size());
+
+            }
+
+
+
         }
         if(!distancia.isEmpty()) {
 
             calculamin(locations,distancia,min,indice);
-
-
-
-
-
-         //   Double numero = Double.valueOf(min);
-         //  int testeint =  min;
-          //  String teste = String.valueOf(min);
 
         }
 
@@ -1196,6 +1211,31 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             bearingText = "?";
         }
 
+    }
+
+    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
     }
 
 

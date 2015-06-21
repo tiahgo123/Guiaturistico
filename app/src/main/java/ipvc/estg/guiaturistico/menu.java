@@ -610,8 +610,8 @@ public class menu extends ActionBarActivity {
                 Cursor cursor = verSeExisteChecked();
                 if(cursor!=null && cursor.getCount()>=1){
                     aplicacao.setVerificaOnResume(true);
-
                     Intent intent = new Intent(getApplicationContext(), Navegacao.class);
+                    intent.putExtra("valor",valor);
                     startActivity(intent);
                     finish();
                 }else {
@@ -794,16 +794,6 @@ public class menu extends ActionBarActivity {
         alertDialog.show();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        ContentValues valores = new ContentValues();
-        valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
-        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
-        String[] selectionArgs = {"1"};
-        db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
-        super.onDestroy();
-    }
 
     @Override
     protected void onResume() {

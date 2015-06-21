@@ -27,5 +27,6 @@
     <string name="inicio"> Iniciar </string>
 
     <string name="voltar">Back</string>
+    <string name="wifi">Wifi</string>
 
 </resources>
