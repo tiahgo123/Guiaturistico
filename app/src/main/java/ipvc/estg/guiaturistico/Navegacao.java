@@ -1,9 +1,7 @@
 package ipvc.estg.guiaturistico;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,7 +43,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -53,15 +50,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 /**
  * Created by Tiago Sousa on 08/04/2015.
@@ -149,6 +144,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     Integer distance = 0;
     String duration = "";
 
+    private boolean verificaDialogbox1;
+    private boolean verificaDialogbox2;
+    private boolean verificaDialogbox3;
+
+    AlertDialog.Builder alert1;
+    AlertDialog.Builder alert2;
+    AlertDialog.Builder alert3;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,7 +187,10 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
 
-
+        //iniciar dialog box
+        alert1 = new AlertDialog.Builder(this);
+        alert2 = new AlertDialog.Builder(this);
+        alert3 = new AlertDialog.Builder(this);
 
 
         // initialize your android device sensor capabilities
@@ -198,27 +205,27 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle(R.string.atencao);
-            alert.setMessage(R.string.ativarGps);
-            alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+           // AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert1.setTitle(R.string.atencao);
+            alert1.setCancelable(false);
+            alert1.setMessage(R.string.ativarGps);
+            alert1.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
                     Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(in);
                     ativarGps = true;
+                    verificaDialogbox1 = false;
 
 
-
-               //     Intent on = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                   // startActivity(on);
                 }
             });
 
 
-            alert.show();
-            ativarGps = true;
+            alert1.show();
+            verificaDialogbox1 = true;
+
 
         }
 
@@ -732,6 +739,17 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     public void onResume() {
         // QUANDO A APLICAÇÃO ESTA NESTE ESTADO RETOMAR OS PEDIDOS
         super.onResume();
+        Toast.makeText(getApplicationContext(),"entrei",Toast.LENGTH_SHORT).show();
+        if(verificaDialogbox1){
+            Toast.makeText(getApplicationContext(),"remover1",Toast.LENGTH_SHORT).show();
+        }
+        if(verificaDialogbox2){
+            Toast.makeText(getApplicationContext(),"remover2",Toast.LENGTH_SHORT).show();
+        }
+        if(verificaDialogbox3){
+            Toast.makeText(getApplicationContext(),"remover3",Toast.LENGTH_SHORT).show();
+        }
+
 
    if (mGoogleApiClient.isConnected()) {
             startLocationUpdates();
@@ -757,7 +775,46 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         if(ativarGps){
 
             aplicacao.setVerificaOnResume(true);
+            LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                //AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert2.setTitle(R.string.atencao);
+                alert2.setMessage(R.string.ativarGps);
+                alert2.setCancelable(false);
+                alert2.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(in);
+                        verificaDialogbox2 = false;
+                        ativarGps = true;
+
+                    }
+                });
+                alert2.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        aplicacao.setVerificaOnResume(true);
+
+                        Intent intent = new Intent(getApplicationContext(), menu.class);
+                        startActivity(intent);
+                        finish();
+
+                        ativarGps = false;
+                        verificaDialogbox2 = false;
+
+                    }
+                });
+
+                alert2.show();
+                verificaDialogbox2 = true;
+
+            }
         }
+
 
 
     }
@@ -1499,6 +1556,84 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             // Drawing polyline in the Google Map for the i-th route
            // Navegacao.this.map.addPolyline(lineOptions);
+        }
+    }
+
+    //detetar se a barra é utilizada
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        try
+        {
+            if(!hasFocus)
+            {
+                Object service  = getSystemService("statusbar");
+                Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+                Method collapse = statusbarManager.getMethod("collapse");
+                collapse .setAccessible(true);
+                collapse .invoke(service);
+
+            }else{
+             //  Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
+                LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                   // AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert3.setTitle(R.string.atencao);
+                    alert3.setMessage(R.string.ativarGps);
+                    alert3.setCancelable(false);
+                    alert3.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            Intent in = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(in);
+                            ativarGps = true;
+                            verificaDialogbox3 = false;
+
+                        }
+                    });
+                    alert3.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+                            aplicacao.setVerificaOnResume(true);
+
+                            Intent intent = new Intent(getApplicationContext(), menu.class);
+                            startActivity(intent);
+                            finish();
+
+                            ativarGps = false;
+                            verificaDialogbox3 = false;
+
+                        }
+                    });
+
+                    alert3.show();
+                    verificaDialogbox3 = true;
+
+                }
+
+            }
+        }
+        catch(Exception ex)
+        {
+            if(!hasFocus)
+            {
+                try {
+                    Object service  = getSystemService("statusbar");
+                    Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+                    Method collapse = statusbarManager.getMethod("collapse");
+                    collapse .setAccessible(true);
+                    collapse .invoke(service);
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                ex.printStackTrace();
+            }
+              // Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
         }
     }
 
