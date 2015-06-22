@@ -256,18 +256,21 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-    //    Log.i("entrei no menu","entrei no menu");
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_navegacao, menu);
         if(onResume){
             if (!veSom1){
                 //sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
-                veSom = false;
-            } else{
-                //com som
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
+                aplicacao.setVerificaSom(true);
+
+            } else{
+                //com som
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                aplicacao.setVerificaSom(false);
+                veSom = false;
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -288,7 +291,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             if (!veSom){
                 // par
                 //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC,false);
@@ -296,7 +299,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             } else{
                 //impar
                 //coloca sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = false;
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC,true);

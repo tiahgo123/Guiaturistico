@@ -24,6 +24,7 @@ public class Ajuda extends ActionBarActivity {
     MediaController mc;
     AudioManager audioManager;
 
+
     //Realizar a verificação da actionbar, para o som
     Menu menu;
     boolean onResume = false;
@@ -51,8 +52,6 @@ public class Ajuda extends ActionBarActivity {
         video.setVideoURI(uri);
 
 
-
-
         Button voltar = (Button) findViewById(R.id.button2);
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,21 +72,22 @@ public class Ajuda extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu1", "entrei no menu adadadasdasda");
-
+        Log.i("entrei no menu Ajuda", "entrei no menu Ajuda");
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_ajuda, menu);
         if(onResume){
             if (!veSom1){
-                //sem som
-             //   Log.e("estou a dar mico","estou a dar mico");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-                veSom = false;
-            } else{
-                //com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
-
+                Log.e("estou sem som","estou sem som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
+                aplicacao.setVerificaSom(false);
+
+            } else{
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                veSom = false;
+                aplicacao.setVerificaSom(true);
 
             }
         }
@@ -102,22 +102,20 @@ public class Ajuda extends ActionBarActivity {
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+        Log.i("menuAjuda","menuAjuda");
         if (id == R.id.btSom) {
             if (!veSom){
-                // par
-                //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                Log.e("estou sem som","estou sem som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
-                aplicacao.setVerificaSom(true);
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-            } else{
-                //impar
-                //coloca sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-                veSom = false;
                 aplicacao.setVerificaSom(false);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            } else{
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                veSom = false;
+                aplicacao.setVerificaSom(true);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
@@ -173,7 +171,6 @@ public class Ajuda extends ActionBarActivity {
         aplicacao.setVerificaOnResume(true);
         aplicacao.setPosVideo(0);
         Intent intent = new Intent(getApplicationContext(),menu.class);
-        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
         startActivity(intent);
         finish();
 
@@ -184,11 +181,11 @@ public class Ajuda extends ActionBarActivity {
         super.onResume();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificaOnResume()){
-            // Log.i("verificaSom",""+aplicacao.isVerificaSom());
+             Log.i("verificaSomAjuda",""+aplicacao.isVerificaSom());
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-            }else{
+                }else{
                 veSom1 = false;
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             }
@@ -200,5 +197,12 @@ public class Ajuda extends ActionBarActivity {
         }else{
             onResume = false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(getApplicationContext(),"entrei aqui",Toast.LENGTH_SHORT).show();
+        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
     }
 }

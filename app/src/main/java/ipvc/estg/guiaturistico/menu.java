@@ -627,21 +627,21 @@ public class menu extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu1","entrei no menu adadadasdasda");
+        Log.i("entrei no menu menu","entrei no menu");
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         if(onResume){
             if (!veSom1){
-                //sem som
-                Log.e("estou a dar mico","estou a dar mico");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
-                veSom = false;
-            } else{
-                //com som
+                Log.e("estou sem som","estou sem som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
-
+                aplicacao.setVerificaSom(false);
                 veSom = true;
+            } else{
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                aplicacao.setVerificaSom(true);
+                veSom = false;
 
             }
         }
@@ -656,20 +656,18 @@ public class menu extends ActionBarActivity {
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+        Log.i("menuMenu","menuMenu");
         if (id == R.id.btSom) {
             if (!veSom){
-                // par
-                //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
-                veSom = true;
-                aplicacao.setVerificaSom(true);
-            } else{
-                //impar
-                //coloca sem som
+                Log.e("estou sem som","estou sem som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
-                veSom = false;
+                veSom = true;
                 aplicacao.setVerificaSom(false);
+            } else{
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                veSom = false;
+                aplicacao.setVerificaSom(true);
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
