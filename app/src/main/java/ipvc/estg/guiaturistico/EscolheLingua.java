@@ -168,6 +168,7 @@ public class EscolheLingua extends ActionBarActivity {
             public void onClick(View v) {
 
                 aplicacao.setVerificaOnResume(true);
+                aplicacao.setSelecionaTudo(false);
                 Intent intent = new Intent(getApplicationContext(),menu.class);
                 startActivity(intent);
                 finish();

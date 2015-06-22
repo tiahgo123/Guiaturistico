@@ -70,6 +70,7 @@
     <string name="aumentaVideo">Ampliar</string>
     <string name="diminuiVideo">Diminuir</string>
     <string name="descricao">Descrição: </string>
+    <string name="checkTudo">Selecionar Tudo</string>
 
 
 </resources>

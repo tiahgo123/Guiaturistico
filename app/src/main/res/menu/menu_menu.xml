@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item android:id="@+id/btCheckTudo"
+        android:icon="@drawable/abc_btn_check_to_on_mtrl_000"
+        android:title="@string/checkTudo"
+        app:showAsAction="ifRoom"
+        />
+
         <item android:id="@+id/btSom"
             android:icon="@drawable/abc_ic_voice_search_api_mtrl_alpha"
             android:title="@string/som"
             app:showAsAction="ifRoom"
             />
-
-    <item android:id="@+id/btfala"
-        android:icon="@drawable/abc_ic_voice_search_api_mtrl_alpha"
-        android:title="@string/fala"
-        app:showAsAction="ifRoom"
-        />
-
 
     <item android:id="@+id/btAjuda"
         android:icon="@drawable/abc_ic_menu_selectall_mtrl_alpha"
