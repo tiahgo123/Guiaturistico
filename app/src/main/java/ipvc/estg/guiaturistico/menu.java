@@ -677,6 +677,8 @@ public class menu extends ActionBarActivity {
         }
 
         if (id == R.id.btAjuda) {
+            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+
             Intent intent = new Intent(getApplicationContext(), Ajuda.class);
             startActivity(intent);
             aplicacao.setVerificaOnResume(true);

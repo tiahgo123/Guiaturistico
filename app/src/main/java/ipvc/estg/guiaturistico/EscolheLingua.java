@@ -44,6 +44,8 @@ public class EscolheLingua extends ActionBarActivity {
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
         checkSom = (CheckBox) findViewById(R.id.checkBoxSom);
+        checkSom.setChecked(true);
+        aplicacao.setVerificaSom(true);
         checkDados = (CheckBox) findViewById(R.id.checkBoxDados);
         checkwifi = (CheckBox) findViewById(R.id.checkBoxwifi);
 

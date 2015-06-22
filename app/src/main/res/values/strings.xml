@@ -69,6 +69,7 @@
 
     <string name="aumentaVideo">Ampliar</string>
     <string name="diminuiVideo">Diminuir</string>
+    <string name="descricao">Descrição: </string>
 
 
 </resources>

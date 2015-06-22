@@ -2,8 +2,10 @@ package ipvc.estg.guiaturistico;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.AudioManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,7 +30,6 @@ import java.util.Locale;
 public class Descricao extends ActionBarActivity {
 
     TextToSpeech ttobj2;
-    TextView txtdescricao ;
     Button anterior;
 
 
@@ -43,6 +45,13 @@ public class Descricao extends ActionBarActivity {
     Double latactu;
     Double  logactu;
     String descricao;
+    String nome;
+    String imagem;
+
+
+    TextView txtdescricao ;
+    TextView txtNome;
+    ImageView image;
 
 
     @Override
@@ -56,6 +65,8 @@ public class Descricao extends ActionBarActivity {
         locfimlog = intent.getDoubleExtra("locfimlog",0);
         latactu= intent.getDoubleExtra("latactu",0);
         logactu = intent.getDoubleExtra("logactu",0);
+        nome = intent.getStringExtra("nome");
+        imagem = intent.getStringExtra("imagem");
 
         ttobj2=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
@@ -71,8 +82,17 @@ public class Descricao extends ActionBarActivity {
 
         Log.e("descricao",descricao);
 
-        txtdescricao = (TextView) findViewById(R.id.textView18);
+        txtdescricao = (TextView) findViewById(R.id.textViewDescricao);
+        txtNome = (TextView) findViewById(R.id.textViewNome);
+        image = (ImageView) findViewById(R.id.image);
+
         txtdescricao.setText(descricao);
+        txtNome.setText(nome);
+
+        int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
+        Log.e("ididididid",""+id);
+        Drawable drawable = getResources().getDrawable(id);
+        image.setImageDrawable(drawable);
 
         anterior= (Button) findViewById(R.id.button2);
         anterior.setOnClickListener(new View.OnClickListener() {

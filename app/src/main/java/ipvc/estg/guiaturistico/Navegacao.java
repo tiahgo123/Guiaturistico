@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
@@ -27,6 +28,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +45,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -123,7 +126,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
     private String imagem;
-
+    private Boolean falateste=false;
 
     private boolean imagem1 = false;
     private boolean imagem2 = false;
@@ -151,6 +154,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     AlertDialog.Builder alert1;
     AlertDialog.Builder alert2;
     AlertDialog.Builder alert3;
+    private String nome;
 
 
     @Override
@@ -159,6 +163,12 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_navegacao);
+
+
+
+
+
+
 
         ttobj=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
@@ -205,7 +215,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-           // AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            AlertDialog.Builder alert1 = new AlertDialog.Builder(this);
             alert1.setTitle(R.string.atencao);
             alert1.setCancelable(false);
             alert1.setMessage(R.string.ativarGps);
@@ -219,18 +229,23 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     verificaDialogbox1 = false;
 
 
+
+               //     Intent on = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                   // startActivity(on);
                 }
             });
+
+            alert1.create();
 
 
             alert1.show();
             verificaDialogbox1 = true;
 
 
+        }else {
+
+
         }
-
-
-
         // verificar onde colocar
 
 
@@ -250,6 +265,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         // INICIAR O SERVIÇO DO GOOGLE PLAY
         buildGoogleApiClient();
+
+
 
     }
 
@@ -341,20 +358,25 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                     audioManager.setStreamVolume(AudioManager.ADJUST_LOWER,7,AudioManager.FLAG_SHOW_UI);
 
-                }else if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))){
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
-                    startActivity(intent);
+                }
+                if(falateste==true) {
 
-                }else if (result.get(i).toString().equals(getResources().getString(R.string.irpara))){
-                    Intent intent =  new  Intent ( android . content . Intent . ACTION_VIEW ,
-                            Uri . parse ( "http://maps.google.com/maps?saddr="+mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude() + "&daddr=+"+latitude+","+longitude));
-                    startActivity ( intent );
 
-                }else if(result.get(i).toString().equals(getResources().getString(R.string.verdescricao))){
-                    Intent intent = new Intent(getApplicationContext(),Descricao.class);
-                    intent.putExtra("descricao",descricao);
-                    startActivity(intent);
+                    if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));
+                        startActivity(intent);
 
+                    } else if (result.get(i).toString().equals(getResources().getString(R.string.irpara))) {
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                Uri.parse("http://maps.google.com/maps?saddr=" + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude() + "&daddr=+" + latitude + "," + longitude));
+                        startActivity(intent);
+
+                    } else if (result.get(i).toString().equals(getResources().getString(R.string.verdescricao))) {
+                        Intent intent = new Intent(getApplicationContext(), Descricao.class);
+                        intent.putExtra("descricao", descricao);
+                        startActivity(intent);
+
+                    }
                 }
 
 
@@ -433,7 +455,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (mWifi.isConnected()) {
+            final NetworkInfo mWifi2 = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (mWifi.isConnected() || mWifi2.isConnected() ) {
 
                 LatLng latLng1 = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                 LatLng latLng2 = new LatLng(location.getLatitude(), location.getLongitude());
@@ -590,7 +613,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
-            Log.e("imagem",imagem);
+
+           // Log.e("imagem",imagem);
 
             verificaImagens();
            // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
@@ -629,6 +653,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
             latitude = latLng.getLatitude();
             longitude = latLng.getLongitude();
+            nome = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_NOME));
+
+            Log.e("lalalalala",nome.toString());
 
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
@@ -667,7 +694,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
 
-
+            nome = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_NOME));
             imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
             verificaImagens();
@@ -721,6 +748,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     protected void onPause() {
         // SE A APLICAÇÃO ENTRA NESTE ESTADO, PARAR OS PEDIDOS PARA POUPAR RECURSOS
         super.onPause();
+
         stopLocationUpdates();
         // to stop the listener and save battery
         mSensorManager.unregisterListener(this);
@@ -745,9 +773,22 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         }
         if(verificaDialogbox2){
             Toast.makeText(getApplicationContext(),"remover2",Toast.LENGTH_SHORT).show();
+            alert2.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+
         }
         if(verificaDialogbox3){
-            Toast.makeText(getApplicationContext(),"remover3",Toast.LENGTH_SHORT).show();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+
         }
 
 
@@ -808,7 +849,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
                     }
                 });
-
+                alert2.create();
                 alert2.show();
                 verificaDialogbox2 = true;
 
@@ -931,7 +972,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         degree = Math.round(event.values[0]);
         Log.i("degre",""+degree);
 
-        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+     //   tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
         currentDegree = -degree;
 
@@ -1020,12 +1061,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -1058,12 +1102,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
            // tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
 
@@ -1097,12 +1144,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
             //tvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -1134,12 +1184,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
             // stvHeading.setText("Heading: " + Float.toString(degree) + " degrees" + bearingText);
 
         }
@@ -1173,12 +1226,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
 
         }
         else if (direction > 202.5 && direction < 247.5){
@@ -1213,12 +1269,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
 
         }
         else if (direction >= 247.5 && direction <= 292.5){
@@ -1247,6 +1306,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
@@ -1254,6 +1315,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             });
 
             disponiblizabotoes();
+            falateste=true;
 
         }
         else if (direction > 292.5 && direction < 337.5){
@@ -1287,12 +1349,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                     intent.putExtra("locfimlog",locFim.getLongitude());
                     intent.putExtra("latactu",mCurrentLocation.getLatitude());
                     intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                    intent.putExtra("imagem",imagem);
+                    intent.putExtra("nome",nome);
                     ttobj.stop();
 
                     startActivity(intent);
                 }
             });
             disponiblizabotoes();
+            falateste=true;
+
 
         }
         else{
@@ -1308,48 +1374,56 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             imagemButton1.setImageDrawable(drawable);
             imagemButton1.setClickable(false);
             imagem1 = false;
+            falateste=false;
         }
         if(imagem2){
             Drawable drawable = getResources().getDrawable(R.drawable.up);
             imagemButton2.setImageDrawable(drawable);
             imagemButton2.setClickable(false);
             imagem2 = false;
+            falateste=false;
         }
         if(imagem3){
             Drawable drawable = getResources().getDrawable(R.drawable.right_up);
             imagemButton3.setImageDrawable(drawable);
             imagemButton3.setClickable(false);
             imagem3 = false;
+            falateste=false;
         }
         if(imagem4){
             Drawable drawable = getResources().getDrawable(R.drawable.left);
             imagemButton4.setImageDrawable(drawable);
             imagemButton4.setClickable(false);
             imagem4 = false;
+            falateste=false;
         }
         if(imagem6){
             Drawable drawable = getResources().getDrawable(R.drawable.right);
             imagemButton6.setImageDrawable(drawable);
             imagemButton6.setClickable(false);
             imagem6 = false;
+            falateste=false;
         }
         if(imagem7){
             Drawable drawable = getResources().getDrawable(R.drawable.left_down);
             imagemButton7.setImageDrawable(drawable);
             imagemButton7.setClickable(false);
             imagem7 = false;
+            falateste=false;
         }
         if(imagem8){
             Drawable drawable = getResources().getDrawable(R.drawable.down);
             imagemButton8.setImageDrawable(drawable);
             imagemButton8.setClickable(false);
             imagem8 = false;
+            falateste=false;
         }
         if(imagem9) {
             Drawable drawable = getResources().getDrawable(R.drawable.right_down);
             imagemButton9.setImageDrawable(drawable);
             imagemButton9.setClickable(false);
             imagem9 = false;
+            falateste=false;
         }
 
     }
@@ -1574,7 +1648,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 collapse .invoke(service);
 
             }else{
-             //  Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
                 LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                    // AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -1608,11 +1682,15 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
                         }
                     });
-
+                    alert3.create();
                     alert3.show();
                     verificaDialogbox3 = true;
 
+                }else{
+
+
                 }
+
 
             }
         }
@@ -1633,8 +1711,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 }
                 ex.printStackTrace();
             }
-              // Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
         }
     }
 
 }
+
