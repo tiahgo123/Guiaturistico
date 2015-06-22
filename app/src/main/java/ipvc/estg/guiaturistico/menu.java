@@ -70,6 +70,10 @@ public class menu extends ActionBarActivity {
     Cursor valoresChecked;
     int checked = 1;
 
+    boolean selecionado;
+
+    // boolean selecionaTudo = false;
+
 
 
 
@@ -78,6 +82,8 @@ public class menu extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        selecionado = false;
 
 
         linearMonumento = (LinearLayout) findViewById(R.id.layoutMomumento);
@@ -113,7 +119,6 @@ public class menu extends ActionBarActivity {
         verificarlinearDesporto = aplicacao.isVerificarlinearDesporto();
         verificarlinearEspaco = aplicacao.isVerificarlinearEspaco();
         verificarlinearOutro = aplicacao.isVerificarlinearOutro();
-
 
         resultadoProgresso.setText("1 Metro");
 
@@ -634,17 +639,29 @@ public class menu extends ActionBarActivity {
         if(onResume){
             if (!veSom1){
                 Log.e("estou sem som","estou sem som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speaker));
                 aplicacao.setVerificaSom(false);
                 veSom = true;
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.semsom));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
 
             }
         }
+        if(aplicacao.isSelecionaTudo()) {
+            if (selecionado == false)
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+            else {
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+
+
+            }
+        }
+
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -660,16 +677,75 @@ public class menu extends ActionBarActivity {
         if (id == R.id.btSom) {
             if (!veSom){
                 Log.e("estou sem som","estou sem som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.semsom));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
+
+            return true;
+        }
+
+        if (id == R.id.btCheckTudo) {
+            if(aplicacao.isSelecionaTudo()){
+
+                //por tudo a zero na bd
+                ContentValues valores = new ContentValues();
+                valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
+                String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+                String[] selectionArgs = {"1"};
+                db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
+                aplicacao.setSelecionaTudo(false);
+
+                Toast.makeText(getApplicationContext(),"tirar tudo",Toast.LENGTH_SHORT).show();
+
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+
+                linearMonumento.setBackgroundColor(Color.WHITE);
+                linearCultura.setBackgroundColor(Color.WHITE);
+                linearGastronomia.setBackgroundColor(Color.WHITE);
+                linearAlojamento.setBackgroundColor(Color.WHITE);
+                linearAgenda.setBackgroundColor(Color.WHITE);
+                linearPraia.setBackgroundColor(Color.WHITE);
+                linearDesporto.setBackgroundColor(Color.WHITE);
+                linearEspaco.setBackgroundColor(Color.WHITE);
+                linearOutro.setBackgroundColor(Color.WHITE);
+
+
+
+            }else {
+
+                Toast.makeText(getApplicationContext(),"seleciona tudo",Toast.LENGTH_SHORT).show();
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+
+                // por tudo a um na bd
+                ContentValues valores = new ContentValues();
+                valores.put(Contrato.pontos.COLUMN_CHECKED,"1");
+                String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+                String[] selectionArgs = {"0"};
+                db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
+                aplicacao.setSelecionaTudo(true);
+
+
+
+                linearMonumento.setBackgroundColor(Color.GREEN);
+                linearCultura.setBackgroundColor(Color.GREEN);
+                linearGastronomia.setBackgroundColor(Color.GREEN);
+                linearAlojamento.setBackgroundColor(Color.GREEN);
+                linearAgenda.setBackgroundColor(Color.GREEN);
+                linearPraia.setBackgroundColor(Color.GREEN);
+                linearDesporto.setBackgroundColor(Color.GREEN);
+                linearEspaco.setBackgroundColor(Color.GREEN);
+                linearOutro.setBackgroundColor(Color.GREEN);
+
+
+
+            }
 
             return true;
         }
@@ -802,6 +878,8 @@ public class menu extends ActionBarActivity {
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
 
+
+
         if (aplicacao.isVerificarlinearMonumento()|| aplicacao.isVerificaTransacaoMonumento()){
             linearMonumento.setBackgroundColor(Color.GREEN);
         }else{
@@ -849,6 +927,57 @@ public class menu extends ActionBarActivity {
         }
 
 
+        String[] projection = {Contrato.pontos._ID};
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+        String[] selectionArgs = { "0" };
+
+        Cursor c = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+
+        c.moveToFirst();
+
+        if(c.getCount()!=0){
+                selecionado = true;
+            aplicacao.setVerificarTransacaoAgenda(true);
+            aplicacao.setVerificarTransacaoAlojamento(true);
+            aplicacao.setVerificarTransacaoOutro(true);
+            aplicacao.setVerificarTransacaoEspaco(true);
+            aplicacao.setVerificarTransacaoCultura(true);
+            aplicacao.setVerificarTransacaoDesporto(true);
+            aplicacao.setVerificarTransacaoGastronomia(true);
+            aplicacao.setVerificaTransacaoMonumento(true);
+            aplicacao.setVerificarTransacaoPraia(true);
+
+
+        }else{
+            selecionado = false;
+            aplicacao.setVerificarTransacaoAgenda(false);
+            aplicacao.setVerificarTransacaoAlojamento(false);
+            aplicacao.setVerificarTransacaoOutro(false);
+            aplicacao.setVerificarTransacaoEspaco(false);
+            aplicacao.setVerificarTransacaoCultura(false);
+            aplicacao.setVerificarTransacaoDesporto(false);
+            aplicacao.setVerificarTransacaoGastronomia(false);
+            aplicacao.setVerificaTransacaoMonumento(false);
+            aplicacao.setVerificarTransacaoPraia(false);
+
+        }
+
+
+
+
+
+
+
+
+
+
         if (aplicacao.isVerificaOnResume()){
            // Log.i("verificaSom",""+aplicacao.isVerificaSom());
             if(aplicacao.isVerificaSom()){
@@ -860,6 +989,8 @@ public class menu extends ActionBarActivity {
         }else{
              onResume = false;
         }
+
+
 
 
         progresso.setProgress((int) aplicacao.getValorSeekBar());

@@ -31,6 +31,42 @@ public class Aplicacao extends Application {
     boolean verificarLongButtonOutro;
 
 
+    public void setVerificarentraMonumento(boolean verificarentraMonumento) {
+        this.verificarentraMonumento = verificarentraMonumento;
+    }
+
+    public void setVerificarentrarOutro(boolean verificarentrarOutro) {
+        this.verificarentrarOutro = verificarentrarOutro;
+    }
+
+    public void setVerifcarentrarEspaco(boolean verifcarentrarEspaco) {
+        this.verifcarentrarEspaco = verifcarentrarEspaco;
+    }
+
+    public void setVerificarentrarDesporto(boolean verificarentrarDesporto) {
+        this.verificarentrarDesporto = verificarentrarDesporto;
+    }
+
+    public void setVerificaenrrarPraia(boolean verificaenrrarPraia) {
+        this.verificaenrrarPraia = verificaenrrarPraia;
+    }
+
+    public void setVerificarentrarAgenda(boolean verificarentrarAgenda) {
+        this.verificarentrarAgenda = verificarentrarAgenda;
+    }
+
+    public void setVericificarentrarAlojamento(boolean vericificarentrarAlojamento) {
+        this.vericificarentrarAlojamento = vericificarentrarAlojamento;
+    }
+
+    public void setVerificarentrarGastronomia(boolean verificarentrarGastronomia) {
+        this.verificarentrarGastronomia = verificarentrarGastronomia;
+    }
+
+    public void setVerificarentrarCultura(boolean verificarentrarCultura) {
+        this.verificarentrarCultura = verificarentrarCultura;
+    }
+
     boolean verificarlinearMonumento;
     boolean verificarlinearCultura;
     boolean verificarlinearGastronomia;
@@ -41,9 +77,63 @@ public class Aplicacao extends Application {
     boolean verificarlinearEspaco;
     boolean verificarlinearOutro;
 
+    boolean verificarentraMonumento;
+
+    public boolean isVerificarentrarCultura() {
+        return verificarentrarCultura;
+    }
+
+    public boolean isVerificarentrarGastronomia() {
+        return verificarentrarGastronomia;
+    }
+
+    public boolean isVericificarentrarAlojamento() {
+        return vericificarentrarAlojamento;
+    }
+
+    public boolean isVerificarentrarAgenda() {
+        return verificarentrarAgenda;
+    }
+
+    public boolean isVerificarentrarDesporto() {
+        return verificarentrarDesporto;
+    }
+
+    public boolean isVerificaenrrarPraia() {
+        return verificaenrrarPraia;
+    }
+
+    public boolean isVerifcarentrarEspaco() {
+        return verifcarentrarEspaco;
+    }
+
+    public boolean isVerificarentrarOutro() {
+        return verificarentrarOutro;
+    }
+
+    boolean verificarentrarCultura;
+    boolean verificarentrarGastronomia;
+    boolean vericificarentrarAlojamento;
+    boolean verificarentrarAgenda;
+    boolean verificaenrrarPraia;
+    boolean verificarentrarDesporto;
+    boolean verifcarentrarEspaco;
+    boolean verificarentrarOutro;
+
+
+    boolean selecionaTudo;
+
     float valorSeekBar;
 
     int posVideo1;
+
+    public void setSelecionaTudo(boolean selecionaTudo) {
+        this.selecionaTudo = selecionaTudo;
+    }
+
+    public boolean isSelecionaTudo() {
+        return selecionaTudo;
+    }
 
     public void setPosVideo(int posVideo1) {
         this.posVideo1 = posVideo1;
@@ -295,4 +385,11 @@ public class Aplicacao extends Application {
     public boolean isVerificarLongButtonPraia() {
         return verificarLongButtonPraia;
     }
+
+
+
+    public boolean isVerificarentraMonumento(){return verificarentraMonumento;}
+
+
+
 }
