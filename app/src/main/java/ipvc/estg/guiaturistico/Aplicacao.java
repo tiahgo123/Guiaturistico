@@ -31,86 +31,184 @@ public class Aplicacao extends Application {
     boolean verificarLongButtonOutro;
 
 
+    boolean verificarlinearMonumento=false;
+    boolean verificarlinearCultura=false;
+    boolean verificarlinearGastronomia=false;
+    boolean verificarlinearAlojamento=false;
+    boolean verificarlinearAgenda=false;
+    boolean verificarlinearPraia=false;
+    boolean verificarlinearDesporto=false;
+    boolean verificarlinearEspaco=false;
+    boolean verificarlinearOutro=false;
+
+    public int getNummonumento() {
+        return nummonumento;
+    }
+
+    public void setNummonumento(int nummonumento) {
+        this.nummonumento = nummonumento;
+    }
+
+    public int getNumcultura() {
+        return numcultura;
+    }
+
+    public void setNumcultura(int numcultura) {
+        this.numcultura = numcultura;
+    }
+
+    public int getMumagenda() {
+        return mumagenda;
+    }
+
+    public void setMumagenda(int mumagenda) {
+        this.mumagenda = mumagenda;
+    }
+
+    public int getNumgastronomia() {
+        return numgastronomia;
+    }
+
+    public void setNumgastronomia(int numgastronomia) {
+        this.numgastronomia = numgastronomia;
+    }
+
+    public int getMumpraia() {
+        return mumpraia;
+    }
+
+    public void setMumpraia(int mumpraia) {
+        this.mumpraia = mumpraia;
+    }
+
+    public int getMumdesporto() {
+        return mumdesporto;
+    }
+
+    public void setMumdesporto(int mumdesporto) {
+        this.mumdesporto = mumdesporto;
+    }
+
+    public int getMumespaco() {
+        return mumespaco;
+    }
+
+    public void setMumespaco(int mumespaco) {
+        this.mumespaco = mumespaco;
+    }
+
+    public int getMumoutro() {
+        return mumoutro;
+    }
+
+    public void setMumoutro(int mumoutro) {
+        this.mumoutro = mumoutro;
+    }
+
+    int nummonumento=0;
+    int numcultura=0;
+    int  numgastronomia=0;
+    int mumagenda=0;
+    int  mumpraia=0;
+    int mumdesporto=0;
+    int mumespaco=0;
+    int  mumoutro=0;
+
+    public int getNumalijamento() {
+        return numalijamento;
+    }
+
+    public void setNumalijamento(int numalijamento) {
+        this.numalijamento = numalijamento;
+    }
+
+    int numalijamento=0;
+
+
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    int valor = 0;
+
+    public boolean isVerificarentraMonumento() {
+        return verificarentraMonumento;
+    }
+
     public void setVerificarentraMonumento(boolean verificarentraMonumento) {
         this.verificarentraMonumento = verificarentraMonumento;
     }
 
-    public void setVerificarentrarOutro(boolean verificarentrarOutro) {
-        this.verificarentrarOutro = verificarentrarOutro;
-    }
-
-    public void setVerifcarentrarEspaco(boolean verifcarentrarEspaco) {
-        this.verifcarentrarEspaco = verifcarentrarEspaco;
-    }
-
-    public void setVerificarentrarDesporto(boolean verificarentrarDesporto) {
-        this.verificarentrarDesporto = verificarentrarDesporto;
-    }
-
-    public void setVerificaenrrarPraia(boolean verificaenrrarPraia) {
-        this.verificaenrrarPraia = verificaenrrarPraia;
-    }
-
-    public void setVerificarentrarAgenda(boolean verificarentrarAgenda) {
-        this.verificarentrarAgenda = verificarentrarAgenda;
-    }
-
-    public void setVericificarentrarAlojamento(boolean vericificarentrarAlojamento) {
-        this.vericificarentrarAlojamento = vericificarentrarAlojamento;
-    }
-
-    public void setVerificarentrarGastronomia(boolean verificarentrarGastronomia) {
-        this.verificarentrarGastronomia = verificarentrarGastronomia;
+    public boolean isVerificarentrarCultura() {
+        return verificarentrarCultura;
     }
 
     public void setVerificarentrarCultura(boolean verificarentrarCultura) {
         this.verificarentrarCultura = verificarentrarCultura;
     }
 
-    boolean verificarlinearMonumento;
-    boolean verificarlinearCultura;
-    boolean verificarlinearGastronomia;
-    boolean verificarlinearAlojamento;
-    boolean verificarlinearAgenda;
-    boolean verificarlinearPraia;
-    boolean verificarlinearDesporto;
-    boolean verificarlinearEspaco;
-    boolean verificarlinearOutro;
-
-    boolean verificarentraMonumento;
-
-    public boolean isVerificarentrarCultura() {
-        return verificarentrarCultura;
-    }
-
     public boolean isVerificarentrarGastronomia() {
         return verificarentrarGastronomia;
+    }
+
+    public void setVerificarentrarGastronomia(boolean verificarentrarGastronomia) {
+        this.verificarentrarGastronomia = verificarentrarGastronomia;
     }
 
     public boolean isVericificarentrarAlojamento() {
         return vericificarentrarAlojamento;
     }
 
+    public void setVericificarentrarAlojamento(boolean vericificarentrarAlojamento) {
+        this.vericificarentrarAlojamento = vericificarentrarAlojamento;
+    }
+
     public boolean isVerificarentrarAgenda() {
         return verificarentrarAgenda;
     }
 
-    public boolean isVerificarentrarDesporto() {
-        return verificarentrarDesporto;
+    public void setVerificarentrarAgenda(boolean verificarentrarAgenda) {
+        this.verificarentrarAgenda = verificarentrarAgenda;
     }
 
     public boolean isVerificaenrrarPraia() {
         return verificaenrrarPraia;
     }
 
+    public void setVerificaenrrarPraia(boolean verificaenrrarPraia) {
+        this.verificaenrrarPraia = verificaenrrarPraia;
+    }
+
+    public boolean isVerificarentrarDesporto() {
+        return verificarentrarDesporto;
+    }
+
+    public void setVerificarentrarDesporto(boolean verificarentrarDesporto) {
+        this.verificarentrarDesporto = verificarentrarDesporto;
+    }
+
     public boolean isVerifcarentrarEspaco() {
         return verifcarentrarEspaco;
+    }
+
+    public void setVerifcarentrarEspaco(boolean verifcarentrarEspaco) {
+        this.verifcarentrarEspaco = verifcarentrarEspaco;
     }
 
     public boolean isVerificarentrarOutro() {
         return verificarentrarOutro;
     }
 
+    public void setVerificarentrarOutro(boolean verificarentrarOutro) {
+        this.verificarentrarOutro = verificarentrarOutro;
+    }
+
+    boolean verificarentraMonumento;
     boolean verificarentrarCultura;
     boolean verificarentrarGastronomia;
     boolean vericificarentrarAlojamento;
@@ -385,11 +483,6 @@ public class Aplicacao extends Application {
     public boolean isVerificarLongButtonPraia() {
         return verificarLongButtonPraia;
     }
-
-
-
-    public boolean isVerificarentraMonumento(){return verificarentraMonumento;}
-
 
 
 }
