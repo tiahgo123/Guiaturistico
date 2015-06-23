@@ -154,15 +154,15 @@ public class ListaDesporto extends ListActivity {
                                     values, selection, selectionArgs);
                         }while (c.moveToNext());
                     }
-<<<<<<< Updated upstream
+
 
 
                 } else {
                     for (int i = 0; i <= list.getChildCount(); i++) {
-=======
+
                 }else {
                     for ( int i=0; i< list.getChildCount(); i++ ) {
->>>>>>> Stashed changes
+
                         list.setItemChecked(i, false);
                     }
                     checkBoxSeleciona.setChecked(false);
