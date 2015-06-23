@@ -1,17 +1,22 @@
 package ipvc.estg.guiaturistico;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -53,11 +59,18 @@ public class Descricao extends ActionBarActivity {
     TextView txtNome;
     ImageView image;
 
+    AudioManager audioManager;
 
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descricao);
+
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+
+
         Intent intent = getIntent();
         descricao = intent.getStringExtra("descricao");
         telefone = intent.getIntExtra("telefone",0);
@@ -78,11 +91,21 @@ public class Descricao extends ActionBarActivity {
                     }
                 });
 
-        ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
+
+        ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
+        if(ttobj2.isSpeaking()){
+            Toast.makeText(getApplicationContext(),"Estou a falar" + descricao,Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getApplicationContext(),"Não Estou a falar" + descricao,Toast.LENGTH_SHORT).show();
+        }
+
+        //ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
 
         Log.e("descricao",descricao);
+        Log.e("descricao",nome);
 
         txtdescricao = (TextView) findViewById(R.id.textViewDescricao);
+        txtdescricao.setMovementMethod(new ScrollingMovementMethod());
         txtNome = (TextView) findViewById(R.id.textViewNome);
         image = (ImageView) findViewById(R.id.image);
 
@@ -98,6 +121,11 @@ public class Descricao extends ActionBarActivity {
         anterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+                aplicacao.setVerificaOnResume(true);
+                Intent intent = new Intent(getApplicationContext(),Navegacao.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -107,32 +135,42 @@ public class Descricao extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        aplicacao.setVerificaOnResume(true);
+        Intent intent = new Intent(getApplicationContext(),Navegacao.class);
+        startActivity(intent);
+        finish();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         Log.i("entrei no menu","entrei no menu");
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_navegacao, menu);
         if(onResume){
             if (!veSom1){
-                //sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-                veSom = false;
-            } else{
-                //com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                Log.e("estou sem som","estou sem som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
+                aplicacao.setVerificaSom(false);
+
+            } else{
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                veSom = false;
+                aplicacao.setVerificaSom(true);
+
             }
         }
         return super.onCreateOptionsMenu(menu);
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,21 +183,21 @@ public class Descricao extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.btSom) {
             if (!veSom){
-                // par
-                //coloca com som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                Log.e("estou sem som","estou sem som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
-                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,false);
-                aplicacao.setVerificaSom(true);
-            } else{
-                //impar
-                //coloca sem som
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-                veSom = false;
-                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC,true);
                 aplicacao.setVerificaSom(false);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+
+            } else{
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                Log.e("estou a dar som","estou a dar som");
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                veSom = false;
+                aplicacao.setVerificaSom(true);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+
             }
             Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
@@ -178,6 +216,45 @@ public class Descricao extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+    super.onStart();
+        ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(getApplicationContext(),"entrei aqui",Toast.LENGTH_SHORT).show();
+
+        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        ttobj2.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+     //   ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        if (aplicacao.isVerificaOnResume()){
+            Log.i("verificaSomAjuda",""+aplicacao.isVerificaSom());
+            if(aplicacao.isVerificaSom()){
+                veSom1 = true;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+            }else{
+                veSom1 = false;
+                AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            }
+
+            onResume = true;
+        }else{
+            onResume = false;
+        }
+    }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==1111 & resultCode==RESULT_OK) {
@@ -185,21 +262,19 @@ public class Descricao extends ActionBarActivity {
 
             for (int i = 0; i < result.size(); i++) {
                 if (result.get(i).toString().equals(getResources().getString(R.string.comandosubirvolume))) {
-                    AudioManager audioManager =
-                            (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                    // Set the volume of played media to maximum.
 
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,7,AudioManager.FLAG_SHOW_UI);
-                    // audioManager.setStreamVolume (
-                    //      AudioManager.STREAM_MUSIC,
-                    //    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-                    //  0);
+                    AudioManager audioManager =(AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,12,AudioManager.FLAG_SHOW_UI);
+
+                }else if(result.get(i).toString().equals(getResources().getString(R.string.comandomediovolume))){
+
+                    AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,6,AudioManager.FLAG_SHOW_UI);
+
                 }else if(result.get(i).toString().equals(getResources().getString(R.string.comandodescervolume))){
 
                     AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                   // audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,4,0);
-
-                    audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,2,AudioManager.FLAG_SHOW_UI);
 
                 }else if (result.get(i).toString().equals(getResources().getString(R.string.telefonar))){
                     Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telefone));

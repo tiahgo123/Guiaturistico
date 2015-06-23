@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 16;
+    public static final int DATABASE_VERSION = 17;
     public static final String DATABASE_NAME = "categorias.db";
 
     public DbHelper(Context context) {
@@ -60,7 +60,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (22,'Pousada Monte de Santa Luzia','Monte de Santa Luzia - Apartado 536,4901-909 Viana do Castelo Portugal',258800370,'recepcao.mluzia@pousadas.pt','Pousada','www.pousadas.pt','pousadadesantaluzia','41.703469','-8.835574',4,0);");
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (23,'Casa Melo Alvim Hotel','Avenida Conde da Carreira, 28, 4900-343 Viana do Castelo Portugal',258808200,'hotel@meloalvimhouse.com','Hotel ****','www.meloalvimhouse.com','casameloalvim','41.694455','-8.831387',4,0);");
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (24,'Hotel Axis Viana Business & SPA','Avenida Capitão Gaspar de Castro Viana do Castelo Portugal',258802000,'reservas@axisviana.com','Hotel ****','www.axishoteis.com','hotelaxisviana','41.702593','-8.819241,17',4,0);");
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (24,'Hotel Axis Viana Business & SPA','Avenida Capitão Gaspar de Castro Viana do Castelo Portugal',258802000,'reservas@axisviana.com','Hotel ****','www.axishoteis.com','hotelaxisviana','41.702593','-8.819241',4,0);");
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (25,'Hotel Calatrava','Rua Manuel Fiuza Júnior, 157, Viana do Castelo Portugal',258828911,'hotelcalatrava@gmail.com','Hotel **','null','hotelcalatrava','41.697303','-8.82393',4,0);");
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (26,'Pousada da Juventude Viana do Castelo','Rua de Limia,46, Viana do Castelo Portugal',258838458,'Sem email','Pousada','vianacastelo@movijovem.pt','pousadajuventude','41.6792011','-8.818432448',4,0);");
 

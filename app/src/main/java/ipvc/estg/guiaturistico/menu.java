@@ -615,8 +615,9 @@ public class menu extends ActionBarActivity {
                 Cursor cursor = verSeExisteChecked();
                 if(cursor!=null && cursor.getCount()>=1){
                     aplicacao.setVerificaOnResume(true);
+                    aplicacao.setValorRaio(valor);
                     Intent intent = new Intent(getApplicationContext(), Navegacao.class);
-                    intent.putExtra("valor",valor);
+                   // intent.putExtra("valor",valor);
                     startActivity(intent);
                     finish();
                 }else {

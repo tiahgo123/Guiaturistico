@@ -30,6 +30,15 @@ public class Aplicacao extends Application {
     boolean verificarLongButtonEspaco;
     boolean verificarLongButtonOutro;
 
+    float valorRaio;
+
+    public void setValorRaio(float valorRaio) {
+        this.valorRaio = valorRaio;
+    }
+
+    public float getValorRaio() {
+        return valorRaio;
+    }
 
     public void setVerificarentraMonumento(boolean verificarentraMonumento) {
         this.verificarentraMonumento = verificarentraMonumento;

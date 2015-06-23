@@ -39,16 +39,17 @@
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
     <string name="atencao">Atenção! </string>
-    <string name="distancia">Distancia:  </string>
+    <string name="distancia">Distancia:\n  </string>
 
     <string name="menoscinquenta">Está a uma distancia menor que cinquenta metros</string>
     <string name="cinquentacem">Está a uma distancia entre cinquenta metros a cem metros</string>
     <string name="cemduzentos">Está a uma distancia entre cem metros a duzentos metros</string>
-    <string name="maisduzentos">Está a uma distancia entre a mais de duzentos metros</string>
+    <string name="maisduzentos">Está a uma distancia a mais de duzentos metros</string>
 
 
-    <string name="comandosubirvolume">subir volume</string>
-    <string name="comandodescervolume">descer volume</string>
+    <string name="comandosubirvolume">volume máximo</string>
+    <string name="comandodescervolume">volume mínimo</string>
+    <string name="comandomediovolume">volume médio</string>
     <string name="telefonar">telefonar</string>
     <string name="irpara">ir para</string>
     <string name="verdescricao">ver descrição</string>
@@ -57,7 +58,7 @@
     <string name="ativarGps">Por favor active o gps</string>
     <string name="ok">Ok</string>
     <string name="perguntaFuncionalidades">Funcionalidades Especiais</string>
-    <string name="funcionalidadesNet">Para utilizar diversas funcionalidades (Reconhecimento de voz, Obter caminho) necessita de aceder a internet.</string>
+    <string name="funcionalidadesNet">Para utilizar diversas funcionalidades (Reconhecimento de voz, Obter caminho com maior precisão) necessita de aceder a internet.</string>
     <string name="dadosMoveis">Dados móveis</string>
     <string name="funcionalidadesSom">Deseja que a aplicação fale durante a viagem.</string>
     <string name="funcionalidadesInformacao">Pode sempre alterar uma das suas escolhas durante a utilização do Guia.</string>
@@ -71,6 +72,7 @@
     <string name="diminuiVideo">Diminuir</string>
     <string name="descricao">Descrição: </string>
     <string name="checkTudo">Selecionar Tudo</string>
+    <string name="distanciade">Está a uma distancia de </string>
 
 
 </resources>

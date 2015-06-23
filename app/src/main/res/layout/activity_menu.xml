@@ -295,7 +295,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/seekBar"
             android:layout_weight="1"
-            android:max="750"/>
+            android:max="900"/>
 
         <TextView
             android:layout_width="wrap_content"
