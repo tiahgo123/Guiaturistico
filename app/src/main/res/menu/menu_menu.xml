@@ -4,7 +4,7 @@
 
 
     <item android:id="@+id/btCheckTudo"
-        android:icon="@drawable/abc_btn_check_to_on_mtrl_000"
+        android:icon="@drawable/check"
         android:title="@string/checkTudo"
         app:showAsAction="ifRoom"
         />

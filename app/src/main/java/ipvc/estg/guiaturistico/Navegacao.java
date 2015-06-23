@@ -297,7 +297,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             } else{
                 //com som
                 Toast.makeText(getApplicationContext(),"com som",Toast.LENGTH_LONG).show();
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
             }
@@ -328,7 +328,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);

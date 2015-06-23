@@ -85,7 +85,7 @@ public class Ajuda extends ActionBarActivity {
 
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
 
@@ -112,7 +112,7 @@ public class Ajuda extends ActionBarActivity {
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);

@@ -9,7 +9,7 @@
         />
 
     <item android:id="@+id/btfala"
-        android:icon="@drawable/microphone"
+        android:icon="@drawable/abc_ic_voice_search_api_mtrl_alpha"
         android:title="@string/fala"
         app:showAsAction="ifRoom"
         />

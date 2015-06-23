@@ -503,6 +503,8 @@ public class menu extends ActionBarActivity {
                     db.update(
                             Contrato.pontos.TABLE_NAME,
                             values, selection, selectionArgs);
+
+
                 }else{
                     linearDesporto.setBackgroundColor(Color.WHITE);
                     verificarLongButtonDesporto = true;
@@ -716,7 +718,7 @@ public class menu extends ActionBarActivity {
                 veSom = true;
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
 
@@ -724,9 +726,9 @@ public class menu extends ActionBarActivity {
             Log.i("valorselecao",""+selecionado);
             if(selecionado) {
                 Log.e("tudo selecionado","tudo selecionado");
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
             }else{
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Log.e("nao tem tudo selecionado","nao tem tudo selecionado");
             }
         }
@@ -754,7 +756,7 @@ public class menu extends ActionBarActivity {
                 aplicacao.setVerificaSom(false);
             } else{
                 Log.e("estou a dar som","estou a dar som");
-                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.semsom));
+                menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
             }
@@ -776,7 +778,7 @@ public class menu extends ActionBarActivity {
 
                // Toast.makeText(getApplicationContext(),"tirar tudo",Toast.LENGTH_SHORT).show();
 
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
 
                 linearMonumento.setBackgroundColor(Color.WHITE);
                 linearCultura.setBackgroundColor(Color.WHITE);
@@ -805,7 +807,7 @@ public class menu extends ActionBarActivity {
             }else {
 
               //  Toast.makeText(getApplicationContext(),"seleciona tudo",Toast.LENGTH_SHORT).show();
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
 
                 // por tudo a um na bd
                 ContentValues valores = new ContentValues();
@@ -847,8 +849,6 @@ public class menu extends ActionBarActivity {
         }
 
         if (id == R.id.btAjuda) {
-            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.semsom));
-
             Intent intent = new Intent(getApplicationContext(), Ajuda.class);
             startActivity(intent);
             aplicacao.setVerificaOnResume(true);
@@ -1027,12 +1027,12 @@ public class menu extends ActionBarActivity {
 
             if(verificarLongButtonMonumento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearMonumento.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearMonumento.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
             }
@@ -1041,12 +1041,12 @@ public class menu extends ActionBarActivity {
 
             if(verificarLongButtonCultura && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearCultura.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearCultura.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
 }
@@ -1055,12 +1055,12 @@ if (valorBt == 3){
 
             if(verificarLongButtonGastronomia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearGastronomia.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearGastronomia.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
 }
@@ -1068,12 +1068,12 @@ if (valorBt == 3){
 
             if(verificarLongButtonAlojamento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearAlojamento.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearAlojamento.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
             }
@@ -1082,12 +1082,12 @@ if (valorBt == 5){
 
             if(verificarLongButtonAgenda && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearAgenda.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearAgenda.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
 }
@@ -1096,12 +1096,12 @@ if (valorBt == 5){
 
             if(verificarLongButtonPraia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearPraia.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearPraia.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
     }
@@ -1110,12 +1110,12 @@ if (valorBt == 5){
 
             if(verificarLongButtonDesporto && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearDesporto.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearDesporto.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
         }
@@ -1125,12 +1125,12 @@ if (valorBt == 5){
 
             if(verificarLongButtonEspaco && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearEspaco.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearEspaco.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
             }
@@ -1138,12 +1138,12 @@ if (valorBt == 5){
 
             if(verificarLongButtonOutro && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearOutro.setBackgroundColor(Color.WHITE);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
                 Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
                 selecionado = false;
             }else{
                 linearOutro.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 selecionado = true;
             }
         }
@@ -1154,55 +1154,55 @@ if (valorBt == 5){
 
             if(verificarLongButtonMonumento){
                 linearMonumento.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonCultura){
                 linearCultura.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonGastronomia){
                 linearGastronomia.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonAlojamento){
                 linearAlojamento.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonAgenda){
                 linearAgenda.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonPraia){
                 linearPraia.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonDesporto){
                 linearDesporto.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonEspaco){
                 linearEspaco.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
             if(verificarLongButtonOutro){
                 linearOutro.setBackgroundColor(Color.GREEN);
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
                 Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
                 selecionado = true;
             }
