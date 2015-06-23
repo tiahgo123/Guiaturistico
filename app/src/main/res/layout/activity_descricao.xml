@@ -36,7 +36,7 @@
                 android:id="@+id/textViewNome"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:textSize="35dp"/>
+                android:textSize="30dp"/>
 
         </LinearLayout>
 
@@ -58,7 +58,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/descricao"
             android:layout_marginLeft="5dp"
-            android:textSize="30dp"
+            android:textSize="25dp"
 
              />
 

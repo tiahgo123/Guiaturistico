@@ -27,7 +27,7 @@ public class EscolheLingua extends ActionBarActivity {
     CheckBox checkSom;
     CheckBox checkDados;
     CheckBox checkwifi;
-
+    CheckBox checkcaminho;
   //  boolean isEnabled;
 
     WifiManager wifiManager;
@@ -40,6 +40,7 @@ public class EscolheLingua extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_lingua);
 
+        //realizar o reset da aplicação quando inicia
         resetApp();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
@@ -48,6 +49,7 @@ public class EscolheLingua extends ActionBarActivity {
         aplicacao.setVerificaSom(true);
         checkDados = (CheckBox) findViewById(R.id.checkBoxDados);
         checkwifi = (CheckBox) findViewById(R.id.checkBoxwifi);
+        checkcaminho = (CheckBox) findViewById(R.id.checkBoxcaminho);
 
 
 
@@ -155,6 +157,21 @@ public class EscolheLingua extends ActionBarActivity {
             }
         });
 
+        checkcaminho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((CheckBox) v).isChecked()){
+                    aplicacao.setvalorcaminho(true);
+
+                }else{
+
+                    aplicacao.setvalorcaminho(false);
+
+
+                }
+            }
+        });
+
 
        Button avancar = (Button) findViewById(R.id.buttonAvancar);
         avancar.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +189,7 @@ public class EscolheLingua extends ActionBarActivity {
 
     }
 
-    //detetar wifi
+    //detetar wifi para a checkbox
     void functionVeWifi(){
         if(wifiManager.isWifiEnabled()){
             checkwifi.setChecked(true);
@@ -181,7 +198,7 @@ public class EscolheLingua extends ActionBarActivity {
         }
     }
 
-    //detetar dados
+    //detetar dados para a checkbox
     void functionVeDados(){
         if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
 
@@ -194,7 +211,7 @@ public class EscolheLingua extends ActionBarActivity {
         }
     }
 
-
+/*
     //alterar os valores da net
     private void setMobileDataEnabled(Context context, boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -213,6 +230,9 @@ public class EscolheLingua extends ActionBarActivity {
         }
     }
 
+    */
+
+    //abrir as settings do wifi
     public void openWifiSettings(){
 
         final Intent intent = new Intent(Intent.ACTION_MAIN, null);
@@ -231,14 +251,18 @@ public class EscolheLingua extends ActionBarActivity {
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
 
+        //colocar todos os valores na bd a zero
         ContentValues valores = new ContentValues();
         valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
         String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
         String[] selectionArgs = {"1"};
         db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
 
+
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
+        //colocar as cores todas a normal
         aplicacao.setVerificarlinearMonumento(false);
         aplicacao.setVerificaTransacaoMonumento(false);
 
@@ -273,6 +297,7 @@ public class EscolheLingua extends ActionBarActivity {
     @Override
     protected void onResume() {
 
+      //  verificar os dados para a checkbox
         functionVeWifi();
         functionVeDados();
 
@@ -302,6 +327,11 @@ public class EscolheLingua extends ActionBarActivity {
                 collapse .invoke(service);
 
             }else{
+<<<<<<< Updated upstream
+=======
+                //Deteta quando a barra é puxada para cima
+
+>>>>>>> Stashed changes
                 functionVeWifi();
                 functionVeDados();
 
@@ -324,6 +354,11 @@ public class EscolheLingua extends ActionBarActivity {
                 }
                 ex.printStackTrace();
             }
+<<<<<<< Updated upstream
+=======
+            //Detetar quando a barra é puxada para baixo
+
+>>>>>>> Stashed changes
         }
     }
 

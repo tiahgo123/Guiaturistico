@@ -21,16 +21,23 @@ import android.widget.Toast;
  */
 public class ListaMonumento extends ListActivity {
 
+
+    //valores para a lista
     int[] toViewIDs;
     String[] fromFieldNames;
     ListView list;
+
+
+
     CheckBox checkBoxSeleciona;
+
+    //Cursores para obter os valores da base dado
     Cursor obterDocumento;
     Cursor valoresChecked;
     Cursor verificaNaoChecked;
 
-    boolean selecionaTudo = false;
 
+    //passar a categoria, se queremos check ou não check para a query
     int idCategoria = 1;
     int checked = 1;
     int nChecked = 0;
@@ -46,13 +53,13 @@ public class ListaMonumento extends ListActivity {
         CheckedTextView item = (CheckedTextView) v;
         final Object obj = list.getAdapter().getItem(position);
 
-        //db = DbHelper.getWritableDatabase();
-
+        //obter o id do valor selecionado quando se carrega num valor da lista
         Cursor cursor2 = (Cursor) obj;
         final String id2=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
 
-        if (item.isChecked()) {
 
+        if (item.isChecked()) {
+            //quando fazemos o check em um valor da lista coloca a um na base dados
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,1);
 
@@ -64,6 +71,7 @@ public class ListaMonumento extends ListActivity {
 
 
         }else {
+            //quando fazemos tiramos o check do valor e pomos a zero na base dados
             checkBoxSeleciona.setChecked(false);
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,0);
@@ -75,6 +83,8 @@ public class ListaMonumento extends ListActivity {
                     values, selection, selectionArgs);
 
         }
+
+        // verifica se existe algum que não esteja check e se não tiver poe a check a falso
         Cursor c3 = verificarNaoChecked();
         if( c3 != null && c3.getCount()>=1){
             checkBoxSeleciona.setChecked(false);

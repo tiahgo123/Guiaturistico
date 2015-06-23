@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Created by Tiago Sousa on 02/04/2015.
@@ -23,12 +24,10 @@ public class ListaDesporto extends ListActivity {
     ListView list;
     CheckBox checkBoxSeleciona;
     Cursor obterDocumento;
-    int idCategoria = 7;
-
-
-    boolean selecionaTudo = false;
     Cursor valoresChecked;
     Cursor verificaNaoChecked;
+
+    int idCategoria = 7;
     int checked = 1;
     int nChecked = 0;
 
@@ -66,13 +65,11 @@ public class ListaDesporto extends ListActivity {
             db.update(
                     Contrato.pontos.TABLE_NAME,
                     values, selection, selectionArgs);
-
-
         }
-        Cursor cursor = verificarNaoChecked();
-        if(cursor!=null && cursor.getCount()>=1){
+        Cursor c3 = verificarNaoChecked();
+        if( c3 != null && c3.getCount()>=1){
             checkBoxSeleciona.setChecked(false);
-        }else {
+        }else{
             checkBoxSeleciona.setChecked(true);
         }
     }
@@ -84,12 +81,10 @@ public class ListaDesporto extends ListActivity {
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
         list=getListView();
-        // list = (ListView) findViewById(R.id.li);
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
-
         list.setTextFilterEnabled(true);
-
         checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
+
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
@@ -97,75 +92,107 @@ public class ListaDesporto extends ListActivity {
         BuildTable();
         obterChecked();
 
+        Cursor check = valoresChecked;
+        if( check != null && check.moveToFirst() ) {
+            check.moveToFirst();
+            do {
+                int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
+                //   Log.i("id",idChecked+"");
+                for (int i = 0; i < list.getCount(); i++) {
+                    int id = (int) list.getItemIdAtPosition(i);
+
+                    if (id == idChecked) {
+                        list.setItemChecked(i, true);
+                        //       Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            } while (check.moveToNext());
+        }else{
+            Toast.makeText(getApplicationContext(), "Cursor nulo ", Toast.LENGTH_SHORT).show();
+        }
+
+        Cursor c1 = verificarNaoChecked();
+        if( c1 != null && c1.getCount()>=1){
+            checkBoxSeleciona.setChecked(false);
+        }else{
+            checkBoxSeleciona.setChecked(true);
+        }
+
+
 
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
         buttonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            volta();
+                volta();
             }
         });
 
 
 
-        checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
+
         checkBoxSeleciona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
                     checkBoxSeleciona.setChecked(true);
-                    for (int i = 0; i < list.getCount(); i++) {
+                    for ( int i=0; i < list.getCount(); i++ ) {
                         list.setItemChecked(i, true);
                     }
                     Cursor c = obterMonumentos();
-                    if (c != null) {
+                    if(c != null){
                         c.moveToFirst();
-                        do {
-                            int idAgenda = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                        do{
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
-                            values.put(Contrato.pontos.COLUMN_CHECKED, 1);
+                            values.put(Contrato.pontos.COLUMN_CHECKED,1);
                             String selection = Contrato.pontos._ID + " LIKE ?";
-                            String[] selectionArgs = {String.valueOf(idAgenda)};
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
                             db.update(
                                     Contrato.pontos.TABLE_NAME,
                                     values, selection, selectionArgs);
-                        } while (c.moveToNext());
+                        }while (c.moveToNext());
                     }
+<<<<<<< Updated upstream
 
 
                 } else {
                     for (int i = 0; i <= list.getChildCount(); i++) {
+=======
+                }else {
+                    for ( int i=0; i< list.getChildCount(); i++ ) {
+>>>>>>> Stashed changes
                         list.setItemChecked(i, false);
                     }
                     checkBoxSeleciona.setChecked(false);
                     Cursor c = obterMonumentos();
-                    if (c != null) {
+                    if(c != null){
                         c.moveToFirst();
-                        do {
-                            int idAgenda = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                        do{
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
-                            values.put(Contrato.pontos.COLUMN_CHECKED, 0);
+                            values.put(Contrato.pontos.COLUMN_CHECKED,0);
                             String selection = Contrato.pontos._ID + " LIKE ?";
-                            String[] selectionArgs = {String.valueOf(idAgenda)};
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
                             db.update(
                                     Contrato.pontos.TABLE_NAME,
                                     values, selection, selectionArgs);
 
-                        } while (c.moveToNext());
+                        }while (c.moveToNext());
                     }
 
                     Cursor c2 = verificarNaoChecked();
-                    if (c2 != null && c2.getCount() >= 1) {
+                    if( c2 != null && c2.getCount()>=1){
                         checkBoxSeleciona.setChecked(false);
-                    } else {
+                    }else{
                         checkBoxSeleciona.setChecked(true);
                     }
                 }
-            }
 
+            }
         });
     }
-
 
     private void BuildTable() {
 
@@ -185,7 +212,6 @@ public class ListaDesporto extends ListActivity {
                 fromFieldNames, // DB Column names
                 toViewIDs // View IDs to put information in
         );
-
         // Set the adapter for the list view
         list.setAdapter(myCursorAdapter);
 
@@ -266,15 +292,18 @@ public class ListaDesporto extends ListActivity {
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         Cursor total = obterChecked();
         if( total != null && total.getCount() == 0){
-            aplicacao.setVerificarTransacaoDesporto(false);
-
-            aplicacao.setVerificarlinearDesporto(false);
+            aplicacao.setVerificarTransacaoPraia(false);
+            Log.i("sair de verde", "sair de verde");
+            aplicacao.setVerificarlinearPraia(false);
             //aplicacao.setSelecionaTudo(true);
             aplicacao.setSelecionaTudo(false);
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
         }else{
-            aplicacao.setVerificarTransacaoDesporto(true);
+            aplicacao.setVerificarTransacaoPraia(true);
             aplicacao.setSelecionaTudo(true);
 
         }
@@ -286,6 +315,7 @@ public class ListaDesporto extends ListActivity {
         }else{
 
         }
+
 
         aplicacao.setVerificaOnResume(true);
         Intent intent = new Intent(getApplicationContext(),menu.class);

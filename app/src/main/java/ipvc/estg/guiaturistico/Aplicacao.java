@@ -32,6 +32,12 @@ public class Aplicacao extends Application {
 
     float valorRaio;
 
+    public boolean isValorcaminho() {
+        return valorcaminho;
+    }
+
+    private boolean valorcaminho;
+
     public void setValorRaio(float valorRaio) {
         this.valorRaio = valorRaio;
     }
@@ -494,4 +500,7 @@ public class Aplicacao extends Application {
     }
 
 
+    public void setvalorcaminho(boolean valorcaminho) {
+        this.valorcaminho = valorcaminho;
+    }
 }

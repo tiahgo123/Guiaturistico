@@ -1,32 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Guiaturistico</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="escolhelingua">Por favor escolha a lingua que deseja</string>
-    <string name="portugal"> Portugal </string>
-    <string name="ingles"> Inglês </string>
-    <string name="frances"> Francês </string>
-    <string name="espanhol"> Espanhol </string>
-    <string name="alemao"> Alemão </string>
-    <string name="chines"> Chinês </string>
-
-    <string name="categoria">Select the categories that you want</string>
-    <string name="categoriaMonumento"> Monumento</string>
-    <string name="categoriaCultura"> Cultura </string>
-    <string name="categoriaGastronomia"> Gastronomia </string>
-    <string name="categoriaAlojamento"> Alojamento </string>
-    <string name="categoriaAgenda"> Agenda Cultural </string>
-    <string name="categoriaPraia"> Praia </string>
-    <string name="categoriaDesporto"> Desporto e Lazer </string>
-    <string name="categoriaEspaco"> Espaço Noturno </string>
-    <string name="categoriaOutro"> Outro </string>
-
-    <string name="defineRaio"> Definir o raio </string>
-    <string name="inicio"> Iniciar </string>
-
-    <string name="voltar">Voltar</string>
-    <string name="wifi">Wifi</string>
-
+    <string name="app_name">"Touristenführer"</string>
+    <string name="action_settings">"Einstellungen"</string>
+    <string name="mensagembBoasVindas">"Willkommen in Ihrem Reiseführer"</string>
+    <string name="avancar">" Voranbringen "</string>
+    <string name="portugal">" Portugal "</string>
+    <string name="ingles">" Englisch "</string>
+    <string name="frances">" Französisch "</string>
+    <string name="espanhol">" Spanisch "</string>
+    <string name="alemao">" Deutsch "</string>
+    <string name="chines">" Chinese "</string>
+    <string name="categoria">"Wählen Sie die Kategorien, die Sie wollen,"</string>
+    <string name="categoriaMonumento">" Monument"</string>
+    <string name="categoriaCultura">" Kultur "</string>
+    <string name="categoriaGastronomia">" Gastronomie "</string>
+    <string name="categoriaAlojamento">" Unterkunft "</string>
+    <string name="categoriaAgenda">" Kulturagenda "</string>
+    <string name="categoriaPraia">" Strand "</string>
+    <string name="categoriaDesporto">" Sport und Freizeit "</string>
+    <string name="categoriaEspaco">" Nachtraum "</string>
+    <string name="categoriaOutro">" Andere "</string>
+    <string name="defineRaio">" Stellen Sie den Radius "</string>
+    <string name="inicio">" Start "</string>
+    <string name="voltar">"Rückkehr"</string>
+    <string name="seleciona">"Alle auswählen"</string>
+    <string name="remove">"Löschen"</string>
+    <string name="sair">"Verlassen"</string>
+    <string name="som">"Klingen"</string>
+    <string name="fala">"Sprechen"</string>
+    <string name="ajuda">"Hilfe"</string>
+    <string name="textoAjuda">"Hilfe"</string>
+    <string name="aviso">"Haben Sie die Anwendung beenden möchten"</string>
+    <string name="sim">"Ja"</string>
+    <string name="nao">"Nicht"</string>
+    <string name="atencao">"Achtung! "</string>
+    <string name="distancia">"Entfernung: \ n "</string>
+    <string name="menoscinquenta">"Es ist ein kleinerer Abstand als fünfzig Metern"</string>
+<string name="cinquentacem">
+"Es ist ein Abstand von fünfzig Metern bis einigen hundert Metern"
+</string>
+<string name="cemduzentos">
+"Es ist ein Abstand zwischen einigen hundert Metern bis zweihundert Meter"
+</string>
+<string name="maisduzentos">
+"Es ist ein Abstand von mehr als zweihundert Meter"
+</string>
+    <string name="comandosubirvolume">"maximale Lautstärke"</string>
+    <string name="comandodescervolume">"Mindestvolumen"</string>
+    <string name="comandomediovolume">"Durchschnittliche Volume"</string>
+    <string name="telefonar">"Telefon"</string>
+    <string name="irpara">"gehe zu"</string>
+    <string name="verdescricao">"Siehe Artikelbeschreibung"</string>
+    <string name="btInicia">"Bitte wählen Sie mindestens einen Punkt."</string>
+    <string name="ativarGps">"Bitte aktivieren Sie GPS"</string>
+    <string name="ok">"Okay"</string>
+    <string name="perguntaFuncionalidades">"Besondere Merkmale"</string>
+<string name="funcionalidadesNet">
+"Um verschiedene Merkmale verwenden (Spracherkennung, erhalten Weg genauer) müssen auf das Internet zugreifen."
+</string>
+    <string name="dadosMoveis">"Mobile Daten"</string>
+<string name="funcionalidadesSom">
+"Sie möchten die Anwendung Diskussion während der Fahrt."
+</string>
+<string name="funcionalidadesInformacao">
+"Sie können jederzeit ändern, eine der Ihre Entscheidungen während der Verwendung des Handbuchs."
+</string>
+    <string name="wifi">"Wifi"</string>
+    <string name="caminhonet">"Way net"</string>
+    <string name="trabalhoElaborado">"Arbeiten von:"</string>
+    <string name="tiagoSousa">"Tiago Sousa"</string>
+    <string name="tiagoCoelho">"Tiago Coelho"</string>
+    <string name="aumentaVideo">"Vergrößern"</string>
+    <string name="diminuiVideo">"Verkleinern"</string>
+    <string name="descricao">"Beschreibung: "</string>
+    <string name="checkTudo">"Alle Auswählen"</string>
+    <string name="distanciade">"Es ist in einem Abstand von "</string>
 </resources>

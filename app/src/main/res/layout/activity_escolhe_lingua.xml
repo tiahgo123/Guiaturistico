@@ -154,6 +154,13 @@
                         android:text="@string/wifi"
                         android:id="@+id/checkBoxwifi"/>
 
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/caminhonet"
+                        android:id="@+id/checkBoxcaminho"/>
+
                 </LinearLayout>
 
 

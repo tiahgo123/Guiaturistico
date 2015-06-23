@@ -43,7 +43,7 @@ public class Descricao extends ActionBarActivity {
     Double latactu;
     Double  logactu;
     String descricao;
-    String nome;
+    String nome="";
     String imagem;
 
 
@@ -53,15 +53,10 @@ public class Descricao extends ActionBarActivity {
 
     AudioManager audioManager;
 
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descricao);
-
-        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-
 
         Intent intent = getIntent();
         descricao = intent.getStringExtra("descricao");
@@ -72,6 +67,11 @@ public class Descricao extends ActionBarActivity {
         logactu = intent.getDoubleExtra("logactu",0);
         nome = intent.getStringExtra("nome");
         imagem = intent.getStringExtra("imagem");
+
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+
+
+
 
         ttobj2=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
@@ -86,6 +86,10 @@ public class Descricao extends ActionBarActivity {
 
         ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
         txtdescricao = (TextView) findViewById(R.id.textViewDescricao);
         txtdescricao.setMovementMethod(new ScrollingMovementMethod());
@@ -203,7 +207,7 @@ public class Descricao extends ActionBarActivity {
     protected void onStart() {
     super.onStart();
         ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
-
+        Intent intent =getIntent();
     }
 
     @Override

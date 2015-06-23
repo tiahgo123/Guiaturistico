@@ -390,7 +390,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
                     } else if (result.get(i).toString().equals(getResources().getString(R.string.verdescricao))) {
                         Intent intent = new Intent(getApplicationContext(), Descricao.class);
-                        intent.putExtra("descricao", descricao);
+                        intent.putExtra("descricao",descricao);
+                        intent.putExtra("telefone",telefone);
+                        intent.putExtra("locfimlat",locFim.getLatitude());
+                        intent.putExtra("locfimlog",locFim.getLongitude());
+                        intent.putExtra("latactu",mCurrentLocation.getLatitude());
+                        intent.putExtra("logactu",mCurrentLocation.getLongitude());
+                        intent.putExtra("imagem",imagem);
+                        intent.putExtra("nome",nome);
                         startActivity(intent);
 
                     }
@@ -465,6 +472,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             final NetworkInfo mWifi2 = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if(aplicacao.isValorcaminho()==true){
             if (mWifi.isConnected() || mWifi2.isConnected() )
             {
 
@@ -482,7 +491,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 // ver depois
 
 
-                } else {
+                }
+            } else {
                     if (mCurrentLocation.distanceTo(location) <= valor) {
                         //array de distancias onde adiciona a cada distancia esta e a localizacao ao array de localizacao
                         distancia.add(mCurrentLocation.distanceTo(location));
@@ -949,7 +959,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     }
 
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void colocaimagem2(){
 
         if ( (360 >= direction && direction >= 337.5) || (0 <= direction && direction <= 22.5) ){
@@ -975,7 +984,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             Drawable drawable = getResources().getDrawable(id);
             imagemButton2.setImageDrawable(drawable);
 
-
+        Log.e("nomememememe",nome);
             imagemButton2.setClickable(true);
             imagem2 = true;
             imagemButton2.setOnClickListener(new View.OnClickListener() {
