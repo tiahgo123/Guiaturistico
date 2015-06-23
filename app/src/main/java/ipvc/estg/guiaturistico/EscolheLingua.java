@@ -84,10 +84,6 @@ public class EscolheLingua extends ActionBarActivity {
                     Intent intent = new Intent(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
                     startActivity(intent);
 
-                   // Intent intent=new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
-                   // ComponentName cName = new ComponentName("com.android.phone","com.android.phone.Settings");
-                 //   intent.setComponent(cName);
-                //    startActivity(intent);
 
       /*              try {
                         setMobileDataEnabled(getApplicationContext(),true);
@@ -104,7 +100,6 @@ public class EscolheLingua extends ActionBarActivity {
                         e.printStackTrace();
                     }
 
-            //        Toast.makeText(getApplicationContext(),"ligar",Toast.LENGTH_SHORT).show();
 
             */
 
@@ -129,7 +124,6 @@ public class EscolheLingua extends ActionBarActivity {
 
                     */
 
-               //     Toast.makeText(getApplicationContext(),"desligar",Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -308,7 +302,6 @@ public class EscolheLingua extends ActionBarActivity {
                 collapse .invoke(service);
 
             }else{
-     //           Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
                 functionVeWifi();
                 functionVeDados();
 
@@ -331,7 +324,6 @@ public class EscolheLingua extends ActionBarActivity {
                 }
                 ex.printStackTrace();
             }
-         //   Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
         }
     }
 

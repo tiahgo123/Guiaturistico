@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.MediaController;
@@ -51,18 +50,16 @@ public class AjudaVideoGrande extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menuAjudaGrande", "entrei no menu AjudaGrande");
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_ajuda, menu);
         if(onResume){
             if (!veSom1){
-                Log.e("estou sem som","estou sem som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 aplicacao.setVerificaSom(false);
                 veSom = true;
             } else{
-                Log.e("estou a dar som","estou a dar som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
@@ -80,27 +77,22 @@ public class AjudaVideoGrande extends ActionBarActivity {
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-        Log.i("menuAjudaGrande","menuGrande");
         if (id == R.id.btSom) {
             if (!veSom){
-                Log.e("estou sem som","estou sem som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             } else{
 
-                Log.e("estou a dar som","estou a dar som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             }
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
             return true;
         }else {
-            Log.i("sair","sair");
             aplicacao.setVerificaOnResume(true);
             posVideo = video.getCurrentPosition();
             aplicacao.setPosVideo(posVideo);
@@ -109,7 +101,7 @@ public class AjudaVideoGrande extends ActionBarActivity {
             startActivity(intent);
             finish();
 
-          //  return true;
+
 
         }
 
@@ -134,7 +126,6 @@ public class AjudaVideoGrande extends ActionBarActivity {
         super.onResume();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificaOnResume()){
-            // Log.i("verificaSom",""+aplicacao.isVerificaSom());
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
@@ -153,11 +144,10 @@ public class AjudaVideoGrande extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        //  Log.i("onStop","onStop");
         posVideo = video.getCurrentPosition();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         aplicacao.setPosVideo(posVideo);
-        //  Log.i("onStop1","onStop"+posVideo);
+
 
 
     }
@@ -165,11 +155,10 @@ public class AjudaVideoGrande extends ActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //  Log.i("onREstart","onRestart");
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         video.start();
         video.seekTo(aplicacao.getPosVideo());
-        //  Log.i("onRestart1","onRestart"+posVideo);
+
 
     }
 

@@ -142,11 +142,11 @@ public class Ajuda extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
-      //  Log.i("onStop","onStop");
+
         posVideo = video.getCurrentPosition();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         aplicacao.setPosVideo(posVideo);
-      //  Log.i("onStop1","onStop"+posVideo);
+
 
 
     }
@@ -154,11 +154,11 @@ public class Ajuda extends ActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-      //  Log.i("onREstart","onRestart");
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         video.start();
         video.seekTo(aplicacao.getPosVideo());
-      //  Log.i("onRestart1","onRestart"+posVideo);
+
 
     }
 
@@ -202,7 +202,7 @@ public class Ajuda extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //Toast.makeText(getApplicationContext(),"entrei aqui",Toast.LENGTH_SHORT).show();
+
         audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
     }
 }

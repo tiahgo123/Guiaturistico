@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -98,13 +97,13 @@ public class ListaPraia extends ListActivity {
             check.moveToFirst();
             do {
                 int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
-                //   Log.i("id",idChecked+"");
+
                 for (int i = 0; i < list.getCount(); i++) {
                     int id = (int) list.getItemIdAtPosition(i);
 
                     if (id == idChecked) {
                         list.setItemChecked(i, true);
-                        //       Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
@@ -287,14 +286,14 @@ public class ListaPraia extends ListActivity {
         Cursor total = obterChecked();
         if( total != null && total.getCount() == 0){
             aplicacao.setVerificarTransacaoPraia(false);
-            Log.i("sair de verde", "sair de verde");
+
             aplicacao.setVerificarlinearPraia(false);
             //aplicacao.setSelecionaTudo(true);
             aplicacao.setSelecionaTudo(false);
         }else{
             aplicacao.setVerificarTransacaoPraia(true);
             aplicacao.setSelecionaTudo(true);
-            Log.i("fica verde","fica verde");
+
         }
 
         //verificar se tem alguma não check

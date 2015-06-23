@@ -706,30 +706,30 @@ public class menu extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu menu","entrei no menu");
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         if(onResume){
             if (!veSom1){
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speaker));
                 aplicacao.setVerificaSom(false);
                 veSom = true;
             } else{
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
 
             }
-            Log.i("valorselecao",""+selecionado);
+
             if(selecionado) {
-                Log.e("tudo selecionado","tudo selecionado");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
             }else{
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Log.e("nao tem tudo selecionado","nao tem tudo selecionado");
+
             }
         }
 
@@ -747,20 +747,20 @@ public class menu extends ActionBarActivity {
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-        Log.i("menuMenu","menuMenu");
+
         if (id == R.id.btSom) {
             if (!veSom){
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
             } else{
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
             }
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
+
 
             return true;
         }
@@ -776,7 +776,7 @@ public class menu extends ActionBarActivity {
                 aplicacao.setSelecionaTudo(false);
                 selecionado = false;
 
-               // Toast.makeText(getApplicationContext(),"tirar tudo",Toast.LENGTH_SHORT).show();
+
 
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
 
@@ -806,7 +806,7 @@ public class menu extends ActionBarActivity {
 
             }else {
 
-              //  Toast.makeText(getApplicationContext(),"seleciona tudo",Toast.LENGTH_SHORT).show();
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
 
                 // por tudo a um na bd
@@ -1020,7 +1020,7 @@ public class menu extends ActionBarActivity {
 
        // final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if( c != null && c.getCount()>=1){
-            Toast.makeText(getApplicationContext(),"entrei este if",Toast.LENGTH_SHORT).show();
+
             //tirar de verde
             // tirar de check
             if(valorBt ==1){
@@ -1028,7 +1028,7 @@ public class menu extends ActionBarActivity {
             if(verificarLongButtonMonumento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearMonumento.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearMonumento.setBackgroundColor(Color.GREEN);
@@ -1042,7 +1042,7 @@ public class menu extends ActionBarActivity {
             if(verificarLongButtonCultura && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearCultura.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearCultura.setBackgroundColor(Color.GREEN);
@@ -1056,7 +1056,7 @@ if (valorBt == 3){
             if(verificarLongButtonGastronomia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearGastronomia.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearGastronomia.setBackgroundColor(Color.GREEN);
@@ -1069,7 +1069,7 @@ if (valorBt == 3){
             if(verificarLongButtonAlojamento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearAlojamento.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearAlojamento.setBackgroundColor(Color.GREEN);
@@ -1083,7 +1083,7 @@ if (valorBt == 5){
             if(verificarLongButtonAgenda && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearAgenda.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearAgenda.setBackgroundColor(Color.GREEN);
@@ -1097,7 +1097,7 @@ if (valorBt == 5){
             if(verificarLongButtonPraia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearPraia.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearPraia.setBackgroundColor(Color.GREEN);
@@ -1111,7 +1111,7 @@ if (valorBt == 5){
             if(verificarLongButtonDesporto && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearDesporto.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearDesporto.setBackgroundColor(Color.GREEN);
@@ -1126,7 +1126,7 @@ if (valorBt == 5){
             if(verificarLongButtonEspaco && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearEspaco.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearEspaco.setBackgroundColor(Color.GREEN);
@@ -1139,7 +1139,7 @@ if (valorBt == 5){
             if(verificarLongButtonOutro && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
                 linearOutro.setBackgroundColor(Color.WHITE);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.check));
-                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+
                 selecionado = false;
             }else{
                 linearOutro.setBackgroundColor(Color.GREEN);
@@ -1155,55 +1155,55 @@ if (valorBt == 5){
             if(verificarLongButtonMonumento){
                 linearMonumento.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonCultura){
                 linearCultura.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonGastronomia){
                 linearGastronomia.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonAlojamento){
                 linearAlojamento.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonAgenda){
                 linearAgenda.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonPraia){
                 linearPraia.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonDesporto){
                 linearDesporto.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonEspaco){
                 linearEspaco.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
             if(verificarLongButtonOutro){
                 linearOutro.setBackgroundColor(Color.GREEN);
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.checkon));
-                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+
                 selecionado = true;
             }
 
@@ -1218,13 +1218,11 @@ if (valorBt == 5){
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("entrei onResume", "adsada");
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
 
         if (aplicacao.isVerificarlinearMonumento() || aplicacao.isVerificaTransacaoMonumento()) {
-            Log.i("colocar verde1",""+aplicacao.isVerificarlinearMonumento());
-            Log.i("colocar verde2",""+aplicacao.isVerificaTransacaoMonumento());
+
             Log.i("colocar verde","colocar verde");
             linearMonumento.setBackgroundColor(Color.GREEN);
         } else {

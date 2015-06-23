@@ -7,13 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Created by Tiago Sousa on 02/04/2015.
@@ -103,19 +101,18 @@ public class ListaAgenda extends ListActivity {
             check.moveToFirst();
             do {
                 int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
-                //   Log.i("id",idChecked+"");
+
                 for (int i = 0; i < list.getCount(); i++) {
                     int id = (int) list.getItemIdAtPosition(i);
 
                     if (id == idChecked) {
                         list.setItemChecked(i, true);
-                        //       Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
                     }
                 }
 
             } while (check.moveToNext());
         }else{
-            Toast.makeText(getApplicationContext(),"Cursor nulo ", Toast.LENGTH_SHORT).show();
+
         }
 
         Cursor c1 = verificarNaoChecked();
@@ -160,7 +157,7 @@ public class ListaAgenda extends ListActivity {
                                     values, selection, selectionArgs);
                         }while (c.moveToNext());
                     }
-                    //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
+
 
                 }else {
                     for ( int i=0; i<= list.getChildCount(); i++ ) {
@@ -182,7 +179,7 @@ public class ListaAgenda extends ListActivity {
 
                         }while (c.moveToNext());
                     }
-                    //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
+
                     Cursor c2 = verificarNaoChecked();
                     if( c2 != null && c2.getCount()>=1){
                         checkBoxSeleciona.setChecked(false);
@@ -299,11 +296,11 @@ public class ListaAgenda extends ListActivity {
             aplicacao.setVerificarlinearAgenda(false);
             //aplicacao.setSelecionaTudo(true);
             aplicacao.setSelecionaTudo(false);
-            Log.i("sair de verde", "sair de verde");
+
         }else{
             aplicacao.setVerificarTransacaoAgenda(true);
             aplicacao.setSelecionaTudo(true);
-            Log.i("fica verde","fica verde");
+
         }
 
         //verificar se tem alguma não check

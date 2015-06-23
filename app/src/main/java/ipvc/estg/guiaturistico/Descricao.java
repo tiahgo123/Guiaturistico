@@ -12,14 +12,12 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -87,16 +85,7 @@ public class Descricao extends ActionBarActivity {
 
 
         ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
-        if(ttobj2.isSpeaking()){
-            Toast.makeText(getApplicationContext(),"Estou a falar" + descricao,Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(getApplicationContext(),"Não Estou a falar" + descricao,Toast.LENGTH_SHORT).show();
-        }
 
-        //ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
-
-        Log.e("descricao",descricao);
-        Log.e("descricao",nome);
 
         txtdescricao = (TextView) findViewById(R.id.textViewDescricao);
         txtdescricao.setMovementMethod(new ScrollingMovementMethod());
@@ -107,7 +96,7 @@ public class Descricao extends ActionBarActivity {
         txtNome.setText(nome);
 
         int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
-        Log.e("ididididid",""+id);
+
         Drawable drawable = getResources().getDrawable(id);
         image.setImageDrawable(drawable);
 
@@ -143,18 +132,18 @@ public class Descricao extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-        Log.i("entrei no menu","entrei no menu");
+
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_navegacao, menu);
         if(onResume){
             if (!veSom1){
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
 
             } else{
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
@@ -178,7 +167,7 @@ public class Descricao extends ActionBarActivity {
         if (id == R.id.btSom) {
             if (!veSom){
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
@@ -186,14 +175,14 @@ public class Descricao extends ActionBarActivity {
 
             } else{
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
 
             }
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
+
 
             return true;
         }
@@ -220,7 +209,6 @@ public class Descricao extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //Toast.makeText(getApplicationContext(),"entrei aqui",Toast.LENGTH_SHORT).show();
 
         audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
         ttobj2.stop();
@@ -232,7 +220,7 @@ public class Descricao extends ActionBarActivity {
      //   ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificaOnResume()){
-            Log.i("verificaSomAjuda",""+aplicacao.isVerificaSom());
+
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
@@ -283,9 +271,6 @@ public class Descricao extends ActionBarActivity {
                     ttobj2.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
-
-                Log.e("dito",result.get(i).toString());
-
 
             }
         }

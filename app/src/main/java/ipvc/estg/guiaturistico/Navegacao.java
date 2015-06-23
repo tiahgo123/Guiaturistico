@@ -142,22 +142,25 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private boolean imagem8 = false;
     private boolean imagem9 = false;
 
-    private boolean imagem22 = false;
-    private boolean imagem23 = false;
+
     private boolean veSom=true;
     private boolean veSom1;
     private boolean ativarGps = false;
 
     Integer distance = 0;
-    String duration = "";
+
 
     private boolean verificaDialogbox1;
-    private boolean verificaDialogbox2;
-    private boolean verificaDialogbox3;
+  //  private boolean verificaDialogbox2;
+   // private boolean verificaDialogbox3;
 
-    AlertDialog.Builder alert1;
+
+
+  /*  AlertDialog.Builder alert1;
     AlertDialog.Builder alert2;
     AlertDialog.Builder alert3;
+
+    */
     private String nome;
     Location location;
 
@@ -206,10 +209,10 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
         //iniciar dialog box
-        alert1 = new AlertDialog.Builder(this);
+    /*    alert1 = new AlertDialog.Builder(this);
         alert2 = new AlertDialog.Builder(this);
         alert3 = new AlertDialog.Builder(this);
-
+    */
 
         // initialize your android device sensor capabilities
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -254,17 +257,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
         }
-        // verificar onde colocar
-
-
-
-       // Intent intent = getIntent();
-      //  valor=intent.getFloatExtra("valor",0);
 
         valor = aplicacao.getValorRaio();
-
-        Log.e("valor3",""+valor);
-
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
@@ -289,14 +283,14 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         if(onResume){
             if (!veSom1){
                 //sem som
-                Toast.makeText(getApplicationContext(),"sem som",Toast.LENGTH_LONG).show();
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
 
             } else{
                 //com som
-                Toast.makeText(getApplicationContext(),"com som",Toast.LENGTH_LONG).show();
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 aplicacao.setVerificaSom(true);
                 veSom = false;
@@ -319,7 +313,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         if (id == R.id.btSom) {
             if (!veSom){
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                Log.e("estou sem som","estou sem som");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
@@ -327,7 +320,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             } else{
 
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
@@ -335,7 +328,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
             }
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
 
             return true;
         }
@@ -360,7 +352,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
 
             for (int i = 0; i < result.size(); i++) {
-                Log.e("falar",result.get(i).toString());
+
                 if (result.get(i).toString().equals(getResources().getString(R.string.comandosubirvolume))) {
                     AudioManager audioManager =
                             (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
@@ -449,15 +441,13 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     public void onLocationChanged(Location location) {
         // METODO DISPARA QUANDO UM SINAL É RECEBIDO
         mCurrentLocation = location;
-      //  txtLat.setText("Latitude: " + String.valueOf(mCurrentLocation.getLatitude()));
-      //  txtLong.setText("Longitude: " + String.valueOf(mCurrentLocation.getLongitude()));
-        Log.i("Latitude", String.valueOf(mCurrentLocation.getLatitude()));
-        Log.i("Longitude",String.valueOf(mCurrentLocation.getLongitude()));
+
+     //   Log.i("Latitude", String.valueOf(mCurrentLocation.getLatitude()));
+      //  Log.i("Longitude",String.valueOf(mCurrentLocation.getLongitude()));
 
        verifica();
 
-
-       // Toast.makeText(getApplicationContext(),mCurrentLocation.getLatitude()+","+mCurrentLocation.getLongitude(),Toast.LENGTH_SHORT).show();
+;
     }
 
     private void verifica() {
@@ -471,8 +461,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
         for (LatLng latLng :myMap.values()) {
             location.setLatitude(latLng.latitude);
             location.setLongitude(latLng.longitude);
-            Log.e("distancialocalizacao", "" + mCurrentLocation.distanceTo(location));
-            Log.e("valor5",""+valor);
 
             ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             final NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -501,7 +489,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                         locations.add(location);
                         cont++;
                     }
-                    Log.e("distancia", "" + distancia.size());
+
 
                 }
 
@@ -519,71 +507,34 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     private void calculamin(ArrayList<Location> locations, ArrayList<Float> distancia, Float min, int indice) {
 
         min = distancia.get(0);
-        Log.e("distanciaget0",""+distancia.get(0));
 
-        int teste3 = 0;
-        int teste2 = 0;
 
         for (int i = 0; i < distancia.size(); i++) {
 
 
 
-            Log.e("distanciatotototototo",""+distancia.get(i));
+
             if (min >= distancia.get(i)) {
                 min = distancia.get(i);
                 indice = distancia.indexOf(min);
 
 
-                Log.e("mint",""+min);
-                // textdistancia.setText("" + distancia + " Metros");
-                //Toast.makeText(getApplicationContext(), "esta a " + distancia + "metros de distancia", Toast.LENGTH_LONG).show();
-                //  getrecursos(, min);
-                teste3++;
-                Log.e("quantasvezes",""+teste3);
+             //   Log.e("mint",""+min);
+
 
 
 
             }else{
-          //      getrecursos(locations.get(i),min);
-                Log.e("min2",""+min);
-                teste2++;
-                Log.e("quantasvedes",""+teste2);
+
+            //    Log.e("min2",""+min);
+
 
             }
-            //
 
         }
         getrecursos(locations.get(indice),min);
     }
 
-
-//        Iterator myVeryOwnIterator = myMap.keySet().iterator();
-//        while(myVeryOwnIterator.hasNext()) {
-//            Integer key=(Integer)myVeryOwnIterator.next();
-//            Location location = new Location("teste");
-//            LatLng value=myMap.get
-//
-//            LatLng teste = myMap.get(value);
-//           // Double teste2 = myMap.get(value);
-//
-//
-//
-//            Log.e("teste",""+value.toString());
-
-           // LatLng latLng2 = myMap.get(value).describeContents();
-
-          //  Double aDouble = latLng2.latitude;
-            //Double aDouble1 = latLng2.longitude;
-            //Log.e("teste",""+aDouble.toString());
-
-
-          //  LatLng latLng = new LatLng(myMap.get(value).latitude,myMap.get(value).longitude);
-           // location.setLatitude(aDouble);
-            //location.setLongitude(aDouble1);
-
-           // float metros= mCurrentLocation.distanceTo(location);
-            //Toast.makeText(getApplicationContext(),"esta a "+metros + "de distancia do seu local" ,Toast.LENGTH_LONG).show();
-        //    Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
 
 
     private void getrecursos(Location latLng,Float min) {
@@ -626,7 +577,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             //obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
             descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
-            Log.e("descricao", descricao);
             telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
             latitude = latLng.getLatitude();
             longitude = latLng.getLongitude();
@@ -639,10 +589,8 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             nome = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_NOME));
 
 
-           // Log.e("imagem",imagem);
 
             verificaImagens();
-           // Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
 
             if(metros<50){
                 ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
@@ -664,23 +612,16 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             colocaimagem2();
 
-
-       //     Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
-           // ttobj.speak("Está a uma distancia de "+min+" Metros", TextToSpeech.QUEUE_FLUSH, null);
             cont++;
-
 
 
         }else if(latLng.getLatitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LATITUDE)) && latLng.getLongitude()==obterPonto.getDouble(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_LONGITUDE)) && cont!=0 ) {
 
             descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
-            Log.e("descricao", descricao);
             telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
             latitude = latLng.getLatitude();
             longitude = latLng.getLongitude();
             nome = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_NOME));
-
-           // Log.e("lalalalala",nome);
 
             locFim.setLatitude(latitude);
             locFim.setLongitude(longitude);
@@ -707,11 +648,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             verificaImagens();
             colocaimagem2();
 
-         //   Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
             cont++;
         }else{
             descricao = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_DESCRICAO));
-            Log.e("descricao", descricao);
             telefone = obterPonto.getInt(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_TELEFONE));
             latitude = latLng.getLatitude();
             longitude = latLng.getLongitude();
@@ -723,11 +662,9 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             imagem = obterPonto.getString(obterPonto.getColumnIndex(Contrato.pontos.COLUMN_IMAGEM));
 
             verificaImagens();
-           // colocarImagem();
-
             colocaimagem2();
 
-         //   Picasso.with(getApplicationContext()).load(R.drawable.monumentos).into(imagemButton1);
+
             cont++;
             if(metros<50){
                 ttobj.speak(getResources().getString(R.string.menoscinquenta), TextToSpeech.QUEUE_FLUSH, null);
@@ -751,22 +688,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
     }
 
-
-
-
-//        Cursor coord = obterLatitudeLongitude();
-//        if( coord != null && coord.moveToFirst() ) {
-//
-//            latitudeString = coord.getString(coord.getColumnIndex("fim_latitude"));
-//            longitudeString = coord.getString(coord.getColumnIndex("fim_longitude"));
-//            moradaFim = coord.getString(coord.getColumnIndex("fim_morada"));
-//
-//            dest_lat = Double.parseDouble(latitudeString);
-//            dest_long = Double.parseDouble(longitudeString);
-//
-//        }else{
-//            Toast.makeText(getActivity(), R.string.cursorNulo, Toast.LENGTH_SHORT).show();
-//        }
 
 
     @Override
@@ -792,29 +713,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
     public void onResume() {
         // QUANDO A APLICAÇÃO ESTA NESTE ESTADO RETOMAR OS PEDIDOS
         super.onResume();
-        Toast.makeText(getApplicationContext(),"entrei",Toast.LENGTH_SHORT).show();
-
-   /*     if(verificaDialogbox2){
-            Toast.makeText(getApplicationContext(),"remover2",Toast.LENGTH_SHORT).show();
-            alert2.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    dialog.dismiss();
-                }
-            });
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-
-        }
-        if(verificaDialogbox3){
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-
-        }
-        */
-
 
    if (mGoogleApiClient.isConnected()) {
             startLocationUpdates();
@@ -825,7 +723,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificaOnResume() ){
-           // Log.i("verificaSomAjuda",""+aplicacao.isVerificaSom());
+
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
                 AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
@@ -896,8 +794,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         aplicacao.setVerificaOnResume(true);
-    //    Log.e("onbackpressed","o valor é: "+aplicacao.isVerificaOnResume());
-    //    Log.e("verificaSom1","o valor do som é: "+aplicacao.isVerificaSom());
 
         Intent intent = new Intent(getApplicationContext(), menu.class);
         startActivity(intent);
@@ -1044,15 +940,6 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
             direction = direction + 360;
         }
         Log.e("graus",""+direction);
-        //colocaimagem2();
-
-        // saber direcao telemovel
-    //    saberDirecao();
-
-        //colocar imagem do telemovel
-  //      colocarImagem();
-
-   //     Toast.makeText(getApplicationContext(),"lado do telemovel e: " + bearingText + "e a imagem esta para o lado: " + bearingTextImagem, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -1683,7 +1570,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
             if (result.size() < 1)
             {
-                Toast.makeText(Navegacao.this.getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
+
                 return;
             }
 
@@ -1726,7 +1613,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
 
                 }
             }
-            Toast.makeText(getApplicationContext(),"Distance:" + distance,Toast.LENGTH_LONG).show();
+
 
             // Drawing polyline in the Google Map for the i-th route
            // Navegacao.this.map.addPolyline(lineOptions);
@@ -1748,7 +1635,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 collapse .invoke(service);
 
             }else{
-              // Toast.makeText(getApplicationContext(),"Barra puxada para cima",Toast.LENGTH_SHORT).show();
+
                 LocationManager manager = (LocationManager) getApplicationContext().getSystemService(getApplicationContext().LOCATION_SERVICE);
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                    // AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -1814,7 +1701,7 @@ public class Navegacao extends ActionBarActivity implements GoogleApiClient.Conn
                 }
                 ex.printStackTrace();
             }
-              // Toast.makeText(getApplicationContext(),"Barra é puxa para baixo",Toast.LENGTH_SHORT).show();
+
         }
     }
 
