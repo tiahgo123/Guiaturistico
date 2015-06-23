@@ -288,10 +288,24 @@ public class ListaPraia extends ListActivity {
         if( total != null && total.getCount() == 0){
             aplicacao.setVerificarTransacaoPraia(false);
             Log.i("sair de verde", "sair de verde");
+            aplicacao.setVerificarlinearPraia(false);
+            //aplicacao.setSelecionaTudo(true);
+            aplicacao.setSelecionaTudo(false);
         }else{
             aplicacao.setVerificarTransacaoPraia(true);
+            aplicacao.setSelecionaTudo(true);
             Log.i("fica verde","fica verde");
         }
+
+        //verificar se tem alguma não check
+        Cursor vv = verificarNaoChecked();
+        if( vv != null && vv.getCount()>=1){
+            aplicacao.setSelecionaTudo(false);
+        }else{
+
+        }
+
+
         aplicacao.setVerificaOnResume(true);
         Intent intent = new Intent(getApplicationContext(),menu.class);
         startActivity(intent);

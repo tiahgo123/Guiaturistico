@@ -60,6 +60,10 @@ public class menu extends ActionBarActivity {
     float valor=1;
 
     SQLiteDatabase db;
+    int idCategoria;
+    int valorBt;
+
+
 
     //Realizar a verificação da actionbar, para o som
      Menu menu;
@@ -68,9 +72,11 @@ public class menu extends ActionBarActivity {
      boolean veSom1;
 
     Cursor valoresChecked;
+    Cursor valoresCheckedCategoria;
     int checked = 1;
 
     boolean selecionado;
+
 
     // boolean selecionaTudo = false;
 
@@ -120,6 +126,8 @@ public class menu extends ActionBarActivity {
         verificarlinearEspaco = aplicacao.isVerificarlinearEspaco();
         verificarlinearOutro = aplicacao.isVerificarlinearOutro();
 
+
+
         resultadoProgresso.setText("1 Metro");
 
         DbHelper dbHelper= new DbHelper(getApplicationContext());
@@ -157,7 +165,10 @@ public class menu extends ActionBarActivity {
                 db.update(
                         Contrato.pontos.TABLE_NAME,
                         values, selection, selectionArgs);
-            }else{
+
+
+            }else
+            {
                 verificarLongButtonMonumento = true;
                 verificarlinearMonumento = false;
                 linearMonumento.setBackgroundColor(Color.WHITE);
@@ -172,6 +183,12 @@ public class menu extends ActionBarActivity {
             }
                 aplicacao.setVerificarLongButtonMonumento(verificarLongButtonMonumento);
                 aplicacao.setVerificarlinearMonumento(verificarlinearMonumento);
+
+                idCategoria = 1;
+                valorBt = 1;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -222,6 +239,12 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonCultura(verificarLongButtonCultura);
                 aplicacao.setVerificarlinearCultura(verificarlinearCultura);
+
+                idCategoria = 2;
+                valorBt = 2;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -272,6 +295,12 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonGastronomia(verificarLongButtonGastronomia);
                 aplicacao.setVerificarlinearGastronomia(verificarlinearGastronomia);
+
+                idCategoria = 3;
+                valorBt = 3;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -321,6 +350,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonAlojamento(verificarLongButtonAlojamento);
                 aplicacao.setVerificarlinearAlojamento(verificarlinearAlojamento);
+
+
+                idCategoria = 4;
+                valorBt = 4;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -370,6 +406,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonAgenda(verificarLongButtonAgenda);
                 aplicacao.setVerificarlinearAgenda(verificarlinearAgenda);
+
+
+                idCategoria = 5;
+                valorBt = 5;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -419,6 +462,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonPraia(verificarLongButtonPraia);
                 aplicacao.setVerificarlinearPraia(verificarlinearPraia);
+
+
+                idCategoria = 6;
+                valorBt = 6;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
                 return false;
             }
         });
@@ -468,6 +518,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonDesporto(verificarLongButtonDesporto);
                 aplicacao.setVerificarlinearDesporto(verificarlinearDesporto);
+
+                idCategoria = 7;
+                valorBt = 7;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
+
                 return false;
             }
         });
@@ -517,6 +574,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonEspaco(verificarLongButtonEspaco);
                 aplicacao.setVerificarlinearEspaco(verificarlinearEspaco);
+
+                idCategoria = 8;
+                valorBt = 8;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
+
                 return false;
             }
         });
@@ -566,6 +630,13 @@ public class menu extends ActionBarActivity {
                 }
                 aplicacao.setVerificarLongButtonOutro(verificarLongButtonOutro);
                 aplicacao.setVerificarlinearOutro(verificarlinearOutro);
+
+                idCategoria = 9;
+                valorBt = 9;
+                obterPorCategoriaChecked();
+                verificarNCheck();
+
+
                 return false;
             }
         });
@@ -650,16 +721,16 @@ public class menu extends ActionBarActivity {
                 veSom = false;
 
             }
-        }
-        if(aplicacao.isSelecionaTudo()) {
-            if (selecionado == false)
+            Log.i("valorselecao",""+selecionado);
+            if(selecionado) {
+                Log.e("tudo selecionado","tudo selecionado");
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
-            else {
+            }else{
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
-
-
+                Log.e("nao tem tudo selecionado","nao tem tudo selecionado");
             }
         }
+
 
 
 
@@ -694,7 +765,6 @@ public class menu extends ActionBarActivity {
 
         if (id == R.id.btCheckTudo) {
             if(aplicacao.isSelecionaTudo()){
-
                 //por tudo a zero na bd
                 ContentValues valores = new ContentValues();
                 valores.put(Contrato.pontos.COLUMN_CHECKED,"0");
@@ -702,8 +772,9 @@ public class menu extends ActionBarActivity {
                 String[] selectionArgs = {"1"};
                 db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
                 aplicacao.setSelecionaTudo(false);
+                selecionado = false;
 
-                Toast.makeText(getApplicationContext(),"tirar tudo",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(),"tirar tudo",Toast.LENGTH_SHORT).show();
 
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
 
@@ -718,10 +789,22 @@ public class menu extends ActionBarActivity {
                 linearOutro.setBackgroundColor(Color.WHITE);
 
 
+                aplicacao.setVerificarlinearMonumento(false);
+                aplicacao.setVerificarlinearCultura(false);
+                aplicacao.setVerificarlinearGastronomia(false);
+                aplicacao.setVerificarlinearAlojamento(false);
+                aplicacao.setVerificarlinearAgenda(false);
+                aplicacao.setVerificarlinearDesporto(false);
+                aplicacao.setVerificarlinearEspaco(false);
+                aplicacao.setVerificarlinearOutro(false);
+                aplicacao.setVerificarlinearPraia(false);
+
+
+
 
             }else {
 
-                Toast.makeText(getApplicationContext(),"seleciona tudo",Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(),"seleciona tudo",Toast.LENGTH_SHORT).show();
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
 
                 // por tudo a um na bd
@@ -731,6 +814,7 @@ public class menu extends ActionBarActivity {
                 String[] selectionArgs = {"0"};
                 db.update(Contrato.pontos.TABLE_NAME,valores,selection,selectionArgs);
                 aplicacao.setSelecionaTudo(true);
+                selecionado = true;
 
 
 
@@ -743,6 +827,17 @@ public class menu extends ActionBarActivity {
                 linearDesporto.setBackgroundColor(Color.GREEN);
                 linearEspaco.setBackgroundColor(Color.GREEN);
                 linearOutro.setBackgroundColor(Color.GREEN);
+
+                aplicacao.setVerificarlinearMonumento(true);
+                aplicacao.setVerificarlinearCultura(true);
+                aplicacao.setVerificarlinearGastronomia(true);
+                aplicacao.setVerificarlinearAlojamento(true);
+                aplicacao.setVerificarlinearAgenda(true);
+                aplicacao.setVerificarlinearDesporto(true);
+                aplicacao.setVerificarlinearEspaco(true);
+                aplicacao.setVerificarlinearOutro(true);
+                aplicacao.setVerificarlinearPraia(true);
+
 
 
 
@@ -774,6 +869,9 @@ public class menu extends ActionBarActivity {
 
     }
 
+
+
+
     private Cursor verSeExisteChecked() {
 
         String[] projection = {
@@ -798,6 +896,37 @@ public class menu extends ActionBarActivity {
 
         return valoresChecked;
     }
+
+
+    private Cursor obterPorCategoriaChecked() {
+
+        String[] projection = {
+                Contrato.pontos.COLUMN_NOME,  Contrato.pontos._ID,
+                Contrato.pontos.COLUMN_IdCategoria, Contrato.pontos.COLUMN_CHECKED
+
+        };
+
+        //    String sortOrder = Contrato.pontos.COLUMN_NOME + " ASC ";
+        String selection = Contrato.pontos.COLUMN_IdCategoria + " =? and " + Contrato.pontos.COLUMN_CHECKED + "=?";
+        String[] selectionArgs = {String.valueOf(idCategoria), String.valueOf(checked)};
+
+        valoresCheckedCategoria = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        return valoresCheckedCategoria;
+
+
+    }
+
+
+
 
     public void pergunta(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -873,113 +1002,299 @@ public class menu extends ActionBarActivity {
         alertDialog.show();
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("entrei onResume","adsada");
-        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
-
-
-
-
-        if (aplicacao.isVerificarlinearMonumento()|| aplicacao.isVerificaTransacaoMonumento()){
-            linearMonumento.setBackgroundColor(Color.GREEN);
-        }else{
-            linearMonumento.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearCultura()||aplicacao.isVerificarTransacaoCultura()){
-            linearCultura.setBackgroundColor(Color.GREEN);
-        }else{
-            linearCultura.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearGastronomia()|| aplicacao.isVerificarTransacaoGastronomia()){
-            linearGastronomia.setBackgroundColor(Color.GREEN);
-        }else{
-            linearGastronomia.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearAlojamento()|| aplicacao.isVerificarTransacaoAlojamento()){
-            linearAlojamento.setBackgroundColor(Color.GREEN);
-        }else{
-            linearAlojamento.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearAgenda()|| aplicacao.isVerificarTransacaoAgenda()){
-            linearAgenda.setBackgroundColor(Color.GREEN);
-        }else{
-            linearAgenda.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearPraia()|| aplicacao.isVerificarTransacaoPraia()){
-            linearPraia.setBackgroundColor(Color.GREEN);
-        }else{
-            linearPraia.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearDesporto()|| aplicacao.isVerificarTransacaoDesporto()){
-            linearDesporto.setBackgroundColor(Color.GREEN);
-        }else{
-            linearDesporto.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearEspaco()|| aplicacao.isVerificarTransacaoEspaco()){
-            linearEspaco.setBackgroundColor(Color.GREEN);
-        }else{
-            linearEspaco.setBackgroundColor(Color.WHITE);
-        }
-        if (aplicacao.isVerificarlinearOutro()|| aplicacao.isVerificarTransacaoOutro()){
-            linearOutro.setBackgroundColor(Color.GREEN);
-        }else{
-            linearOutro.setBackgroundColor(Color.WHITE);
-        }
-
-
-        String[] projection = {Contrato.pontos._ID};
+    public void verificarNCheck(){
+        String[] projection = {Contrato.pontos.COLUMN_IdCategoria};
         String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
-        String[] selectionArgs = { "0" };
+        String[] selectionArgs = {"0"};
 
         Cursor c = db.query(
                 Contrato.pontos.TABLE_NAME,
                 projection,
                 selection,
                 selectionArgs,
-                null,
+                Contrato.pontos.COLUMN_IdCategoria,
                 null,
                 null);
 
         c.moveToFirst();
 
-        if(c.getCount()!=0){
-                selecionado = true;
-            aplicacao.setVerificarTransacaoAgenda(true);
-            aplicacao.setVerificarTransacaoAlojamento(true);
-            aplicacao.setVerificarTransacaoOutro(true);
-            aplicacao.setVerificarTransacaoEspaco(true);
-            aplicacao.setVerificarTransacaoCultura(true);
-            aplicacao.setVerificarTransacaoDesporto(true);
-            aplicacao.setVerificarTransacaoGastronomia(true);
-            aplicacao.setVerificaTransacaoMonumento(true);
-            aplicacao.setVerificarTransacaoPraia(true);
+       // final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        if( c != null && c.getCount()>=1){
+            Toast.makeText(getApplicationContext(),"entrei este if",Toast.LENGTH_SHORT).show();
+            //tirar de verde
+            // tirar de check
+            if(valorBt ==1){
 
+            if(verificarLongButtonMonumento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearMonumento.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearMonumento.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+            }
+        if(valorBt == 2){
+
+
+            if(verificarLongButtonCultura && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearCultura.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearCultura.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+}
+if (valorBt == 3){
+
+
+            if(verificarLongButtonGastronomia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearGastronomia.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearGastronomia.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+}
+            if(valorBt == 4){
+
+            if(verificarLongButtonAlojamento && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearAlojamento.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearAlojamento.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+            }
+if (valorBt == 5){
+
+
+            if(verificarLongButtonAgenda && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearAgenda.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearAgenda.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+}
+    if (valorBt == 6){
+
+
+            if(verificarLongButtonPraia && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearPraia.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearPraia.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+    }
+        if (valorBt == 7){
+
+
+            if(verificarLongButtonDesporto && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearDesporto.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearDesporto.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+        }
+
+            if (valorBt == 8){
+
+
+            if(verificarLongButtonEspaco && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearEspaco.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearEspaco.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+            }
+        if (valorBt == 9){
+
+            if(verificarLongButtonOutro && valoresCheckedCategoria != null && valoresCheckedCategoria.getCount() == 0){
+                linearOutro.setBackgroundColor(Color.WHITE);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_000));
+                Toast.makeText(getApplicationContext(),"tirar check",Toast.LENGTH_SHORT).show();
+                selecionado = false;
+            }else{
+                linearOutro.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                selecionado = true;
+            }
+        }
 
         }else{
-            selecionado = false;
-            aplicacao.setVerificarTransacaoAgenda(false);
-            aplicacao.setVerificarTransacaoAlojamento(false);
-            aplicacao.setVerificarTransacaoOutro(false);
-            aplicacao.setVerificarTransacaoEspaco(false);
-            aplicacao.setVerificarTransacaoCultura(false);
-            aplicacao.setVerificarTransacaoDesporto(false);
-            aplicacao.setVerificarTransacaoGastronomia(false);
-            aplicacao.setVerificaTransacaoMonumento(false);
-            aplicacao.setVerificarTransacaoPraia(false);
+            //por verde
+            //por check
 
+            if(verificarLongButtonMonumento){
+                linearMonumento.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonCultura){
+                linearCultura.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonGastronomia){
+                linearGastronomia.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonAlojamento){
+                linearAlojamento.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonAgenda){
+                linearAgenda.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonPraia){
+                linearPraia.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonDesporto){
+                linearDesporto.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonEspaco){
+                linearEspaco.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+            if(verificarLongButtonOutro){
+                linearOutro.setBackgroundColor(Color.GREEN);
+                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.abc_btn_check_to_on_mtrl_015));
+                Toast.makeText(getApplicationContext(),"meter check check",Toast.LENGTH_SHORT).show();
+                selecionado = true;
+            }
+
+
+        }
+    }
+
+
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("entrei onResume", "adsada");
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+
+
+        if (aplicacao.isVerificarlinearMonumento() || aplicacao.isVerificaTransacaoMonumento()) {
+            Log.i("colocar verde1",""+aplicacao.isVerificarlinearMonumento());
+            Log.i("colocar verde2",""+aplicacao.isVerificaTransacaoMonumento());
+            Log.i("colocar verde","colocar verde");
+            linearMonumento.setBackgroundColor(Color.GREEN);
+        } else {
+            linearMonumento.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearCultura() || aplicacao.isVerificarTransacaoCultura()) {
+            linearCultura.setBackgroundColor(Color.GREEN);
+        } else {
+            linearCultura.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearGastronomia() || aplicacao.isVerificarTransacaoGastronomia()) {
+            linearGastronomia.setBackgroundColor(Color.GREEN);
+        } else {
+            linearGastronomia.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearAlojamento() || aplicacao.isVerificarTransacaoAlojamento()) {
+            linearAlojamento.setBackgroundColor(Color.GREEN);
+        } else {
+            linearAlojamento.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearAgenda() || aplicacao.isVerificarTransacaoAgenda()) {
+            linearAgenda.setBackgroundColor(Color.GREEN);
+        } else {
+            linearAgenda.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearPraia() || aplicacao.isVerificarTransacaoPraia()) {
+            linearPraia.setBackgroundColor(Color.GREEN);
+        } else {
+            linearPraia.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearDesporto() || aplicacao.isVerificarTransacaoDesporto()) {
+            linearDesporto.setBackgroundColor(Color.GREEN);
+        } else {
+            linearDesporto.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearEspaco() || aplicacao.isVerificarTransacaoEspaco()) {
+            linearEspaco.setBackgroundColor(Color.GREEN);
+        } else {
+            linearEspaco.setBackgroundColor(Color.WHITE);
+        }
+        if (aplicacao.isVerificarlinearOutro() || aplicacao.isVerificarTransacaoOutro()) {
+            linearOutro.setBackgroundColor(Color.GREEN);
+        } else {
+            linearOutro.setBackgroundColor(Color.WHITE);
         }
 
 
+        String[] projection = {Contrato.pontos.COLUMN_IdCategoria};
+        String selection = Contrato.pontos.COLUMN_CHECKED + " =? ";
+        String[] selectionArgs = {"0"};
+
+        Cursor c = db.query(
+                Contrato.pontos.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                Contrato.pontos.COLUMN_IdCategoria,
+                null,
+                null);
+
+        c.moveToFirst();
 
 
-
-
-
-
-
+        if( c != null && c.getCount()>=1 || !aplicacao.isSelecionaTudo()){
+            selecionado = false;
+            Log.i("não estão todos", "adsada");
+        }else{
+            selecionado = true;
+            Log.i("estao todos", "adsada");
+        }
 
         if (aplicacao.isVerificaOnResume()){
            // Log.i("verificaSom",""+aplicacao.isVerificaSom());
@@ -992,9 +1307,6 @@ public class menu extends ActionBarActivity {
         }else{
              onResume = false;
         }
-
-
-
 
         progresso.setProgress((int) aplicacao.getValorSeekBar());
 

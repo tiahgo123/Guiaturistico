@@ -92,6 +92,8 @@ public class ListaMonumento extends ListActivity {
         setContentView(R.layout.activity_lista);
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
+       // aplicacao.setVerificarentraMonumento(true);
+
         list = getListView();
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
         list.setTextFilterEnabled(true);
@@ -303,10 +305,21 @@ public class ListaMonumento extends ListActivity {
         Cursor total = obterChecked();
         if( total != null && total.getCount() == 0){
             aplicacao.setVerificaTransacaoMonumento(false);
+            aplicacao.setVerificarlinearMonumento(false);
+            //aplicacao.setSelecionaTudo(true);
+           aplicacao.setSelecionaTudo(false);
             Log.i("sair de verde", "sair de verde");
         }else{
             aplicacao.setVerificaTransacaoMonumento(true);
+            aplicacao.setSelecionaTudo(true);
             Log.i("fica verde","fica verde");
+        }
+        //verificar se tem alguma não check
+        Cursor vv = verificarNaoChecked();
+        if( vv != null && vv.getCount()>=1){
+            aplicacao.setSelecionaTudo(false);
+        }else{
+
         }
         aplicacao.setVerificaOnResume(true);
         Intent intent = new Intent(getApplicationContext(),menu.class);
