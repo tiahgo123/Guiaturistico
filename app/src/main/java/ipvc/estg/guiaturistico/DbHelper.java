@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 17;
+    public static final int DATABASE_VERSION = 18;
     public static final String DATABASE_NAME = "categorias.db";
 
     public DbHelper(Context context) {
@@ -71,10 +71,10 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (30,'Dias 18, 19, 20 e 21 Junho','null',null,'Sem email','Feira Medieval de Viana do Castelo','null','agenda','41.693657','-8.828301',5,0);");
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (31,'Dias 20 a 23 de Agosto','null',null,'Sem email','- Romaria de Nª Srª d’Agonia','null','agenda','41.693657','-8.828301',5,0);");
 
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (32,'Praia Afife','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiaafife','41,78079','-8,87150',6,0);");//
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (33,'Praia Amorosa','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiaamorosa','41,64693','-8,82509',6,0);");
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (34,'Praia Cabedelo','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiacabedelo','41,68003','-8,83546',6,0);");
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (35,'Praia Ínsua','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiainsua','41,78539','-8,87133',6,0);");
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (32,'Praia Afife','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiaafife','41.78079','-8.87150',6,0);");//
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (33,'Praia Amorosa','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiaamorosa','41.64693','-8.82509',6,0);");
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (34,'Praia Cabedelo','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiacabedelo','41.68003','-8.83546',6,0);");
+        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (35,'Praia Ínsua','null',null,'Sem email','Praia com agua de qualidade maxima','null','praiainsua','41.78539','-8.87133',6,0);");
 
 
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (36,'Surf Clube de Viana','Praia do Cabedelo 4935-161 Viana do Castelo',258332043,'info@surfingviana.com','Escola de surf, bodyboard, longboard e paddle','www.surfingviana.com','surfclubeviana','41.6784167','-8.82733611111111',7,0);");
