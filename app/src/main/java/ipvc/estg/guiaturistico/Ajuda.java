@@ -47,7 +47,7 @@ public class Ajuda extends ActionBarActivity {
 
         video = (VideoView) findViewById(R.id.videoView);
 
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.teste);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.omeufilme);
         video.setMediaController(mc);
         video.setVideoURI(uri);
 

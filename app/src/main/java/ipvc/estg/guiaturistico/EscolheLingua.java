@@ -327,11 +327,7 @@ public class EscolheLingua extends ActionBarActivity {
                 collapse .invoke(service);
 
             }else{
-<<<<<<< Updated upstream
-=======
-                //Deteta quando a barra é puxada para cima
 
->>>>>>> Stashed changes
                 functionVeWifi();
                 functionVeDados();
 
@@ -354,11 +350,7 @@ public class EscolheLingua extends ActionBarActivity {
                 }
                 ex.printStackTrace();
             }
-<<<<<<< Updated upstream
-=======
-            //Detetar quando a barra é puxada para baixo
 
->>>>>>> Stashed changes
         }
     }
 

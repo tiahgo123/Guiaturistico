@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 20;
+    public static final int DATABASE_VERSION = 21;
     public static final String DATABASE_NAME = "categorias.db";
 
     public DbHelper(Context context) {
@@ -93,10 +93,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (46,'Estação de Viana do Castelo','sem morada',null,'sem email','Estação de Comboios','sem site','estacaocombois','41.6948863','-8.831216',9,0);");
 
 
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (47,'Teste','sem morada',919643063,'sem email','fala que eu gosto de te ouvir','sem site','bandeirafranca','41.6940098','-8.8322639',9,0);");
-
-        //inserir para testar a bussula
-        db.execSQL("insert into pontos (_id, Nome, Morada, Telefone, Email, Descricao, Site, Imagem, Latitude, Longitude, Id_categoria,Checked)  values (48,'TesteBussula','frente ao nosso quarto',919643063,'sem email','fala que eu gosto de te ouvir','sem site','bandeirainglaterra','41.693822','-8.832688',9,0);");
 
 
 

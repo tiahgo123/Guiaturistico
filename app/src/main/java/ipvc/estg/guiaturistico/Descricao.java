@@ -86,10 +86,7 @@ public class Descricao extends ActionBarActivity {
 
         ttobj2.speak(descricao,TextToSpeech.QUEUE_FLUSH,null);
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
         txtdescricao = (TextView) findViewById(R.id.textViewDescricao);
         txtdescricao.setMovementMethod(new ScrollingMovementMethod());

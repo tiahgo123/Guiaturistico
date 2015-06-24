@@ -42,7 +42,7 @@ public class AjudaVideoGrande extends ActionBarActivity {
 
         video = (VideoView) findViewById(R.id.videoView1);
 
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.teste);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.omeufilme);
         video.setMediaController(mc);
         video.setVideoURI(uri);
  }
