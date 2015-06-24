@@ -18,14 +18,19 @@ import android.widget.ListView;
  */
 public class ListaGastronomia extends ListActivity {
 
+    //valores para a lista
     int[] toViewIDs;
     String[] fromFieldNames;
     ListView list;
+
     CheckBox checkBoxSeleciona;
+
+    //Cursores para obter os valores da base dados
     Cursor obterDocumento;
     Cursor valoresChecked;
     Cursor verificaNaoChecked;
 
+    //passar a categoria, se queremos check ou não check para a query
     int idCategoria = 3;
     int checked = 1;
     int nChecked = 0;
@@ -41,10 +46,12 @@ public class ListaGastronomia extends ListActivity {
         CheckedTextView item = (CheckedTextView) v;
         final Object obj = list.getAdapter().getItem(position);
 
+        //obter o id do valor selecionado quando se carrega num valor da lista
         Cursor cursor2 = (Cursor) obj;
         final String id2=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
 
         if (item.isChecked()) {
+            //quando fazemos o check em um valor da lista coloca a um na base dados
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,1);
 
@@ -56,6 +63,7 @@ public class ListaGastronomia extends ListActivity {
 
 
         }else {
+            //quando fazemos tiramos o check do valor e pomos a zero na base dados
             checkBoxSeleciona.setChecked(false);
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,0);
@@ -66,6 +74,8 @@ public class ListaGastronomia extends ListActivity {
                     Contrato.pontos.TABLE_NAME,
                     values, selection, selectionArgs);
         }
+
+        // verifica se existe algum que não esteja check e se não tiver poe a check a falso
         Cursor c3 = verificarNaoChecked();
         if( c3 != null && c3.getCount()>=1){
             checkBoxSeleciona.setChecked(false);
@@ -103,6 +113,10 @@ public class ListaGastronomia extends ListActivity {
 
                     if (id == idChecked) {
                         list.setItemChecked(i, true);
+                        //colocar os valores na lista check
+                        // obter o id dos que estão check
+                        //obter os id da lista
+                        // quando forem iguais mete a check a true
 
                     }
                 }
@@ -112,6 +126,7 @@ public class ListaGastronomia extends ListActivity {
 
         }
 
+        // colocar a check do selecionar tudo selecionada ou não
         Cursor c1 = verificarNaoChecked();
         if( c1 != null && c1.getCount()>=1){
             checkBoxSeleciona.setChecked(false);
@@ -135,6 +150,7 @@ public class ListaGastronomia extends ListActivity {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
+                    //colocar todos os valores da lista a true
                     checkBoxSeleciona.setChecked(true);
                     for ( int i=0; i < list.getCount(); i++ ) {
                         list.setItemChecked(i, true);
@@ -143,6 +159,7 @@ public class ListaGastronomia extends ListActivity {
                     if(c != null){
                         c.moveToFirst();
                         do{
+                            // colocar todos os valores na base dados com valor 1
                             int idGastronomia = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
                             values.put(Contrato.pontos.COLUMN_CHECKED,1);
@@ -154,6 +171,8 @@ public class ListaGastronomia extends ListActivity {
                         }while (c.moveToNext());
                     }
                 }else {
+                    // a check fica sem estar selecionada
+                    // colocar na lista os valores sem estarem selecionados
                     for ( int i=0; i< list.getChildCount(); i++ ) {
                         list.setItemChecked(i, false);
                     }
@@ -162,6 +181,7 @@ public class ListaGastronomia extends ListActivity {
                     if(c != null){
                         c.moveToFirst();
                         do{
+                            // colocar os valores na base dados a 0
                             int idGastronomia = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
                             values.put(Contrato.pontos.COLUMN_CHECKED,0);
@@ -173,6 +193,7 @@ public class ListaGastronomia extends ListActivity {
 
                         }while (c.moveToNext());
                     }
+                    // ve se existe algum que não esteja cheke para mudar a check principal
                     Cursor c2 = verificarNaoChecked();
                     if( c2 != null && c2.getCount()>=1){
                         checkBoxSeleciona.setChecked(false);
@@ -184,7 +205,7 @@ public class ListaGastronomia extends ListActivity {
             }
         });
     }
-
+    //construção da tabela
     private void BuildTable() {
 
         obterMonumentos();
@@ -209,6 +230,7 @@ public class ListaGastronomia extends ListActivity {
 
     }
 
+    // obter os gastronomia
     private Cursor obterMonumentos() {
 
         String[] projection = {
@@ -282,15 +304,16 @@ public class ListaGastronomia extends ListActivity {
 
     public void volta(){
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        // obter os check
         Cursor total = obterChecked();
         if( total != null && total.getCount() == 0){
+            //como não tem valores check fica o layout a cinza
             aplicacao.setVerificarTransacaoGastronomia(false);
-
             aplicacao.setVerificarlinearGastronomia(false);
-            //aplicacao.setSelecionaTudo(true);
             aplicacao.setSelecionaTudo(false);
 
         }else{
+            //se não poe a verde
             aplicacao.setVerificarTransacaoGastronomia(true);
             aplicacao.setSelecionaTudo(true);
 
@@ -299,11 +322,11 @@ public class ListaGastronomia extends ListActivity {
         //verificar se tem alguma não check
         Cursor vv = verificarNaoChecked();
         if( vv != null && vv.getCount()>=1){
+            //alterar a check do seleciona tudo para falso para utilizar na classe Menu
             aplicacao.setSelecionaTudo(false);
         }else{
 
         }
-
 
         aplicacao.setVerificaOnResume(true);
         Intent intent = new Intent(getApplicationContext(),menu.class);

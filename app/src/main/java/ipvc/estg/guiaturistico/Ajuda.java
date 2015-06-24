@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,19 +71,19 @@ public class Ajuda extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.i("entrei no menu Ajuda", "entrei no menu Ajuda");
+
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_ajuda, menu);
         if(onResume){
             if (!veSom1){
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
 
             } else{
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
@@ -102,22 +101,22 @@ public class Ajuda extends ActionBarActivity {
 
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         int id = item.getItemId();
-        Log.i("menuAjuda","menuAjuda");
+
         if (id == R.id.btSom) {
             if (!veSom){
-                Log.e("estou sem som","estou sem som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             } else{
-                Log.e("estou a dar som","estou a dar som");
+
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             }
-            Log.i("verificaSom",""+aplicacao.isVerificaSom());
+
 
             return true;
         }
@@ -181,7 +180,7 @@ public class Ajuda extends ActionBarActivity {
         super.onResume();
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
         if (aplicacao.isVerificaOnResume()){
-             Log.i("verificaSomAjuda",""+aplicacao.isVerificaSom());
+
             if(aplicacao.isVerificaSom()){
                 veSom1 = true;
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);

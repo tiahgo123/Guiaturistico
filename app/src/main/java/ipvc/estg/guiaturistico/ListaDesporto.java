@@ -1,6 +1,5 @@
 package ipvc.estg.guiaturistico;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -8,13 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Created by Tiago Sousa on 02/04/2015.
@@ -24,14 +21,14 @@ public class ListaDesporto extends ListActivity {
     int[] toViewIDs;
     String[] fromFieldNames;
     ListView list;
+
     CheckBox checkBoxSeleciona;
+
     Cursor obterDocumento;
-    int idCategoria = 7;
-
-
-    boolean selecionaTudo = false;
     Cursor valoresChecked;
     Cursor verificaNaoChecked;
+
+    int idCategoria = 7;
     int checked = 1;
     int nChecked = 0;
 
@@ -45,10 +42,13 @@ public class ListaDesporto extends ListActivity {
         CheckedTextView item = (CheckedTextView) v;
         final Object obj = list.getAdapter().getItem(position);
 
+        //obter o id do valor selecionado quando se carrega num valor da lista
         Cursor cursor2 = (Cursor) obj;
         final String id2=cursor2.getString(cursor2.getColumnIndex(Contrato.pontos._ID));
 
+
         if (item.isChecked()) {
+            //quando fazemos o check em um valor da lista coloca a um na base dados
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,1);
 
@@ -60,6 +60,7 @@ public class ListaDesporto extends ListActivity {
 
 
         }else {
+            //quando fazemos tiramos o check do valor e pomos a zero na base dados
             checkBoxSeleciona.setChecked(false);
             ContentValues values = new ContentValues();
             values.put(Contrato.pontos.COLUMN_CHECKED,0);
@@ -70,15 +71,19 @@ public class ListaDesporto extends ListActivity {
                     Contrato.pontos.TABLE_NAME,
                     values, selection, selectionArgs);
 
-
         }
-        Cursor cursor = verificarNaoChecked();
-        if(cursor!=null && cursor.getCount()>=1){
+
+        // verifica se existe algum que não esteja check e se não tiver poe a check a falso
+        Cursor c3 = verificarNaoChecked();
+        if( c3 != null && c3.getCount()>=1){
             checkBoxSeleciona.setChecked(false);
-        }else {
+        }else{
             checkBoxSeleciona.setChecked(true);
         }
+
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,101 +91,127 @@ public class ListaDesporto extends ListActivity {
         setContentView(R.layout.activity_lista);
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
 
-        list=getListView();
-        // list = (ListView) findViewById(R.id.li);
+        // aplicacao.setVerificarentraMonumento(true);
+
+        list = getListView();
         list.setChoiceMode(list.CHOICE_MODE_MULTIPLE);
-
         list.setTextFilterEnabled(true);
-
         checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
 
-        DbHelper dbHelper= new DbHelper(getApplicationContext());
-        db = dbHelper.getWritableDatabase();
+
+        DbHelper dbHelper = new DbHelper(getApplicationContext());
+        db = dbHelper.getReadableDatabase();
 
         BuildTable();
         obterChecked();
+
+        Cursor check = valoresChecked;
+        if( check != null && check.moveToFirst() ) {
+            check.moveToFirst();
+            do {
+                int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
+                for (int i = 0; i < list.getCount(); i++) {
+                    int id = (int) list.getItemIdAtPosition(i);
+
+                    if (id == idChecked) {
+                        list.setItemChecked(i, true);
+                        //colocar os valores na lista check
+                        // obter o id dos que estão check
+                        //obter os id da lista
+                        // quando forem iguais mete a check a true
+                    }
+                }
+
+            } while (check.moveToNext());
+        }else{
+
+        }
+
+        // colocar a check do selecionar tudo selecionada ou não
+        Cursor c1 = verificarNaoChecked();
+        if( c1 != null && c1.getCount()>=1){
+            checkBoxSeleciona.setChecked(false);
+        }else{
+            checkBoxSeleciona.setChecked(true);
+        }
 
 
         Button buttonVoltar = (Button) findViewById(R.id.buttonVoltar);
         buttonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor total = obterChecked();
-                if( total != null && total.getCount() == 0){
-                    aplicacao.setVerificarTransacaoDesporto(false);
-                    Log.i("sair de verde", "sair de verde");
+                volta();
 
-                }else{
-                    aplicacao.setVerificarTransacaoDesporto(true);
-                    Log.i("fica verde","fica verde");
-                }
-                Intent intent = new Intent(getApplicationContext(),menu.class);
-                startActivity(intent);
-                finish();
             }
         });
 
 
 
-        checkBoxSeleciona = (CheckBox) findViewById(R.id.checkBoxSeleciona);
+
         checkBoxSeleciona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
+                    //colocar todos os valores da lista a true
                     checkBoxSeleciona.setChecked(true);
-                    for (int i = 0; i < list.getCount(); i++) {
+                    for ( int i=0; i < list.getCount(); i++ ) {
                         list.setItemChecked(i, true);
                     }
                     Cursor c = obterMonumentos();
-                    if (c != null) {
+                    if(c != null){
                         c.moveToFirst();
-                        do {
-                            int idAgenda = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                        do{
+                            // colocar todos os valores na base dados com valor 1
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
-                            values.put(Contrato.pontos.COLUMN_CHECKED, 1);
+                            values.put(Contrato.pontos.COLUMN_CHECKED,1);
                             String selection = Contrato.pontos._ID + " LIKE ?";
-                            String[] selectionArgs = {String.valueOf(idAgenda)};
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
                             db.update(
                                     Contrato.pontos.TABLE_NAME,
                                     values, selection, selectionArgs);
-                        } while (c.moveToNext());
+                        }while (c.moveToNext());
                     }
-                    //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
 
-                } else {
-                    for (int i = 0; i <= list.getChildCount(); i++) {
+
+                }else {
+                    // a check fica sem estar selecionada
+                    // colocar na lista os valores sem estarem selecionados
+                    for ( int i=0; i<= list.getChildCount(); i++ ) {
                         list.setItemChecked(i, false);
                     }
                     checkBoxSeleciona.setChecked(false);
                     Cursor c = obterMonumentos();
-                    if (c != null) {
+                    if(c != null){
                         c.moveToFirst();
-                        do {
-                            int idAgenda = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
+                        do{
+                            // colocar os valores na base dados a 0
+                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
-                            values.put(Contrato.pontos.COLUMN_CHECKED, 0);
+                            values.put(Contrato.pontos.COLUMN_CHECKED,0);
                             String selection = Contrato.pontos._ID + " LIKE ?";
-                            String[] selectionArgs = {String.valueOf(idAgenda)};
+                            String[] selectionArgs = {String.valueOf(idMonumento)};
                             db.update(
                                     Contrato.pontos.TABLE_NAME,
                                     values, selection, selectionArgs);
 
-                        } while (c.moveToNext());
+                        }while (c.moveToNext());
                     }
-                    //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
+                    // ve se existe algum que não esteja cheke para mudar a check principal
                     Cursor c2 = verificarNaoChecked();
-                    if (c2 != null && c2.getCount() >= 1) {
+                    if( c2 != null && c2.getCount()>=1){
                         checkBoxSeleciona.setChecked(false);
-                    } else {
+                    }else{
                         checkBoxSeleciona.setChecked(true);
                     }
                 }
+
             }
 
         });
     }
 
-
+    //construção da tabela
     private void BuildTable() {
 
         obterMonumentos();
@@ -204,7 +235,7 @@ public class ListaDesporto extends ListActivity {
         list.setAdapter(myCursorAdapter);
 
     }
-
+    // obter os monumentos
     private Cursor obterMonumentos() {
 
         String[] projection = {
@@ -276,5 +307,40 @@ public class ListaDesporto extends ListActivity {
         return verificaNaoChecked;
     }
 
+    public void volta(){
+        final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        // obter os check
+        Cursor total = obterChecked();
+
+        if( total != null && total.getCount() == 0){
+            //como não tem valores check fica o layout a cinza
+            aplicacao.setVerificarTransacaoDesporto(false);
+            aplicacao.setVerificarlinearDesporto(false);
+            aplicacao.setSelecionaTudo(false);
+        }else{
+            //se não poe a verde
+            aplicacao.setVerificarTransacaoDesporto(true);
+            aplicacao.setSelecionaTudo(true);
+
+        }
+        //verificar se tem alguma não check
+        Cursor vv = verificarNaoChecked();
+        if( vv != null && vv.getCount()>=1){
+            //alterar a check do seleciona tudo para falso para utilizar na classe Menu
+            aplicacao.setSelecionaTudo(false);
+        }else{
+
+        }
+        aplicacao.setVerificaOnResume(true);
+        Intent intent = new Intent(getApplicationContext(),menu.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        volta();
+    }
 
 }

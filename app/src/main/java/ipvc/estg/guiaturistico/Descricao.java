@@ -1,12 +1,10 @@
 package ipvc.estg.guiaturistico;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -58,6 +56,8 @@ public class Descricao extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descricao);
 
+
+        //Recebe os valores que vem da outra atividade que são obtidos através da base dados
         Intent intent = getIntent();
         descricao = intent.getStringExtra("descricao");
         telefone = intent.getIntExtra("telefone",0);
@@ -96,8 +96,8 @@ public class Descricao extends ActionBarActivity {
         txtdescricao.setText(descricao);
         txtNome.setText(nome);
 
-        int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
 
+        int id = getResources().getIdentifier(imagem, "drawable", getPackageName());
         Drawable drawable = getResources().getDrawable(id);
         image.setImageDrawable(drawable);
 
@@ -168,7 +168,6 @@ public class Descricao extends ActionBarActivity {
         if (id == R.id.btSom) {
             if (!veSom){
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speaker));
                 veSom = true;
                 aplicacao.setVerificaSom(false);
@@ -176,7 +175,6 @@ public class Descricao extends ActionBarActivity {
 
             } else{
                 AudioManager audioManager = (AudioManager) this.getSystemService(getApplicationContext().AUDIO_SERVICE);
-
                 menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.speakernosound));
                 veSom = false;
                 aplicacao.setVerificaSom(true);

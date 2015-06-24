@@ -7,13 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 /**
@@ -31,7 +29,7 @@ public class ListaMonumento extends ListActivity {
 
     CheckBox checkBoxSeleciona;
 
-    //Cursores para obter os valores da base dado
+    //Cursores para obter os valores da base dados
     Cursor obterDocumento;
     Cursor valoresChecked;
     Cursor verificaNaoChecked;
@@ -121,21 +119,24 @@ public class ListaMonumento extends ListActivity {
             check.moveToFirst();
             do {
                 int idChecked = check.getInt(check.getColumnIndex(Contrato.pontos._ID));
-             //   Log.i("id",idChecked+"");
                 for (int i = 0; i < list.getCount(); i++) {
                     int id = (int) list.getItemIdAtPosition(i);
 
                     if (id == idChecked) {
                         list.setItemChecked(i, true);
-                 //       Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+              //colocar os valores na lista check
+              // obter o id dos que estão check
+              //obter os id da lista
+              // quando forem iguais mete a check a true
                     }
                 }
 
             } while (check.moveToNext());
         }else{
-            Toast.makeText(getApplicationContext(),"Cursor nulo ", Toast.LENGTH_SHORT).show();
+
         }
 
+        // colocar a check do selecionar tudo selecionada ou não
         Cursor c1 = verificarNaoChecked();
         if( c1 != null && c1.getCount()>=1){
             checkBoxSeleciona.setChecked(false);
@@ -160,6 +161,7 @@ public class ListaMonumento extends ListActivity {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
+                    //colocar todos os valores da lista a true
                     checkBoxSeleciona.setChecked(true);
                     for ( int i=0; i < list.getCount(); i++ ) {
                         list.setItemChecked(i, true);
@@ -168,6 +170,7 @@ public class ListaMonumento extends ListActivity {
                     if(c != null){
                         c.moveToFirst();
                         do{
+                           // colocar todos os valores na base dados com valor 1
                            int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
                             values.put(Contrato.pontos.COLUMN_CHECKED,1);
@@ -178,9 +181,11 @@ public class ListaMonumento extends ListActivity {
                                     values, selection, selectionArgs);
                         }while (c.moveToNext());
                     }
-             //       Toast.makeText(getApplicationContext(),"esta checked",Toast.LENGTH_SHORT).show();
+
 
                 }else {
+                    // a check fica sem estar selecionada
+                    // colocar na lista os valores sem estarem selecionados
                     for ( int i=0; i<= list.getChildCount(); i++ ) {
                         list.setItemChecked(i, false);
                     }
@@ -189,6 +194,7 @@ public class ListaMonumento extends ListActivity {
                     if(c != null){
                         c.moveToFirst();
                         do{
+                            // colocar os valores na base dados a 0
                             int idMonumento = c.getInt(c.getColumnIndex(Contrato.pontos._ID));
                             ContentValues values = new ContentValues();
                             values.put(Contrato.pontos.COLUMN_CHECKED,0);
@@ -200,7 +206,7 @@ public class ListaMonumento extends ListActivity {
 
                         }while (c.moveToNext());
                     }
-            //        Toast.makeText(getApplicationContext(),"n esta checked",Toast.LENGTH_SHORT).show();
+                    // ve se existe algum que não esteja cheke para mudar a check principal
                     Cursor c2 = verificarNaoChecked();
                     if( c2 != null && c2.getCount()>=1){
                         checkBoxSeleciona.setChecked(false);
@@ -214,7 +220,7 @@ public class ListaMonumento extends ListActivity {
         });
     }
 
-
+    //construção da tabela
     private void BuildTable() {
 
         obterMonumentos();
@@ -238,7 +244,7 @@ public class ListaMonumento extends ListActivity {
         list.setAdapter(myCursorAdapter);
 
     }
-
+    // obter os monumentos
     private Cursor obterMonumentos() {
 
         String[] projection = {
@@ -312,21 +318,24 @@ public class ListaMonumento extends ListActivity {
 
     public void volta(){
         final Aplicacao aplicacao = (Aplicacao) getApplicationContext();
+        // obter os check
         Cursor total = obterChecked();
+
         if( total != null && total.getCount() == 0){
+            //como não tem valores check fica o layout a cinza
             aplicacao.setVerificaTransacaoMonumento(false);
             aplicacao.setVerificarlinearMonumento(false);
-            //aplicacao.setSelecionaTudo(true);
            aplicacao.setSelecionaTudo(false);
-            Log.i("sair de verde", "sair de verde");
         }else{
+            //se não poe a verde
             aplicacao.setVerificaTransacaoMonumento(true);
             aplicacao.setSelecionaTudo(true);
-            Log.i("fica verde","fica verde");
+
         }
         //verificar se tem alguma não check
         Cursor vv = verificarNaoChecked();
         if( vv != null && vv.getCount()>=1){
+            //alterar a check do seleciona tudo para falso para utilizar na classe Menu
             aplicacao.setSelecionaTudo(false);
         }else{
 

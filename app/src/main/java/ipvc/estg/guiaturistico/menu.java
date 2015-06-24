@@ -80,17 +80,12 @@ public class menu extends ActionBarActivity {
 
     // boolean selecionaTudo = false;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
         selecionado = false;
-
 
         linearMonumento = (LinearLayout) findViewById(R.id.layoutMomumento);
         linearCultura = (LinearLayout) findViewById(R.id.layoutCultura);
